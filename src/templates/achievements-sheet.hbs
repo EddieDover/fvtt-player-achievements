@@ -1,0 +1,61 @@
+<form autocomplete="off" name="achievements-sheet" class="achievements-sheet" >
+  {{#if isDM}}
+  <div class="achievements-sheet__dm-controls">
+    <button type="button" class="btn btn--primary" name="add-achievement">
+      <i class="fas fa-plus"></i>
+      Add Achievement
+    </button>
+    <button type="button" class="btn btn--primary" name="export-achievements">
+      <i class="fas fa-download"></i>
+      Export
+    </button>
+    <button type="button" class="btn btn--primary" name="import-achievements">
+      <i class="fas fa-upload"></i>
+      Import
+    </button>
+  </div>
+  {{else}}
+  <div class="achievements-sheet__player-controls">
+    <input type="checkbox" name="hide-awarded" id="hide-awarded" class="achievements-sheet__hide-awarded" {{#if hideAwarded}}checked{{/if}}>
+    <label for="hide-awarded">Hide Awarded</label>
+
+    <input type="checkbox" name="hide-unawarded" id="hide-unawarded" class="achievements-sheet__hide-unawarded" {{#if hideUnawarded}}checked{{/if}}>
+    <label for="hide-unawarded">Hide Unawarded</label>
+  </div>
+  {{/if}}
+  <div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;">
+    <select id="actor-filter" name="actor-filter">
+      <option value="" {{#if (eq seluuid "")}}selected{{/if}}>All Players</option>
+      {{#each currentPlayers as |player|}}
+        <option value="{{player.uuid}}" {{#if (eq ../seluuid player.uuid)}}selected{{/if}}>{{player.name}}</option>
+      {{/each}}
+    </select>
+  <input
+      type="text"
+      name="achievement_filter"
+      value="{{currentFilter}}"
+      placeholder="Filter by achievement name"
+      class="achievements-sheet__filter"
+    >
+    <button type="button" name="filter-azza" class="btn btn--primary achievements-sheet__filter-azza" style="width:50px;">
+      {{#if sortza}}
+        <i class="fas fa-sort-alpha-up"></i>
+      {{else}}
+        <i class="fas fa-sort-alpha-down"></i>
+      {{/if}}
+    </button>
+  </div>
+  {{#if achievements}}
+    <div class="achievements-container">
+      {{#each achievements as |achievement|}}
+          {{> achievement-block isDM=../isDM myuuid=../myuuid achievement=achievement  players=../currentPlayers }}
+      {{/each}}
+    </div>
+  {{else}}
+    {{#if currentFilter}}
+      <p>No achievements match your filter.</p>
+    {{else}}
+      <p>No achievements have been added yet.</p>
+    {{/if}}
+  {{/if}}
+</form>

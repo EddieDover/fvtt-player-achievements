@@ -1,0 +1,13 @@
+{
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "copyrightInserter.holder": "Eddie Dover",
+    "copyrightInserter.license": "gpl3",
+    "copyrightInserter.year": "2023",
+    "translation.api": "google",
+    "translation.fromLanguage": "en",
+    "translation.toLanguage": "es",
+    "google-translate.maxSizeOfResult": 250,
+    "google-translate.firstLanguage": "es",
+    "google-translate.secondLanguage": "zh-cn"
+}

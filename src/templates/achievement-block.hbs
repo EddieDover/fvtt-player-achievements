@@ -1,0 +1,76 @@
+<div class="achievement-block  {{#unless isDM}}{{#ifcompachi this myuuid}}achievement-block-obtained{{else}}achievement-block-unobtained{{/ifcompachi}}{{/unless}}">
+  <div class="achievement-block__header">
+    <div class="achievement-block__image-holder">
+      <img width=64 height=64 src="{{image}}" alt="{{title}}" class="achievement-block__image {{#unless isDM}}{{#ifcompachi this myuuid}}achievement-block__image-obtained{{else}}achievement-block__image-unobtained{{/ifcompachi}}{{/unless}}">
+    </div>
+    <div class="achievement-block__content">
+      <h3 class="achievement-block__title">{{title}}</h3>
+      <p class="achievement-block__description">{{description}}</p>
+    </div>
+  </div>
+  <div class="achievement-block__image-holder-buttons-container" style="">
+    {{#if isDM}}
+      <div class="achievement-block__image-holder-buttons">
+        <button
+          class="achievement-block__image-holder-button achievement-block__image-holder-button--edit"
+          type="button"
+          name="edit"
+          aria-label="Edit achievement"
+          data-achievement_id="{{id}}"
+        >
+          <i class="fas fa-pencil-alt"></i>
+          Edit
+        </button>
+        <button
+          class="achievement-block__image-holder-button achievement-block__image-holder-button--delete"
+          type="button"
+          name="delete"
+          aria-label="Delete achievement"
+          data-achievement_id="{{id}}"
+        >
+          <i class="fas fa-trash-alt"></i>
+          Delete
+        </button>
+      </div>
+      {{#if players }}
+      <div class="achievement-block__image-holder-award-buttons-area">
+        {{#ownedPlayersCount completedActors players }}
+          <p>Owned <span style="font-size:smaller;"> (click to remove)</span></p>
+          <div class="owned">
+            {{#ownedPlayers completedActors players}}
+              <button class="unassign" data-achievement_id="{{../id}}" data-player_id="{{this.uuid}}">{{this.name}}</button>
+            {{/ownedPlayers}}
+          </div>
+          {{/ownedPlayersCount}}
+        {{#unownedPlayersCount completedActors players }}
+          <p>Unowned <span style="font-size:smaller;"> (click to award)</span></p>
+          <div class="unowned">
+            {{#unownedPlayers completedActors players}}
+              <button class="assign" data-achievement_id="{{../id}}" data-player_id="{{this.uuid}}">{{this.name}}</button>
+            {{/unownedPlayers}}
+          </div>
+        {{/unownedPlayersCount}}
+      </div>
+      {{else}}
+        <p>No players to award</p>
+      {{/if}}
+    {{else}}
+      {{#if players }}
+      <div class="achievement-block__image-holder-other-players-area">
+        {{#ownedPlayersCount completedActors players }}
+          <p>Owned by: </p>
+          <div class="owned
+           {{#each completedActors as |actor|}}
+            owned-by-{{actor.uuid}}
+          {{/each}}
+          ">
+            {{#ownedPlayers completedActors players}}
+              <button disabled>{{this.name}}</button>
+            {{/ownedPlayers}}
+          </div>
+          {{/ownedPlayersCount}}
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</div>

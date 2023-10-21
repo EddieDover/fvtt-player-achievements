@@ -1,0 +1,11 @@
+
+node_modules/
+
+github/
+
+dist/
+deploy/
+tools/
+copydist.bat
+.env
+foundryconfig.json

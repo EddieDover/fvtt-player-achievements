@@ -1,0 +1,26 @@
+{
+  "fvtt-player-achievements": {
+      "settings": {
+        "enable-player-achievements": {
+          "name": "Enable Player Achievements",
+          "hint": "Enable Player Achievements"
+        },
+        "play-self-sounds": {
+          "name": "Reproducir Sonidos de Logro Personal",
+          "hint": "Reproduce un sonido si recibes un logro."
+        },
+        "hide-unearned": {
+          "name": "Ocultar logros no ganados",
+          "hint": "Ocultar completamente los logros no ganados del jugador. (Esto tiene prioridad sobre la configuración de la capa)."
+        },
+        "cloak-unearned": {
+          "name": "Logros no ganados de Cloak",
+          "hint": "Los jugadores pueden ver que hay un logro, pero no lo que es. (Esto se anula por la configuración de la piel)."
+        },
+        "show-only-to-awarded-user" : {
+          "name": "Mostrar solo al usuario premiado",
+          "hint": "Muestre el mensaje de logro solo al usuario que lo ganó."
+        }
+      }
+  }
+}

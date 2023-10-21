@@ -1,0 +1,271 @@
+.achievements-sheet {
+  width:100%;
+  height:100%;
+  padding:10px;
+  max-height:600px;
+
+  .achievements-sheet__dm-controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    margin-bottom: 5px;
+  }
+
+  .achievements-sheet__player-controls {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    justify-content:center;
+    align-items: center;
+  }
+}
+.achievements-container {
+  display:flex;
+  flex-flow: column nowrap;
+}
+
+.add-achievement-form {
+  display:flex;
+  flex-direction:column;
+}
+
+.form-error {
+  color:red;
+}
+
+.achievement-message {
+  h2 {
+    text-align:center;
+  }
+
+  p {
+    text-align:center;
+  }
+
+  .achievement-message-description {
+    text-align:left;
+  }
+
+  .achievement-message-container {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+
+    img {
+      margin-right:5px;
+      width:64px;
+      height:64px;
+    }
+  }
+}
+
+.achievement-block {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  background: darkgrey;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+
+  details {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+  }
+
+  summary {
+      display: flex;
+      align-items: center;
+
+      display {
+        color: #333;
+        font-weight: bold;
+      }
+  }
+
+  details[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  summary::before {
+      content: "▶";
+      margin-right: 0.5rem;
+  }
+
+  .achievement-block__details {
+    position:relative;
+  }
+
+  .achievement-block__details-summary {
+    padding: 5px;
+  }
+
+  .achievement-block__details-completedoverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+
+  .achievement-block__content {
+    margin-left: 5px;
+    display: flex;
+    flex-direction:column;
+    flex-wrap: nowrap;
+    flex: 1 1 auto;
+  }
+
+  .achievement-block__header {
+    display:flex;
+    flex-flow: row nowrap;
+  }
+
+  .achievement-block__image-holder {
+    max-width: fit-content;
+    max-height: fit-content;
+    flex: 1 0 auto;
+    padding: 5px;
+  }
+
+  .achievement-block__image-holder-other-players-area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+    p {
+      margin:0;
+    }
+
+    .owned {
+      display:flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom:5px;
+      margin-top:5px;
+
+      button {
+        height: 28px;
+        background: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px var(--color-shadow-dark);
+        border: 1px solid var(--color-border-dark);
+        border-radius: 5px;
+        cursor: pointer;
+        pointer-events: all;
+        display: flex;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        width:fit-content;
+        margin:5px;
+      }
+    }
+  }
+
+  .achievement-block__image-unobtained {
+    filter: brightness(0.5)
+  }
+
+  .achievement-block__image-holder-buttons {
+    display:flex;
+    flex-direction:column;
+    flex-wrap:nowrap;
+  }
+
+  .achievement-block__image-holder-award-buttons-area {
+    display:flex;
+    flex-basis:content;
+    flex-direction:column;
+    flex-wrap:nowrap;
+    justify-content: center;
+
+    p {
+      margin:0;
+    }
+
+    .owned {
+      display:flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom:5px;
+      margin-top:5px;
+      border-bottom: 1px solid black;
+
+      button {
+        height: 28px;
+        background: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px var(--color-shadow-dark);
+        border: 1px solid var(--color-border-dark);
+        border-radius: 5px;
+        cursor: pointer;
+        pointer-events: all;
+        display: flex;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        width:fit-content;
+        margin:2px;
+      }
+    }
+
+    .unowned {
+      display:flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom:5px;
+      margin-top:5px;
+
+      button {
+        height: 28px;
+        background: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px var(--color-shadow-dark);
+        border: 1px solid var(--color-border-dark);
+        border-radius: 5px;
+        cursor: pointer;
+        pointer-events: all;
+        display: flex;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        width:fit-content;
+        margin:2px;
+      }
+    }
+
+
+  }
+
+  .achievement-block__image-holder-buttons {
+    display:flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:5px;
+    margin-top:5px;
+
+    .achievement-block__image-holder-button {
+      height: 28px;
+      background: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px var(--color-shadow-dark);
+      border: 1px solid var(--color-border-dark);
+      border-radius: 5px;
+      cursor: pointer;
+      pointer-events: all;
+      display: flex;
+      color: white;
+      align-items: center;
+      justify-content: center;
+    }
+
+  }
+
+
+}
