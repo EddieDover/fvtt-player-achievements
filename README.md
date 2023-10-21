@@ -1,4 +1,6 @@
-# Player Achievements - A FoundryVTT plugin
+# Player Achievements - A FoundryVTT module
+
+This module provides GMs with a way to award players with achievements.
 
 ## Features
   ### GMs
@@ -46,3 +48,8 @@
 ### Add Achievement Screen
 
   <img src="./previews/addAchievementScreen.png" title="Foundry Achievements Button"></img>
+
+
+## Credits
+
+sounds/notification.ogg - [https://freesound.org/people/Rob_Marion/sounds/542043/](https://freesound.org/people/Rob_Marion/sounds/542043/)
