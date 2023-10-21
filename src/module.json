@@ -47,16 +47,5 @@
     "esmodules": [
       "module/fvtt-player-achievements.js"
     ],
-    "styles": ["styles/fvtt-player-achievements.css"],
-    "relationships": {
-      "systems": [
-        {
-          "id": "dnd5e",
-          "type": "system",
-          "compatibility": {
-            "minimum": "2.0.0"
-          }
-        }
-      ]
-    }
+    "styles": ["styles/fvtt-player-achievements.css"]
   }
