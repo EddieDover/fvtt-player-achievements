@@ -135,6 +135,22 @@ export class AchievementForm extends FormApplication {
 
   async onImportAchievements(event) {
     event.preventDefault();
+
+    const destructiveyesno = await Dialog.confirm({
+      title: "Import Achievements",
+      content: "This will overwrite all existing achievements with data from your clipboard. Are you sure?",
+      yes: () => {
+        return true;
+      },
+      no: () => {
+        return false;
+      },
+    });
+
+    if (!destructiveyesno) {
+      return;
+    }
+
     const clipboardText = await navigator.clipboard.readText();
     if (!clipboardText) {
       ui.notifications.error("No data found in clipboard.");
