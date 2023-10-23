@@ -68,6 +68,20 @@ export const registerSettings = () => {
     "type": Boolean,
   });
 
+  game.settings.register("fvtt-player-achievements", "selfSoundVolume", {
+    "name": "fvtt-player-achievements.settings.self-sound-volume.name",
+    "hint": "fvtt-player-achievements.settings.self-sound-volume.hint",
+    "scope": "local",
+    "config": true,
+    "default": 0.1,
+    "type": Number,
+    "range": {
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+    },
+  });
+
   game.settings.register("fvtt-player-achievements", "showOnlyToAwardedUser", {
     "name": "fvtt-player-achievements.settings.show-only-to-awarded-user.name",
     "hint": "fvtt-player-achievements.settings.show-only-to-awarded-user.hint",

@@ -9,6 +9,10 @@
         "name": "Reproducir Sonidos de Logro Personal",
         "hint": "Reproduce un sonido si recibes un logro."
       },
+      "self-sound-volume": {
+        "name": "Volumen de sonido de autocontrol",
+        "hint": "El volumen del sonido que se produce cuando se premio un logro."
+      },
       "hide-unearned": {
         "name": "Ocultar logros no ganados",
         "hint": "Ocultar completamente los logros no ganados del jugador. (Esto tiene prioridad sobre la configuración de Cloak)."
@@ -50,6 +54,8 @@
         "description": "Descripción",
         "image": "Imagen",
         "select": "Seleccionar",
+        "sound": "Sonido",
+        "preview": "Previsualiza",
         "clear": "Clara",
         "add-achievement":"Agregar logro",
         "update-achievement":"Actualizar el logro"

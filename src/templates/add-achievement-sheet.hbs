@@ -58,12 +58,45 @@
         <i class="fas fa-upload"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.select"}}
       </button>
-      <button type="button" name="clear" class="btn btn--primary add-achievement-form__clear-image" style="flex: 1 1 auto;">
+      <button type="button" name="clear_image" class="btn btn--primary add-achievement-form__clear-image" style="flex: 1 1 auto;">
         <i class="fas fa-times"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.clear"}}
       </button>
     </div>
   </div>
+
+  <label for="achievement_sound_preview" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.sound"}}</label>
+
+
+    <audio
+      src=""
+      name="achievement_sound_preview"
+      id="achievement_sound_preview"
+      class="add-achievement-form__sound-preview"
+      src="{{overrides.achievement.sound}}"
+    ></audio>
+
+    <input type="text" name="achievement_sound" id="achievement_sound" value="{{overrides.achievement.sound}}">
+    <div style="display:flex;flex-direction:row;flex-wrap:nowrap;flex: 1 0 auto;">
+      <button
+        id="achievement_sound-button"
+        type="button"
+        name="achievement_sound-button"
+        class="btn btn--primary add-achievement-form__sound"
+        style="flex: 1 1 auto;"
+      >
+        <i class="fas fa-upload"></i>
+        {{localize "fvtt-player-achievements.forms.add-achievement-form.select"}}
+      </button>
+      <button type="button" name="preview_sound" class="btn btn--primary add-achievement-form__preview-sound" style="flex: 1 1 auto;">
+        <i class="fas fa-play"></i>
+        {{localize "fvtt-player-achievements.forms.add-achievement-form.preview"}}
+      </button>
+      <button type="button" name="clear_sound" class="btn btn--primary add-achievement-form__clear-sound" style="flex: 1 1 auto;">
+        <i class="fas fa-times"></i>
+        {{localize "fvtt-player-achievements.forms.add-achievement-form.clear"}}
+      </button>
+    </div>
 
   <button type="submit" class="btn btn--primary add-achievement-form__submit">
     <i class="fas fa-plus"></i>

@@ -59,14 +59,34 @@ export class AddAchievementForm extends FormApplication {
 
     if (this.overrides.mode === "edit") {
       this.updateSelectImage();
+      this.updateSelectSound();
+    } else {
+      this.setupDefaults();
     }
 
     const achievementId = $("input[name='achievement_id']", html);
 
     $("button[type='submit']", html).click(this.handleSubmit.bind(this));
-    $("button[name='clear']", html).click(this.handleClear.bind(this));
+    $("button[name='clear_image']", html).click(this.handleClearImage.bind(this));
+    $("button[name='preview_sound']", html).click(this.handlePreviewSound.bind(this));
+    $("button[name='clear_sound']", html).click(this.handleClearSound.bind(this));
     $("button[name='achievement_image-button']", html).click(this.handleSelectImage.bind(this));
+    $("button[name='achievement_sound-button']", html).click(this.handleSelectSound.bind(this));
     achievementId.on("keyup", () => this.validateFields());
+  }
+
+  setupDefaults() {
+    const imageInput = document.querySelector("#achievement_image");
+    const imagePreview = document.querySelector("#achievement_image_preview");
+    imageInput.value = "modules/fvtt-player-achievements/images/default.webp";
+    imagePreview.style.display = "block";
+    imagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
+
+    const soundInput = document.querySelector("#achievement_sound");
+    const soundPreview = document.querySelector("#achievement_sound_preview");
+    soundInput.value = "modules/fvtt-player-achievements/sounds/notification.ogg";
+    soundPreview.style.display = "none";
+    soundPreview.src = "modules/fvtt-player-achievements/sounds/notification.ogg";
   }
 
   validateFields() {
@@ -77,12 +97,53 @@ export class AddAchievementForm extends FormApplication {
       : "";
   }
 
+  handlePreviewSound(event) {
+    event.preventDefault();
+    const soundPreview = document.querySelector("#achievement_sound_preview");
+    if (soundPreview.src === window.location.href) {
+      new Audio("/modules/fvtt-player-achievements/sounds/notification.ogg").play();
+    } else {
+      soundPreview.play();
+    }
+  }
+
+  handleClearSound(event) {
+    event.preventDefault();
+    const soundInput = document.querySelector("#achievement_sound");
+    soundInput.value = "";
+    const soundPreview = document.querySelector("#achievement_sound_preview");
+    soundPreview.src = "";
+  }
+
+  updateSelectSound() {
+    const soundInput = document.querySelector("#achievement_sound");
+    const soundPreview = document.querySelector("#achievement_sound_preview");
+    soundInput.value = this.overrides.achievement.sound ?? "";
+    soundPreview.style.display = "block";
+    soundPreview.src = this.overrides.achievement.sound ?? "";
+  }
+
   updateSelectImage() {
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
     imageInput.value = this.overrides.achievement.image;
     imagePreview.style.display = "block";
     imagePreview.src = this.overrides.achievement.image;
+  }
+
+  handleSelectSound(event) {
+    event.preventDefault();
+    // Show the foundry file picker
+    const fp = new FilePicker();
+    fp.options.type = "audio";
+    fp.render(true);
+    fp.callback = (path, _filePicker) => {
+      const soundInput = document.querySelector("#achievement_sound");
+      soundInput.value = path;
+      const soundPreview = document.querySelector("#achievement_sound_preview");
+      soundPreview.style.display = "block";
+      soundPreview.src = path;
+    };
   }
 
   handleSelectImage(event) {
@@ -119,7 +180,7 @@ export class AddAchievementForm extends FormApplication {
     }
   }
 
-  handleClear(event) {
+  handleClearImage(event) {
     event.preventDefault();
     const imageInput = document.querySelector("#achievement_image");
     imageInput.value = "modules/fvtt-player-achievements/images/default.webp";
@@ -147,6 +208,7 @@ export class AddAchievementForm extends FormApplication {
       title: data.achievement_title,
       description: data.achievement_description,
       image: data.achievement_image,
+      sound: data.achievement_sound,
     };
 
     const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");

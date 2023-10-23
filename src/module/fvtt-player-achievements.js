@@ -131,8 +131,8 @@ async function awardAchievementSelf({ achievement, playerId }) {
   }
 
   if (game.user.character?.uuid === playerId && playAwardSound) {
-    const audio = new Audio("/modules/fvtt-player-achievements/sounds/notification.ogg");
-    audio.volume = 0.1;
+    const audio = new Audio(achievement.sound ?? "/modules/fvtt-player-achievements/sounds/notification.ogg");
+    audio.volume = game.settings.get("fvtt-player-achievements", "selfSoundVolume");
     audio.play();
   }
 }

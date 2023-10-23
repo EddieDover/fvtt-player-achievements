@@ -6,6 +6,7 @@ This module provides GMs with a way to award players with achievements.
   ### GMs
   - Create your own achievements.
   - Assign/Unassign achievements to/from players.
+  - Customize sound played per achievement.
   - Can choose to cloak all unearned achievements details from players.
   - Can choose to hide all unearned achievements from players.
   - Can show achievement earn message to all players or only receiving player.
@@ -13,6 +14,7 @@ This module provides GMs with a way to award players with achievements.
   - Can restore achievement data from clipboard JSON text.
  ### Players
   - Optionally play a sound when an achievement is earned.
+  - Control the volume of achievement sounds if they play.
  ### All
   - Sort Achievement View by achievement name (ascending or descending).
   - Sort Achievement View by owned player.
@@ -57,3 +59,8 @@ This module provides GMs with a way to award players with achievements.
 
 ### Images
   default.webp - [https://game-icons.net/1x1/skoll/achievement.html](https://game-icons.net/1x1/skoll/achievement.html)
+
+
+### Localization
+
+  Spanish - @maeonian
