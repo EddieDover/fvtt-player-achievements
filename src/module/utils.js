@@ -18,3 +18,7 @@
 export function deepCopy(object) {
   return JSON.parse(JSON.stringify(object));
 }
+
+export function localize(incstr) {
+  return game.i18n.localize(incstr);
+}

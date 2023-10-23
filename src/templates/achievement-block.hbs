@@ -19,7 +19,7 @@
           data-achievement_id="{{id}}"
         >
           <i class="fas fa-pencil-alt"></i>
-          Edit
+          {{localize "fvtt-player-achievements.forms.achievement-block.edit"}}
         </button>
         <button
           class="achievement-block__image-holder-button achievement-block__image-holder-button--delete"
@@ -29,13 +29,13 @@
           data-achievement_id="{{id}}"
         >
           <i class="fas fa-trash-alt"></i>
-          Delete
+          {{localize "fvtt-player-achievements.forms.achievement-block.delete"}}
         </button>
       </div>
       {{#if players }}
       <div class="achievement-block__image-holder-award-buttons-area">
         {{#ownedPlayersCount completedActors players }}
-          <p>Owned <span style="font-size:smaller;"> (click to remove)</span></p>
+          <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-remove"}})</span></p>
           <div class="owned">
             {{#ownedPlayers completedActors players}}
               <button class="unassign" data-achievement_id="{{../id}}" data-player_id="{{this.uuid}}">{{this.name}}</button>
@@ -43,7 +43,7 @@
           </div>
           {{/ownedPlayersCount}}
         {{#unownedPlayersCount completedActors players }}
-          <p>Unowned <span style="font-size:smaller;"> (click to award)</span></p>
+          <p>{{localize "fvtt-player-achievements.forms.achievement-block.unowned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-award"}})</span></p>
           <div class="unowned">
             {{#unownedPlayers completedActors players}}
               <button class="assign" data-achievement_id="{{../id}}" data-player_id="{{this.uuid}}">{{this.name}}</button>
@@ -52,13 +52,13 @@
         {{/unownedPlayersCount}}
       </div>
       {{else}}
-        <p>No players to award</p>
+        <p>{{localize "fvtt-player-achievements.forms.achievement-block.no-players-to-award"}}</p>
       {{/if}}
     {{else}}
       {{#if players }}
       <div class="achievement-block__image-holder-other-players-area">
         {{#ownedPlayersCount completedActors players }}
-          <p>Owned by: </p>
+          <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned-by"}}: </p>
           <div class="owned
            {{#each completedActors as |actor|}}
             owned-by-{{actor.uuid}}

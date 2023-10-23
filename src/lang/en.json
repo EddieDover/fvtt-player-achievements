@@ -1,26 +1,75 @@
 {
   "fvtt-player-achievements": {
-      "settings": {
-        "enable-player-achievements": {
-          "name": "Enable Player Achievements",
-          "hint": "Enable Player Achievements"
-        },
-        "play-self-sounds": {
-          "name": "Play Self Achievement Sounds",
-          "hint": "Play a sound if you are awarded an achievement."
-        },
-        "hide-unearned": {
-          "name": "Hide Unearned Achievements",
-          "hint": "Completely hide unearned achievements from the player. (This takes precedence over the cloak setting.)"
-        },
-        "cloak-unearned": {
-          "name": "Cloak Unearned Achievements",
-          "hint": "Players can see that there is an achievement, but not what it is. (This is overridden by the hide setting.)"
-        },
-        "show-only-to-awarded-user" : {
-          "name": "Show Only to Awarded User",
-          "hint": "Show the achievement message only to the user who gained it."
-        }
+    "settings": {
+      "enable-player-achievements": {
+        "name": "Enable Player Achievements",
+        "hint": "Enable Player Achievements"
+      },
+      "play-self-sounds": {
+        "name": "Play Self Achievement Sounds",
+        "hint": "Play a sound if you are awarded an achievement."
+      },
+      "hide-unearned": {
+        "name": "Hide Unearned Achievements",
+        "hint": "Completely hide unearned achievements from the player. (This takes precedence over the cloak setting.)"
+      },
+      "cloak-unearned": {
+        "name": "Cloak Unearned Achievements",
+        "hint": "Players can see that there is an achievement, but not what it is. (This is overridden by the hide setting.)"
+      },
+      "show-only-to-awarded-user": {
+        "name": "Show Only to Awarded User",
+        "hint": "Show the achievement message only to the user who gained it."
       }
+    },
+    "forms": {
+      "achievements-sheet": {
+        "all-players": "All Players",
+        "add-achievement": "Add Achievement",
+        "export": "Export",
+        "import": "Import",
+        "filter": "Filter by achievement name",
+        "hide-awarded": "Hide Awarded",
+        "hide-unawarded": "Hide Unawarded",
+        "no-achievements-match-filter": "No achievements match your filter.",
+        "no-achievements-added": "No achievements have been added yet."
+      },
+      "achievement-block": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "owned": "Owned",
+        "owned-by": "Owned by",
+        "unowned": "Unowned",
+        "click-to-remove": "Click to remove",
+        "click-to-award": "Click to award",
+        "no-players-to-award": "No players to award."
+      },
+      "add-achievement-form": {
+        "id": "ID",
+        "title": "Title",
+        "description": "Description",
+        "image": "Image",
+        "select": "Select",
+        "clear": "Clear",
+        "add-achievement": "Add Achievement",
+        "update-achievement": "Update Achievement"
+      }
+    },
+    "messages": {
+      "achievements-imported": "Achievements imported from clipboard.",
+      "achievements-exported": "Achievements exported to clipboard.",
+      "achievement-updated": "Achievement updated.",
+      "achievement-aded": "Achievement added.",
+      "duplicate-id": "An achievement with that ID already exists.",
+      "id-no-spaces": "ID cannot contain spaces.",
+      "invalid-achievement-format": "Invalid achievement format.",
+      "missing-fields": "Please fill out all fields.",
+      "no-clipboard-data": "No data found in clipboard.",
+      "no-achievements-in-clipboard": "No achievements found in the clipboard.",
+      "import-achievements": {
+        "title": "Import Achievements",
+        "content": "This will overwrite all existing achievements with data from your clipboard. Are you sure?"
+      }
+    }
   }
 }

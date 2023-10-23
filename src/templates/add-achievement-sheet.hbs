@@ -1,6 +1,8 @@
 <form  autocomplete="off" name="add-achievement-form" class="add-achievement-form">
 
-<label for="achievement_id" class="add-achievement-form__id">ID</label>
+<label for="achievement_id" class="add-achievement-form__id">
+  {{localize "fvtt-player-achievements.forms.add-achievement-form.id"}}
+</label>
   <input
     id="achievement_id"
     type="text"
@@ -13,7 +15,7 @@
     {{/if}}
   >
   <label name="achievement_id_error" class="add-achievement-form__id-error form-error">{{validation.id}}</label>
-  <label for="achievement_title" class="add-achievement-form__label">Title</label>
+  <label for="achievement_title" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.title"}}</label>
   <input
     id="achievement_title"
     type="text"
@@ -23,7 +25,7 @@
     value="{{overrides.achievement.title}}"
   >
 
-  <label for="achievement_description" class="add-achievement-form__label">Description</label>
+  <label for="achievement_description" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.description"}}</label>
   <textarea
     id="achievement_description"
     name="achievement_description"
@@ -31,7 +33,7 @@
     class="add-achievement-form__description"
   >{{overrides.achievement.description}}</textarea>
 
-  <label for="achievement_image_preview" class="add-achievement-form__label">Image</label>
+  <label for="achievement_image_preview" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.image"}}</label>
   <div style="display:flex;flex-direction:row;flex-wrap:nowrap;margin-bottom:5px;">
     <img
       src=""
@@ -54,17 +56,21 @@
         style="flex: 1 1 auto;"
       >
         <i class="fas fa-upload"></i>
-        Select
+        {{localize "fvtt-player-achievements.forms.add-achievement-form.select"}}
       </button>
       <button type="button" name="clear" class="btn btn--primary add-achievement-form__clear-image" style="flex: 1 1 auto;">
         <i class="fas fa-times"></i>
-        Clear
+        {{localize "fvtt-player-achievements.forms.add-achievement-form.clear"}}
       </button>
     </div>
   </div>
 
   <button type="submit" class="btn btn--primary add-achievement-form__submit">
     <i class="fas fa-plus"></i>
-    Add Achievement
+    {{#if (eq overrides.mode "edit")}}
+      {{localize "fvtt-player-achievements.forms.add-achievement-form.update-achievement"}}
+    {{else}}
+      {{localize "fvtt-player-achievements.forms.add-achievement-form.add-achievement"}}
+    {{/if}}
   </button>
 </form>
