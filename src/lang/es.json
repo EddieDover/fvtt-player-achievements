@@ -29,7 +29,7 @@
         "export": "Exportar",
         "import": "Importar",
         "filter": "Filtrar por nombre de logro",
-        "hide-awarded": "Ocultar otorgado",
+        "hide-awarded": "Ocultar logros ganados",
         "hide-unawarded": "Esconder sin premio",
         "no-achievements-match-filter": "No hay logros que coincidan con su filtro.",
         "no-achievements-added": "Todavía no se han agregado logros."
