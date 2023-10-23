@@ -50,6 +50,8 @@
         "description": "Description",
         "image": "Image",
         "select": "Select",
+        "sound": "Sound",
+        "preview": "Preview",
         "clear": "Clear",
         "add-achievement": "Add Achievement",
         "update-achievement": "Update Achievement"

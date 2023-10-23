@@ -50,6 +50,8 @@
         "description": "Descripción",
         "image": "Imagen",
         "select": "Seleccionar",
+        "sound": "Sonido",
+        "preview": "Avance",
         "clear": "Clara",
         "add-achievement":"Agregar logro",
         "update-achievement":"Actualizar el logro"
