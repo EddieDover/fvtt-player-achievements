@@ -118,7 +118,7 @@ export class AddAchievementForm extends FormApplication {
   handleClear(event) {
     event.preventDefault();
     const imageInput = document.querySelector("#achievement_image");
-    imageInput.value = "";
+    imageInput.value = "modules/fvtt-player-achievements/images/default.webp";
     const imagePreview = document.querySelector("#achievement_image_preview");
     imagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
   }
