@@ -11,7 +11,7 @@
       },
       "hide-unearned": {
         "name": "Ocultar logros no ganados",
-        "hint": "Ocultar completamente los logros no ganados del jugador. (Esto tiene prioridad sobre la configuración de la capa)."
+        "hint": "Ocultar completamente los logros no ganados del jugador. (Esto tiene prioridad sobre la configuración de Cloak)."
       },
       "cloak-unearned": {
         "name": "Logros no ganados de Cloak",
