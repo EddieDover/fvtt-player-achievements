@@ -1,26 +1,75 @@
 {
   "fvtt-player-achievements": {
-      "settings": {
-        "enable-player-achievements": {
-          "name": "Enable Player Achievements",
-          "hint": "Enable Player Achievements"
-        },
-        "play-self-sounds": {
-          "name": "Reproducir Sonidos de Logro Personal",
-          "hint": "Reproduce un sonido si recibes un logro."
-        },
-        "hide-unearned": {
-          "name": "Ocultar logros no ganados",
-          "hint": "Ocultar completamente los logros no ganados del jugador. (Esto tiene prioridad sobre la configuración de la capa)."
-        },
-        "cloak-unearned": {
-          "name": "Logros no ganados de Cloak",
-          "hint": "Los jugadores pueden ver que hay un logro, pero no lo que es. (Esto se anula por la configuración de la piel)."
-        },
-        "show-only-to-awarded-user" : {
-          "name": "Mostrar solo al usuario premiado",
-          "hint": "Muestre el mensaje de logro solo al usuario que lo ganó."
-        }
+    "settings": {
+      "enable-player-achievements": {
+        "name": "Habilitar los logros de los jugadores",
+        "hint": "Habilitar los logros de los jugadores"
+      },
+      "play-self-sounds": {
+        "name": "Reproducir Sonidos de Logro Personal",
+        "hint": "Reproduce un sonido si recibes un logro."
+      },
+      "hide-unearned": {
+        "name": "Ocultar logros no ganados",
+        "hint": "Ocultar completamente los logros no ganados del jugador. (Esto tiene prioridad sobre la configuración de Cloak)."
+      },
+      "cloak-unearned": {
+        "name": "Logros no ganados de Cloak",
+        "hint": "Los jugadores pueden ver que hay un logro, pero no lo que es. (Esto es anulado por la configuración en Ocultar)."
+      },
+      "show-only-to-awarded-user" : {
+        "name": "Mostrar solo al usuario premiado",
+        "hint": "Muestre el mensaje de logro solo al usuario que lo ganó."
       }
+    },
+    "forms": {
+      "achievements-sheet" : {
+        "all-players": "Todos los jugadores",
+        "add-achievement": "Agregar logro",
+        "export": "Exportar",
+        "import": "Importar",
+        "filter": "Filtrar por nombre de logro",
+        "hide-awarded": "Ocultar logros ganados",
+        "hide-unawarded": "Ocultar logros no ganados",
+        "no-achievements-match-filter": "No hay logros que coincidan con su filtro.",
+        "no-achievements-added": "Todavía no se han agregado logros."
+      },
+      "achievement-block" : {
+        "edit": "Editar",
+        "delete": "Borrar",
+        "owned": "De propiedad",
+        "owned-by": "Propiedad de",
+        "unowned": "Sin propietario",
+        "click-to-remove": "Haga clic para eliminar",
+        "click-to-award": "Haga clic para premiar",
+        "no-players-to-award": "No hay jugadores para premiar."
+      },
+      "add-achievement-form": {
+        "id": "ID",
+        "title": "Título",
+        "description": "Descripción",
+        "image": "Imagen",
+        "select": "Seleccionar",
+        "clear": "Clara",
+        "add-achievement":"Agregar logro",
+        "update-achievement":"Actualizar el logro"
+      }
+    },
+    "messages": {
+      "achievements-imported": "Logros importados del portapapeles.",
+      "achievements-exported": "Logros exportados al portapapeles.",
+      "achievement-updated": "Logro actualizado.",
+      "achievement-aded":"Logro agregado.",
+      "duplicate-id": "Ya existe un logro con esa identificación.",
+      "id-no-spaces": "ID no puede contener espacios.",
+      "invalid-achievement-format": "Formato de logro no válido.",
+      "missing-fields": "Por favor rellene todos los campos.",
+      "no-clipboard-data": "No se encuentran datos en el portapapeles.",
+      "no-achievements-in-clipboard": "No se encuentran logros en el portapapeles.",
+      "import-achievements": {
+        "title": "Logros de importación",
+        "content": "Esto sobrescribirá todos los logros existentes con datos de su portapapeles. ¿Está seguro?"
+      }
+    }
   }
 }

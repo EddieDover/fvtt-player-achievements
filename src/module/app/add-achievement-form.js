@@ -15,6 +15,8 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { localize } from "../utils";
+
 export class AddAchievementForm extends FormApplication {
   constructor(overrides) {
     super();
@@ -70,7 +72,9 @@ export class AddAchievementForm extends FormApplication {
   validateFields() {
     const achievementId = document.getElementsByName("achievement_id")[0];
     const achievementIdError = document.querySelectorAll(".add-achievement-form__id-error")[0];
-    achievementIdError.innerHTML = achievementId.value.includes(" ") ? "ID cannot contain spaces." : "";
+    achievementIdError.innerHTML = achievementId.value.includes(" ")
+      ? localize("fvtt-player-achievements.messages.id-no-spaces")
+      : "";
   }
 
   updateSelectImage() {
@@ -134,7 +138,7 @@ export class AddAchievementForm extends FormApplication {
 
     // Verify none of the fields are blank
     if (Object.values(data).some((value) => !value)) {
-      ui.notifications.error("Please fill out all fields.");
+      ui.notifications.error(localize("fvtt-player-achievements.messages.missing-fields"));
       return;
     }
 
@@ -154,16 +158,16 @@ export class AddAchievementForm extends FormApplication {
       const index = customAchievements.findIndex((a) => a.id === achievement.id);
       customAchievements[index] = achievement;
       game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
-      ui.notifications.info("Achievement updated.");
+      ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-updated"));
     } else {
       // Verify the achievement doesn't already exist
       if (customAchievements.some((a) => a.id === achievement.id)) {
-        ui.notifications.error("An achievement with that ID already exists.");
+        ui.notifications.error(localize("fvtt-player-achievements.messages.duplicate-id"));
         return;
       }
       customAchievements.push(achievement);
       game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
-      ui.notifications.info("Achievement added.");
+      ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-added"));
     }
     const onendfunc = this.overrides?.onend;
     if (onendfunc) {
