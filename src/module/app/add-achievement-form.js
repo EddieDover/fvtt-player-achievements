@@ -118,11 +118,9 @@ export class AddAchievementForm extends FormApplication {
   updateSelectSound() {
     const soundInput = document.querySelector("#achievement_sound");
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    console.log(soundInput.value, soundPreview.preview);
     soundInput.value = this.overrides.achievement.sound ?? "";
     soundPreview.style.display = "block";
     soundPreview.src = this.overrides.achievement.sound ?? "";
-    console.log(soundInput.value, soundPreview.preview);
   }
 
   updateSelectImage() {
@@ -200,7 +198,6 @@ export class AddAchievementForm extends FormApplication {
     }, {});
 
     // Verify none of the fields are blank
-    console.log(data);
     if (Object.values(data).some((value) => !value)) {
       ui.notifications.error(localize("fvtt-player-achievements.messages.missing-fields"));
       return;

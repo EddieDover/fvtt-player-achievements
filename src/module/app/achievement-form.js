@@ -186,7 +186,6 @@ export class AchievementForm extends FormApplication {
     game.settings.set("fvtt-player-achievements", "customAchievements", importedAchievements);
     game.settings.set("fvtt-player-achievements", "awardedAchievements", newAwardedAchievements);
     this.achievements = await this.filterAchievements();
-    console.log(this.achievements);
     setTimeout(() => {
       this.render(true);
     }, 100);
@@ -202,8 +201,6 @@ export class AchievementForm extends FormApplication {
   onSelectPlayer(event) {
     event.preventDefault();
     this.seluuid = event.target.value;
-    console.log("asdf");
-    console.log(this.seluuid);
     this.render(true);
   }
 
