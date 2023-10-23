@@ -15,7 +15,7 @@
       },
       "cloak-unearned": {
         "name": "Logros no ganados de Cloak",
-        "hint": "Los jugadores pueden ver que hay un logro, pero no lo que es. (Esto se anula por la configuración de la piel)."
+        "hint": "Los jugadores pueden ver que hay un logro, pero no lo que es. (Esto es anulado por la configuración en Ocultar)."
       },
       "show-only-to-awarded-user" : {
         "name": "Mostrar solo al usuario premiado",
