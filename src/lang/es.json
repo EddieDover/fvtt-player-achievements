@@ -11,7 +11,7 @@
       },
       "self-sound-volume": {
         "name": "Volumen de sonido de autocontrol",
-        "hint": "El volumen del sonido se reproduce cuando se le otorga un logro."
+        "hint": "El volumen del sonido que se produce cuando se premio un logro."
       },
       "hide-unearned": {
         "name": "Ocultar logros no ganados",
