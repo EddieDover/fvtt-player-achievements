@@ -18,6 +18,9 @@
 import { localize } from "../utils";
 import { AddAchievementForm } from "./add-achievement-form";
 
+const FEEDBACK_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=feature_request.md";
+const BUGREPORT_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=bug_report.md";
+
 export class AchievementForm extends FormApplication {
   constructor(overrides) {
     super();
@@ -132,6 +135,21 @@ export class AchievementForm extends FormApplication {
     $('select[name="actor-filter"]', html).on("change", this.onSelectPlayer.bind(this));
     $('button[name="import-achievements"]', html).click(await this.onImportAchievements.bind(this));
     $('button[name="export-achievements"]', html).click(this.onExportAchievements.bind(this));
+
+    $('button[name="feedback"]', html).click(this.onFeedback.bind(this));
+    $('button[name="bugreport"]', html).click(this.onBugReport.bind(this));
+  }
+
+  async onFeedback(event) {
+    event.preventDefault();
+    const newWindow = window.open(FEEDBACK_URL, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = undefined;
+  }
+
+  async onBugReport(event) {
+    event.preventDefault();
+    const newWindow = window.open(BUGREPORT_URL, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = undefined;
   }
 
   async onImportAchievements(event) {

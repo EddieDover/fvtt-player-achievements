@@ -75,7 +75,10 @@ async function toggleAchievementScreen() {
         return await getAchivements();
       },
       processAward: async (achievementId, playerId) => {
+        // Hooks.call("fvtt-player-achievements.beforeAchievementBestowed", achievementId, playerId);
         return await awardAchievement(achievementId, playerId);
+        // Hooks.call("fvtt-player-achievements.afterAchievementBestowed", achievementId, playerId);
+        // return;
       },
     };
     currentAchievementScreen = new AchievementForm(overrides);
