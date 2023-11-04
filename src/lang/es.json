@@ -32,11 +32,15 @@
         "add-achievement": "Agregar logro",
         "export": "Exportar",
         "import": "Importar",
+        "export-achievements": "Exportar datos de logros al portapapeles",
+        "import-achievements": "Sobrescribir los logros actuales con los datos de exportación del portapapeles",
         "filter": "Filtrar por nombre de logro",
         "hide-awarded": "Ocultar logros ganados",
         "hide-unawarded": "Ocultar logros no ganados",
         "no-achievements-match-filter": "No hay logros que coincidan con su filtro.",
-        "no-achievements-added": "Todavía no se han agregado logros."
+        "no-achievements-added": "Todavía no se han agregado logros.",
+        "bugreport": "Dar retroalimentación",
+        "feedback": "Reportar un fallo"
       },
       "achievement-block" : {
         "edit": "Editar",

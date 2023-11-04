@@ -31,12 +31,16 @@
         "all-players": "All Players",
         "add-achievement": "Add Achievement",
         "export": "Export",
+        "export-achievements": "Export achievement data to clipboard",
+        "import-achievements": "Overwrite current achievements with export data from clipboard",
         "import": "Import",
         "filter": "Filter by achievement name",
         "hide-awarded": "Hide Awarded",
         "hide-unawarded": "Hide Unawarded",
         "no-achievements-match-filter": "No achievements match your filter.",
-        "no-achievements-added": "No achievements have been added yet."
+        "no-achievements-added": "No achievements have been added yet.",
+        "bugreport": "File a Bug Report",
+        "feedback": "Send Feedback"
       },
       "achievement-block": {
         "edit": "Edit",

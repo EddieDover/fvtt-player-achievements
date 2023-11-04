@@ -1,51 +1,59 @@
 {
-    "id": "fvtt-player-achievements",
-    "title": "Player Achievements",
-    "description": "Allows DMs to setup customizable achievements for players.",
-    "url": "https://github.com/EddieDover/fvtt-player-achievements",
-    "bugs": "https://github.com/EddieDover/fvtt-player-achievements/issues",
-    "changelog": "https://github.com/EddieDover/fvtt-player-achievements/releases",
-    "manifest": "https://github.com/EddieDover/fvtt-player-achievements/releases/latest/download/module.json",
-    "download": "https://github.com/EddieDover/fvtt-player-achievements/releases/latest/download/module.zip",
-    "license": "https://github.com/EddieDover/fvtt-player-achievements/raw/main/LICENSE.md",
-    "readme": "https://github.com/EddieDover/fvtt-player-achievements/raw/main/README.md",
-    "flags": {
-      "allowBugReporter": true
+  "id": "fvtt-player-achievements",
+  "title": "Player Achievements",
+  "description": "Allows DMs to setup customizable achievements for players.",
+  "url": "https://github.com/EddieDover/fvtt-player-achievements",
+  "bugs": "https://github.com/EddieDover/fvtt-player-achievements/issues",
+  "changelog": "https://github.com/EddieDover/fvtt-player-achievements/releases",
+  "manifest": "https://github.com/EddieDover/fvtt-player-achievements/releases/latest/download/module.json",
+  "download": "https://github.com/EddieDover/fvtt-player-achievements/releases/latest/download/module.zip",
+  "license": "https://github.com/EddieDover/fvtt-player-achievements/raw/main/LICENSE.md",
+  "readme": "https://github.com/EddieDover/fvtt-player-achievements/raw/main/README.md",
+  "flags": {
+    "allowBugReporter": true
+  },
+  "allowBugReporter": true,
+  "socket": true,
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
     },
-    "allowBugReporter": true,
-    "socket": true,
-    "languages": [
-      {
-        "lang": "en",
-        "name": "English",
-        "path": "lang/en.json"
-      },
-      {
-        "lang": "es",
-        "name": "Spanish",
-        "path": "lang/es.json"
-      }
-    ],
-  "media": [
-      {
-          "type": "cover",
-          "url": ""
-      }
+    {
+      "lang": "es",
+      "name": "Spanish",
+      "path": "lang/es.json"
+    }
   ],
-    "authors": [
+  "media": [
+    {
+      "type": "cover",
+      "url": ""
+    }
+  ],
+  "authors": [
+    {
+      "name": "Eddie Dover",
+      "email": "ed@eddiedover.dev",
+      "url": "https://github.com/eddiedover/"
+    }
+  ],
+  "version": "1.0.2",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
+  "relationships": {
+    "conflicts": [
       {
-        "name": "Eddie Dover",
-        "email": "ed@eddiedover.dev",
-        "url": "https://github.com/eddiedover/"
+        "id": "enhancedcombathud",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/theripper93/enhancedcombathud/master/module.json",
+        "reason": "Clicking on a target after selecting an action from the ECH opens the achievement window through no fault of the achievement plugin."
       }
-    ],
-    "version": "1.0.1",
-    "compatibility": {
-      "minimum": "11",
-      "verified": "11"
-    },
-    "esmodules": [
-      "module/fvtt-player-achievements.js"
-    ],
-    "styles": ["styles/fvtt-player-achievements.css"]
-  }
+    ]
+  },
+  "esmodules": ["module/fvtt-player-achievements.js"],
+  "styles": ["styles/fvtt-player-achievements.css"]
+}

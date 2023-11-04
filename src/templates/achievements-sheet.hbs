@@ -1,17 +1,27 @@
 <form autocomplete="off" name="achievements-sheet" class="achievements-sheet" >
+  {{!-- <div style="display:flex;flex-direction:row-reverse;flex-wrap:nowrap;padding-bottom:10px;">
+
+  </div> --}}
   {{#if isDM}}
   <div class="achievements-sheet__dm-controls">
-    <button type="button" class="btn btn--primary" name="add-achievement">
+    <button type="button" class="btn btn--primary" name="add-achievement" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.add-achievement"}}">
       <i class="fas fa-plus"></i>
       {{localize "fvtt-player-achievements.forms.achievements-sheet.add-achievement"}}
     </button>
-    <button type="button" class="btn btn--primary" name="export-achievements" title="Export achievement data to clipboard">
+    <button type="button" class="btn btn--primary" name="export-achievements" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.export-achievements"}}">
       <i class="fas fa-download"></i>
       {{localize "fvtt-player-achievements.forms.achievements-sheet.export"}}
     </button>
-    <button type="button" class="btn btn--primary" name="import-achievements" title="Overwrite current achievements with export data from clipboard">
+    <button type="button" class="btn btn--primary" name="import-achievements" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.import-achievements"}}">
       <i class="fas fa-upload"></i>
       {{localize "fvtt-player-achievements.forms.achievements-sheet.import"}}
+    </button>
+    <div style="flex-grow:1"></div>
+    <button type="button" class="btn btn--primary" style="max-width:50px" name="feedback" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.feedback"}}">
+      <i class="fas fa-comment"></i>
+    </button>
+    <button type="button" class="btn btn--primary" style="max-width:50px" name="bugreport" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.bugreport"}}">
+      <i class="fas fa-bug"></i>
     </button>
   </div>
   {{else}}
