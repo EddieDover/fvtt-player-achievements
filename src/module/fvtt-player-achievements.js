@@ -240,16 +240,18 @@ Hooks.on("renderSceneControls", () => {
   const controls = $(".main-controls.app.control-tools.flexcol");
 
   if (controls && !button) {
-    const button = $(`<li class="control-tool"
-            id="AchievementButton"
-            data-tool="AchievementSheet"
-            aria-label="Show Achievement Sheet"
-            role="button"
-            data-tooltip="Achievement Sheet">
-            <i class="fas fa-trophy"></i>
-        </li>`);
-    button.click(async () => await toggleAchievementScreen());
-    controls.append(button);
+    const newli = document.createElement("li");
+    newli.classList.add("control-tool");
+    newli.id = "AchievementButton";
+    newli.dataset.tool = "AchievementSheet";
+    newli.setAttribute("aria-label", "Show Achievement Sheet");
+    newli.setAttribute("role", "button");
+    newli.dataset.tooltip = "Achievement Sheet";
+    newli.innerHTML = `<i class="fas fa-trophy"></i>`;
+    newli.addEventListener("click", async () => {
+      await toggleAchievementScreen();
+    });
+    controls.append(newli);
   }
 });
 
