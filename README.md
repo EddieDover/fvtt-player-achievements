@@ -25,6 +25,13 @@ This module provides GMs with a way to award players with achievements.
   - Sort Achievement View by owned player.
   - Filter Achievement View by name.
 
+
+## Known Conflicts
+| Plugin | id | Conflict |
+| --- | --- | --- |
+| Argon - Combat Hud | enhancedcombathud | Opens the Achievement Window after selecting target. |
+
+
 ## Screenshots
 
 ### Achievements Icon
