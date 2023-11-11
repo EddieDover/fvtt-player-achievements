@@ -63,6 +63,13 @@
         "clear": "Clara",
         "add-achievement":"Agregar logro",
         "update-achievement":"Actualizar el logro"
+      },
+      "achievements-export": {
+        "export-message": "Por favor, copia los siguientes datos en un lugar seguro, en caso de que necesites restaurarlos más tarde."
+      },
+      "achievements-import": {
+        "import-message": "Pega los datos que deseas importar en el cuadro de abajo.",
+        "button": "Importar Datos de Logros"
       }
     },
     "messages": {

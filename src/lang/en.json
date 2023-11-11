@@ -63,6 +63,13 @@
         "clear": "Clear",
         "add-achievement": "Add Achievement",
         "update-achievement": "Update Achievement"
+      },
+      "achievements-export": {
+        "export-message": "Please copy the following data to a safe place, in case you need to restore it later."
+      },
+      "achievements-import": {
+        "import-message": "Paste the data you wish to import into the box below.",
+        "button": "Import Achievement Data"
       }
     },
     "messages": {
@@ -74,7 +81,7 @@
       "id-no-spaces": "ID cannot contain spaces.",
       "invalid-achievement-format": "Invalid achievement format.",
       "missing-fields": "Please fill out all fields.",
-      "no-clipboard-data": "No data found in clipboard.",
+      "no-clipboard-data": "No data found to import.",
       "no-achievements-in-clipboard": "No achievements found in the clipboard.",
       "import-achievements": {
         "title": "Import Achievements",

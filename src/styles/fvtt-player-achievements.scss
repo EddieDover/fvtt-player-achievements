@@ -33,6 +33,32 @@
   color:red;
 }
 
+.fpa-nowrap {
+  white-space: nowrap;
+}
+
+.fpa-import-container {
+  display:flex;
+  flex-direction:column;
+  flex-wrap:nowrap;
+
+  .fpa-import-data {
+    width:100%;
+    height:100%;
+  }
+}
+
+.fpa-export-container {
+  display:flex;
+  flex-direction:column;
+  flex-wrap:nowrap;
+
+  .fpa-export-data {
+    width:100%;
+    height:100%;
+  }
+}
+
 .achievement-message {
   h2 {
     text-align:center;
