@@ -1,3 +1,9 @@
+## 1.0.3 (2023-11-11)
+
+#### New Features
+
+*  Added dialogs for achievement import/export for better browser compatibility. ([fd1a1a1c]('https://github.com/EddieDover/fvtt-player-achievements'/commit/fd1a1a1caf9af3ff49f4810bb8d7b5ebfc47f55a))
+
 ## 1.0.2 (2023-11-04)
 
 #### Chores

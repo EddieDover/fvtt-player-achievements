@@ -1,10 +1,7 @@
 <form autocomplete="off" name="achievements-sheet" class="achievements-sheet" >
-  {{!-- <div style="display:flex;flex-direction:row-reverse;flex-wrap:nowrap;padding-bottom:10px;">
-
-  </div> --}}
   {{#if isDM}}
   <div class="achievements-sheet__dm-controls">
-    <button type="button" class="btn btn--primary" name="add-achievement" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.add-achievement"}}">
+    <button type="button" class="btn btn--primary fpa-nowrap" name="add-achievement" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.add-achievement"}}">
       <i class="fas fa-plus"></i>
       {{localize "fvtt-player-achievements.forms.achievements-sheet.add-achievement"}}
     </button>
