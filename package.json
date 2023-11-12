@@ -34,7 +34,7 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
     "postinstall": "husky install",
-    "changelog2": "generate-changelog -u 'https://github.com/EddieDover/fvtt-player-achievements'"
+    "changelog2": "generate-changelog -u https://github.com/EddieDover/fvtt-player-achievements"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.1",

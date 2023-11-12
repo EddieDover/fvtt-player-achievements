@@ -2,24 +2,24 @@
 
 #### New Features
 
-*  Added dialogs for achievement import/export for better browser compatibility. ([fd1a1a1c]('https://github.com/EddieDover/fvtt-player-achievements'/commit/fd1a1a1caf9af3ff49f4810bb8d7b5ebfc47f55a))
+*  Added dialogs for achievement import/export for better browser compatibility. ([fd1a1a1c](https://github.com/EddieDover/fvtt-player-achievements/commit/fd1a1a1caf9af3ff49f4810bb8d7b5ebfc47f55a))
 
 ## 1.0.2 (2023-11-04)
 
 #### Chores
 
-*  Added conflict note with enchancedcombathud ([ff2f69c3]('https://github.com/EddieDover/fvtt-player-achievements'/commit/ff2f69c3a190cdc84f05b63f0a7994d2a4df984f))
-*  improved localization ([48c1f174]('https://github.com/EddieDover/fvtt-player-achievements'/commit/48c1f174da980448b25eaf08953c30297e4cc130))
+*  Added conflict note with enchancedcombathud ([ff2f69c3](https://github.com/EddieDover/fvtt-player-achievements/commit/ff2f69c3a190cdc84f05b63f0a7994d2a4df984f))
+*  improved localization ([48c1f174](https://github.com/EddieDover/fvtt-player-achievements/commit/48c1f174da980448b25eaf08953c30297e4cc130))
 
 #### New Features
 
-*  Added bug report & feedback buttons to achievements window ([7abe91ce]('https://github.com/EddieDover/fvtt-player-achievements'/commit/7abe91ce238eac5e948ff42e764940fd36e1b174))
+*  Added bug report & feedback buttons to achievements window ([7abe91ce](https://github.com/EddieDover/fvtt-player-achievements/commit/7abe91ce238eac5e948ff42e764940fd36e1b174))
 
 ## 1.0.1 (2023-10-25)
 
 #### Bug Fixes
 
-*  corrected message display on achievement creation ([a03b3f68]('https://github.com/EddieDover/fvtt-player-achievements'/commit/a03b3f68ef57d84d5f096bffba48c2c979214039))
+*  corrected message display on achievement creation ([a03b3f68](https://github.com/EddieDover/fvtt-player-achievements/commit/a03b3f68ef57d84d5f096bffba48c2c979214039))
 
 ## 1.0.0 (2023-10-23)
 
