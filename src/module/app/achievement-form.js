@@ -167,59 +167,6 @@ export class AchievementForm extends FormApplication {
 
   async onImportAchievements(event) {
     event.preventDefault();
-
-    // const destructiveyesno = await Dialog.confirm({
-    //   title: localize("fvtt-player-achievements.messages.import-achievements.title"),
-    //   content: localize("fvtt-player-achievements.messages.import-achievements.content"),
-    //   yes: () => {
-    //     return true;
-    //   },
-    //   no: () => {
-    //     return false;
-    //   },
-    // });
-
-    // if (!destructiveyesno) {
-    //   return;
-    // }
-
-    // const clipboardText = await navigator.clipboard.readText();
-    // if (!clipboardText) {
-    //   ui.notifications.error(localize("fvtt-player-achievements.messages.no-clipboard-data"));
-    //   return;
-    // }
-    // const importedAchievements = JSON.parse(clipboardText);
-    // if (importedAchievements.length === 0) {
-    //   ui.notifications.error(localize("fvtt-player-achievements.messages.no-achievements-in-clipboard"));
-    //   return;
-    // }
-
-    // for (const ach of importedAchievements) {
-    //   if (ach.id === undefined || ach.title === undefined || ach.description === undefined) {
-    //     ui.notifications.error(localize("fvtt-player-achievements.message.invalid-achievement-format"));
-    //     return;
-    //   }
-    // }
-
-    // const newAwardedAchievements = {};
-
-    // for (const ach of importedAchievements) {
-    //   if (ach.completedActors?.length) {
-    //     newAwardedAchievements[ach.id] = ach.completedActors;
-    //     delete ach.completedActors;
-    //   }
-    // }
-
-    // ui.notifications.info(
-    //   `${importedAchievements.length} ${localize("fvtt-player-achievements.messages.achievements-imported")}`,
-    // );
-    // // this.achievements = importedAchievements;
-    // game.settings.set("fvtt-player-achievements", "customAchievements", importedAchievements);
-    // game.settings.set("fvtt-player-achievements", "awardedAchievements", newAwardedAchievements);
-    // this.achievements = await this.filterAchievements();
-    // setTimeout(() => {
-    //   this.render(true);
-    // }, 100);
     this.toggleImportDialog();
   }
 
@@ -232,9 +179,7 @@ export class AchievementForm extends FormApplication {
 
   onExportAchievements(event) {
     event.preventDefault();
-    // const achievementJSON = JSON.stringify(game.settings.get("fvtt-player-achievements", "customAchievements"));
-    // navigator.clipboard.writeText(achievementJSON);
-    // ui.notifications.info(localize("fvtt-player-achievements.messages.achievements-exported"));
+
     if (achievementsExportDialog?.rendered) {
       achievementsExportDialog.close();
     } else {
