@@ -58,6 +58,7 @@
         "title-hiddenoption": "Show title if cloaked?",
         "description": "Description",
         "image": "Image",
+        "cloaked-image": "Cloaked Image (Optional)",
         "select": "Select",
         "sound": "Sound",
         "preview": "Preview",

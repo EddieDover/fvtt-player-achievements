@@ -166,6 +166,9 @@ async function getAchivements(overrides) {
     if (achievement.image == "") {
       achievement.image = "modules/fvtt-player-achievements/images/default.webp";
     }
+    if (achievement.cloakedImage == "") {
+      achievement.cloakedImage = "modules/fvtt-player-achievements/images/default.webp";
+    }
   });
 
   const hideUnearnedAchievements = game.settings.get("fvtt-player-achievements", "hideUnearnedAchievements");
@@ -184,7 +187,7 @@ async function getAchivements(overrides) {
             achievement.title = "HIDDEN";
           }
           achievement.description = "HIDDEN";
-          achievement.image = "modules/fvtt-player-achievements/images/default.webp";
+          achievement.image = achievement.cloakedImage ?? "modules/fvtt-player-achievements/images/default.webp";
         }
         return achievement;
       });
