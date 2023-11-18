@@ -191,10 +191,16 @@ export class AddAchievementForm extends FormApplication {
   handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target.form);
+    console.log(formData.entries);
     // eslint-disable-next-line unicorn/no-array-reduce
     const data = [...formData.entries()].reduce((accumulator, [key, value]) => {
-      accumulator[key] = value;
-      return accumulator;
+      if (key === "achievement_title_hiddenoption") {
+        accumulator[key] = true;
+        return accumulator;
+      } else {
+        accumulator[key] = value;
+        return accumulator;
+      }
     }, {});
 
     // Verify none of the fields are blank
@@ -206,6 +212,7 @@ export class AddAchievementForm extends FormApplication {
     const achievement = {
       id: data.achievement_id,
       title: data.achievement_title,
+      showTitleCloaked: data.achievement_title_hiddenoption ? true : false,
       description: data.achievement_description,
       image: data.achievement_image,
       sound: data.achievement_sound,

@@ -180,7 +180,9 @@ async function getAchivements(overrides) {
     } else if (cloakUnearnedAchievements) {
       retachievements = retachievements.map((achievement) => {
         if (!achievement.completedActors.includes(callingCharacterId)) {
-          achievement.title = "HIDDEN";
+          if (!achievement.showTitleCloaked) {
+            achievement.title = "HIDDEN";
+          }
           achievement.description = "HIDDEN";
           achievement.image = "modules/fvtt-player-achievements/images/default.webp";
         }
