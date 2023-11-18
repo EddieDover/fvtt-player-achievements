@@ -24,6 +24,18 @@
     class="add-achievement-form__title"
     value="{{overrides.achievement.title}}"
   >
+  <div style="display:flex;flex-direction:row;flex-wrap:nowrap;flex: 1 0 auto;align-items:center;">
+    <label for="achievement_title_hiddenoption" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.title-hiddenoption"}}</label>
+    <input
+      id="achievement_title_hiddenoption"
+      type="checkbox"
+      name="achievement_title_hiddenoption"
+      class="add-achievement-form__title-hiddenoption"
+      {{#if overrides.achievement.showTitleCloaked}}
+        checked
+      {{/if}}
+    />
+  </div>
 
   <label for="achievement_description" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.description"}}</label>
   <textarea

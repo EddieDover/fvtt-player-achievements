@@ -55,6 +55,7 @@
       "add-achievement-form": {
         "id": "ID",
         "title": "Title",
+        "title-hiddenoption": "Show title if cloaked?",
         "description": "Description",
         "image": "Image",
         "select": "Select",
