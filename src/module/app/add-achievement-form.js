@@ -45,7 +45,7 @@ export class AddAchievementForm extends FormApplication {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: "add-achievement-sheet",
       classes: ["form"],
-      title: "Add Achievement",
+      title: "fvtt-player-achievements.forms.add-achievement-form.window-title",
       submitOnChange: false,
       closeOnSubmit: false,
       template: "modules/fvtt-player-achievements/templates/add-achievement-sheet.hbs",
@@ -59,6 +59,7 @@ export class AddAchievementForm extends FormApplication {
 
     if (this.overrides.mode === "edit") {
       this.updateSelectImage();
+      this.updateSelectCloakedImage();
       this.updateSelectSound();
     } else {
       this.setupDefaults();
@@ -68,9 +69,11 @@ export class AddAchievementForm extends FormApplication {
 
     $("button[type='submit']", html).click(this.handleSubmit.bind(this));
     $("button[name='clear_image']", html).click(this.handleClearImage.bind(this));
+    $("button[name='clear_cloaked_image']", html).click(this.handleClearCloakedImage.bind(this));
     $("button[name='preview_sound']", html).click(this.handlePreviewSound.bind(this));
     $("button[name='clear_sound']", html).click(this.handleClearSound.bind(this));
     $("button[name='achievement_image-button']", html).click(this.handleSelectImage.bind(this));
+    $("button[name='achievement_cloaked_image-button']", html).click(this.handleSelectCloakedImage.bind(this));
     $("button[name='achievement_sound-button']", html).click(this.handleSelectSound.bind(this));
     achievementId.on("keyup", () => this.validateFields());
   }
@@ -81,6 +84,12 @@ export class AddAchievementForm extends FormApplication {
     imageInput.value = "modules/fvtt-player-achievements/images/default.webp";
     imagePreview.style.display = "block";
     imagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
+
+    const cloakedImageInput = document.querySelector("#achievement_cloaked_image");
+    const cloakedImagePreview = document.querySelector("#achievement_cloaked_image_preview");
+    cloakedImageInput.value = "modules/fvtt-player-achievements/images/default.webp";
+    cloakedImagePreview.style.display = "block";
+    cloakedImagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
 
     const soundInput = document.querySelector("#achievement_sound");
     const soundPreview = document.querySelector("#achievement_sound_preview");
@@ -131,6 +140,14 @@ export class AddAchievementForm extends FormApplication {
     imagePreview.src = this.overrides.achievement.image;
   }
 
+  updateSelectCloakedImage() {
+    const imageInput = document.querySelector("#achievement_cloaked_image");
+    const imagePreview = document.querySelector("#achievement_cloaked_image_preview");
+    imageInput.value = this.overrides.achievement.cloakedImage ?? this.overrides.achievement.image;
+    imagePreview.style.display = "block";
+    imagePreview.src = this.overrides.achievement.cloakedImage ?? this.overrides.achievement.image;
+  }
+
   handleSelectSound(event) {
     event.preventDefault();
     // Show the foundry file picker
@@ -161,11 +178,45 @@ export class AddAchievementForm extends FormApplication {
     };
   }
 
+  handleSelectCloakedImage(event) {
+    event.preventDefault();
+    // Show the foundry file picker
+    const fp = new FilePicker();
+    fp.options.type = "image";
+    fp.render(true);
+    fp.callback = (path, _filePicker) => {
+      const imageInput = document.querySelector("#achievement_cloaked_image");
+      imageInput.value = path;
+      const imagePreview = document.querySelector("#achievement_cloaked_image_preview");
+      imagePreview.style.display = "block";
+      imagePreview.src = path;
+    };
+  }
+
   handleImageChange(event) {
     event?.preventDefault();
 
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
+    // Update the style so it's display:block instead of hidden
+    imagePreview.style.display = "block";
+    const file = imageInput.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      imagePreview.src = reader.result;
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      imagePreview.src = "";
+    }
+  }
+
+  handleCloakedImageChange(event) {
+    event?.preventDefault();
+
+    const imageInput = document.querySelector("#achievement_cloaked_image");
+    const imagePreview = document.querySelector("#achievement_cloaked_image_preview");
     // Update the style so it's display:block instead of hidden
     imagePreview.style.display = "block";
     const file = imageInput.files[0];
@@ -188,13 +239,28 @@ export class AddAchievementForm extends FormApplication {
     imagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
   }
 
+  handleClearCloakedImage(event) {
+    event.preventDefault();
+    const uncloakedImageInput = document.querySelector("#achievement_image");
+    const unlcoakedImagePreview = document.querySelector("#achievement_image_preview");
+    const imageInput = document.querySelector("#achievement_cloaked_image");
+    imageInput.value = uncloakedImageInput.value;
+    const imagePreview = document.querySelector("#achievement_cloaked_image_preview");
+    imagePreview.src = unlcoakedImagePreview.src;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target.form);
     // eslint-disable-next-line unicorn/no-array-reduce
     const data = [...formData.entries()].reduce((accumulator, [key, value]) => {
-      accumulator[key] = value;
-      return accumulator;
+      if (key === "achievement_title_hiddenoption") {
+        accumulator[key] = true;
+        return accumulator;
+      } else {
+        accumulator[key] = value;
+        return accumulator;
+      }
     }, {});
 
     // Verify none of the fields are blank
@@ -206,8 +272,10 @@ export class AddAchievementForm extends FormApplication {
     const achievement = {
       id: data.achievement_id,
       title: data.achievement_title,
+      showTitleCloaked: data.achievement_title_hiddenoption ? true : false,
       description: data.achievement_description,
       image: data.achievement_image,
+      cloakedImage: data.achievement_cloaked_image,
       sound: data.achievement_sound,
     };
 

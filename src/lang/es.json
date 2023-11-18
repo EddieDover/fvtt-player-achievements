@@ -55,14 +55,17 @@
       "add-achievement-form": {
         "id": "ID",
         "title": "Título",
+        "title-hiddenoption": "¿Mostrar título si está oculto?",
         "description": "Descripción",
         "image": "Imagen",
+        "cloaked-image": "Imagen Oculta",
         "select": "Seleccionar",
         "sound": "Sonido",
         "preview": "Previsualiza",
         "clear": "Clara",
-        "add-achievement":"Agregar logro",
-        "update-achievement":"Actualizar el logro"
+        "add-achievement":"Agregar Logro",
+        "update-achievement":"Actualizar el Logro",
+        "window-title": "Agregar/Editar Logro"
       },
       "achievements-export": {
         "export-message": "Por favor, copia los siguientes datos en un lugar seguro, en caso de que necesites restaurarlos más tarde."

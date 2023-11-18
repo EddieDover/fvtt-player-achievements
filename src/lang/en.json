@@ -55,14 +55,17 @@
       "add-achievement-form": {
         "id": "ID",
         "title": "Title",
+        "title-hiddenoption": "Show title if cloaked?",
         "description": "Description",
         "image": "Image",
+        "cloaked-image": "Cloaked Image",
         "select": "Select",
         "sound": "Sound",
         "preview": "Preview",
         "clear": "Clear",
         "add-achievement": "Add Achievement",
-        "update-achievement": "Update Achievement"
+        "update-achievement": "Update Achievement",
+        "window-title": "Add/Edit Achievement"
       },
       "achievements-export": {
         "export-message": "Please copy the following data to a safe place, in case you need to restore it later."

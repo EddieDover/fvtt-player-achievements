@@ -1,3 +1,10 @@
+## 1.0.4 (2023-11-18)
+
+#### New Features
+
+*  Achievements can now have a separate image when they are cloaked. ([9a043f34](https://github.com/EddieDover/fvtt-player-achievements/commit/9a043f349a726120c192e210fb03231185d8dcc0))
+*  You can now choose to show the title of an achievement if it is cloaked, on a per-achievement basis. ([1ed80bdb](https://github.com/EddieDover/fvtt-player-achievements/commit/1ed80bdbd1122523d4deb06501d4d1735b155e4a))
+
 ## 1.0.3 (2023-11-11)
 
 #### New Features

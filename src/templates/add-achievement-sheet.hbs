@@ -24,6 +24,18 @@
     class="add-achievement-form__title"
     value="{{overrides.achievement.title}}"
   >
+  <div style="display:flex;flex-direction:row;flex-wrap:nowrap;flex: 1 0 auto;align-items:center;">
+    <label for="achievement_title_hiddenoption" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.title-hiddenoption"}}</label>
+    <input
+      id="achievement_title_hiddenoption"
+      type="checkbox"
+      name="achievement_title_hiddenoption"
+      class="add-achievement-form__title-hiddenoption"
+      {{#if overrides.achievement.showTitleCloaked}}
+        checked
+      {{/if}}
+    />
+  </div>
 
   <label for="achievement_description" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.description"}}</label>
   <textarea
@@ -65,18 +77,48 @@
     </div>
   </div>
 
-  <label for="achievement_sound_preview" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.sound"}}</label>
-
-
-    <audio
+  <label for="achievement_cloaked_image_preview" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.cloaked-image"}}</label>
+  <div style="display:flex;flex-direction:row;flex-wrap:nowrap;margin-bottom:5px;">
+    <img
       src=""
-      name="achievement_sound_preview"
-      id="achievement_sound_preview"
-      class="add-achievement-form__sound-preview"
-      src="{{overrides.achievement.sound}}"
-    ></audio>
+      width=64
+      height=64
+      alt=""
+      name="achievement_cloaked_image_preview"
+      id="achievement_cloaked_image_preview"
+      class="add-achievement-form__cloaked_image-preview"
+      src="{{overrides.achievement.cloakedImage}}"
+    >
 
-    <input type="text" name="achievement_sound" id="achievement_sound" value="{{overrides.achievement.sound}}">
+    <input type="hidden" name="achievement_cloaked_image" id="achievement_cloaked_image" value="{{overrides.achievement.cloakedImage}}">
+    <div style="display:flex;flex-direction:row;flex-wrap:nowrap;flex: 1 0 auto;">
+      <button
+        id="achievement_cloaked_image-button"
+        type="button"
+        name="achievement_cloaked_image-button"
+        class="btn btn--primary add-achievement-form__cloaked_image"
+        style="flex: 1 1 auto;"
+      >
+        <i class="fas fa-upload"></i>
+        {{localize "fvtt-player-achievements.forms.add-achievement-form.select"}}
+      </button>
+      <button type="button" name="clear_cloaked_image" class="btn btn--primary add-achievement-form__clear-cloaked_image" style="flex: 1 1 auto;">
+        <i class="fas fa-times"></i>
+        {{localize "fvtt-player-achievements.forms.add-achievement-form.clear"}}
+      </button>
+    </div>
+  </div>
+
+  <label for="achievement_sound_preview" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.sound"}}</label>
+  <audio
+    src=""
+    name="achievement_sound_preview"
+    id="achievement_sound_preview"
+    class="add-achievement-form__sound-preview"
+    src="{{overrides.achievement.sound}}"
+  ></audio>
+
+  <input type="text" name="achievement_sound" id="achievement_sound" value="{{overrides.achievement.sound}}">
     <div style="display:flex;flex-direction:row;flex-wrap:nowrap;flex: 1 0 auto;">
       <button
         id="achievement_sound-button"
