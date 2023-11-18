@@ -45,7 +45,7 @@ export class AddAchievementForm extends FormApplication {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: "add-achievement-sheet",
       classes: ["form"],
-      title: "Add Achievement",
+      title: "fvtt-player-achievements.forms.add-achievement-form.window-title",
       submitOnChange: false,
       closeOnSubmit: false,
       template: "modules/fvtt-player-achievements/templates/add-achievement-sheet.hbs",
@@ -143,9 +143,9 @@ export class AddAchievementForm extends FormApplication {
   updateSelectCloakedImage() {
     const imageInput = document.querySelector("#achievement_cloaked_image");
     const imagePreview = document.querySelector("#achievement_cloaked_image_preview");
-    imageInput.value = this.overrides.achievement.cloakedImage;
+    imageInput.value = this.overrides.achievement.cloakedImage ?? this.overrides.achievement.image;
     imagePreview.style.display = "block";
-    imagePreview.src = this.overrides.achievement.cloakedImage;
+    imagePreview.src = this.overrides.achievement.cloakedImage ?? this.overrides.achievement.image;
   }
 
   handleSelectSound(event) {
@@ -252,7 +252,6 @@ export class AddAchievementForm extends FormApplication {
   handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target.form);
-    console.log(formData.entries);
     // eslint-disable-next-line unicorn/no-array-reduce
     const data = [...formData.entries()].reduce((accumulator, [key, value]) => {
       if (key === "achievement_title_hiddenoption") {
