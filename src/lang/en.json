@@ -57,6 +57,7 @@
         "title": "Title",
         "description": "Description",
         "image": "Image",
+        "cloaked-image": "Cloaked Image",
         "select": "Select",
         "sound": "Sound",
         "preview": "Preview",
