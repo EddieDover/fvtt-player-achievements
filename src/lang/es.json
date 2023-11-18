@@ -57,7 +57,7 @@
         "title": "Título",
         "description": "Descripción",
         "image": "Imagen",
-        "cloaked-image": "Imagen oculta",
+        "cloaked-image": "Imagen Oculta (Opcional)",
         "select": "Seleccionar",
         "sound": "Sonido",
         "preview": "Previsualiza",
