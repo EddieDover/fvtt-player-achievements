@@ -13,6 +13,8 @@ This module provides GMs with a way to award players with achievements.
   - Assign/Unassign achievements to/from players.
   - Customize sound played per achievement.
   - Can choose to cloak all unearned achievements details from players.
+  - Can choose to allow cloaked achievements to show title on a per achievement basis.
+  - Can choose an image to show when an achievement is cloaked.
   - Can choose to hide all unearned achievements from players.
   - Can show achievement earn message to all players or only receiving player.
   - Can backup achievement data to clipboard as JSON.
@@ -62,7 +64,6 @@ This module provides GMs with a way to award players with achievements.
 ### Add Achievement Screen
 
   <img src="./previews/addAchievementScreen.png" title="Foundry Achievements Button"></img>
-
 
 ## Credits
 
