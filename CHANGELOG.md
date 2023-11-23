@@ -1,3 +1,9 @@
+## 1.0.5 (2023-11-23)
+
+#### Bug Fixes
+
+*  Fixed achievement unlock image breaking if URL was used. ([adca8f24](https://github.com/EddieDover/fvtt-player-achievements/commit/adca8f24def6896a52cbf443fa42fe6ba0c14879)) - Report & Diagnosis Credit to @SoulCookie
+
 ## 1.0.4 (2023-11-18)
 
 #### New Features
