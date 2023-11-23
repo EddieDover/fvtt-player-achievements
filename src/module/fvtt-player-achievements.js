@@ -104,7 +104,7 @@ async function awardAchievement(achievementId, playerId) {
   <p>${player.name} (${playerOwner.name}) has unlocked</p>
   <hr/>
   <div class="achievement-message-container">
-    <img src=${achievement.image}/>
+    <img src=${achievement.image} />
     <p>${achievement.title}</p>
   </div>
   <p class="achievement-message-description">${achievement.description}</p>
