@@ -73,7 +73,7 @@ export const registerSettings = () => {
     "hint": "fvtt-player-achievements.settings.self-sound-volume.hint",
     "scope": "local",
     "config": true,
-    "default": 0.1,
+    "default": 0.5,
     "type": Number,
     "range": {
       "min": 0,
