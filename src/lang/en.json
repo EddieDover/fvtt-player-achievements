@@ -40,7 +40,8 @@
         "no-achievements-match-filter": "No achievements match your filter.",
         "no-achievements-added": "No achievements have been added yet.",
         "bugreport": "File a Bug Report",
-        "feedback": "Send Feedback"
+        "feedback": "Send Feedback",
+        "discord": "Discord"
       },
       "achievement-block": {
         "edit": "Edit",

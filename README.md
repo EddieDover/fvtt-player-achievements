@@ -33,6 +33,11 @@ This module provides GMs with a way to award players with achievements.
 | --- | --- | --- |
 | Argon - Combat Hud | enhancedcombathud | Opens the Achievement Window after selecting target. |
 
+# Support
+
+Feel free to file a Bug Report / Feature Request under the Issues tab of Github.
+
+Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
 
 ## Screenshots
 
