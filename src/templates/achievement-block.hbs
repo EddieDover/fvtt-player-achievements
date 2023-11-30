@@ -1,11 +1,15 @@
 <div class="achievement-block  {{#unless isDM}}{{#ifcompachi this myuuid}}achievement-block-obtained{{else}}achievement-block-unobtained{{/ifcompachi}}{{/unless}}">
   <div class="achievement-block__header">
+    {{#unless hideDetails}}
     <div class="achievement-block__image-holder">
       <img width=64 height=64 src="{{image}}" alt="{{title}}" class="achievement-block__image {{#unless isDM}}{{#ifcompachi this myuuid}}achievement-block__image-obtained{{else}}achievement-block__image-unobtained{{/ifcompachi}}{{/unless}}">
     </div>
+    {{/unless}}
     <div class="achievement-block__content">
       <h3 class="achievement-block__title">{{title}}</h3>
-      <p class="achievement-block__description">{{description}}</p>
+      {{#unless hideDetails}}
+        <p class="achievement-block__description">{{description}}</p>
+      {{/unless}}
     </div>
   </div>
   <div class="achievement-block__image-holder-buttons-container" style="">
@@ -56,6 +60,7 @@
       {{/if}}
     {{else}}
       {{#if players }}
+      {{#unless hideDetails}}
       <div class="achievement-block__image-holder-other-players-area">
         {{#ownedPlayersCount completedActors players }}
           <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned-by"}}: </p>
@@ -69,6 +74,8 @@
             {{/ownedPlayers}}
           </div>
           {{/ownedPlayersCount}}
+          </div>
+          {{/unless}}
         {{/if}}
       </div>
     {{/if}}

@@ -34,6 +34,7 @@ export class AchievementForm extends FormApplication {
     this.sortza = false;
     this.hideAwarded = false;
     this.hideUnawarded = false;
+    this.hideDetails = false;
     this.seluuid = "";
   }
 
@@ -93,6 +94,7 @@ export class AchievementForm extends FormApplication {
       achievements: achievements,
       currentFilter: this.currentFilter,
       sortza: this.sortza,
+      hideDetails: this.hideDetails,
       hideAwarded: this.hideAwarded,
       hideUnawarded: this.hideUnawarded,
       seluuid: this.seluuid,
@@ -136,6 +138,7 @@ export class AchievementForm extends FormApplication {
     $('button[class="unassign"]', html).click(this.unassignAchievement.bind(this));
     $('input[name="hide-awarded"]', html).on("change", this.onToggleHideAwarded.bind(this));
     $('input[name="hide-unawarded"]', html).on("change", this.onToggleHideUnawarded.bind(this));
+    $('input[name="hide-details"]', html).on("change", this.onToggleHideDetails.bind(this));
     $('button[name="filter-azza"]', html).click(this.onSort.bind(this));
     $('select[name="actor-filter"]', html).on("change", this.onSelectPlayer.bind(this));
     $('button[name="import-achievements"]', html).click(await this.onImportAchievements.bind(this));
@@ -216,6 +219,11 @@ export class AchievementForm extends FormApplication {
   onToggleHideUnawarded(event) {
     event.preventDefault();
     this.hideUnawarded = event.target.checked;
+  }
+
+  onToggleHideDetails(event) {
+    event.preventDefault();
+    this.hideDetails = event.target.checked;
   }
 
   async assignAchievement(event) {

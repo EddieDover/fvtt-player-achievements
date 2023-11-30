@@ -37,6 +37,7 @@
         "filter": "Filter by achievement name",
         "hide-awarded": "Hide Awarded",
         "hide-unawarded": "Hide Unawarded",
+        "hide-details": "Hide Details",
         "no-achievements-match-filter": "No achievements match your filter.",
         "no-achievements-added": "No achievements have been added yet.",
         "bugreport": "File a Bug Report",
