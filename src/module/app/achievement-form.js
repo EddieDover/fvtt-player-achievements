@@ -21,6 +21,7 @@ import { AddAchievementForm } from "./add-achievement-form";
 
 const FEEDBACK_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=feature_request.md";
 const BUGREPORT_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=bug_report.md";
+const DISCORD_URL = "https://discord.gg/XuGx7zNMKZ";
 
 let achievementsExportDialog;
 let achievementsImportDialog;
@@ -142,6 +143,7 @@ export class AchievementForm extends FormApplication {
 
     $('button[name="feedback"]', html).click(this.onFeedback.bind(this));
     $('button[name="bugreport"]', html).click(this.onBugReport.bind(this));
+    $('button[name="discord"]', html).click(this.onDiscord.bind(this));
   }
 
   async onFeedback(event) {
@@ -153,6 +155,12 @@ export class AchievementForm extends FormApplication {
   async onBugReport(event) {
     event.preventDefault();
     const newWindow = window.open(BUGREPORT_URL, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = undefined;
+  }
+
+  async onDiscord(event) {
+    event.preventDefault();
+    const newWindow = window.open(DISCORD_URL, "_blank", "noopener,noreferrer");
     if (newWindow) newWindow.opener = undefined;
   }
 

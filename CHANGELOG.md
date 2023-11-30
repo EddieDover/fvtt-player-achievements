@@ -1,3 +1,15 @@
+#### 1.0.6 (2023-11-23)
+
+##### New Features
+
+*  Added Discord button to primary window. ([c70d358c](https://github.com/EddieDover/fvtt-player-achievements/commit/c70d358cf41c2dee3c88348210cad1c394b9f2ae))
+
+## 1.0.5 (2023-11-23)
+
+#### Bug Fixes
+
+*  Fixed achievement unlock image breaking if URL was used. ([adca8f24](https://github.com/EddieDover/fvtt-player-achievements/commit/adca8f24def6896a52cbf443fa42fe6ba0c14879)) - Report & Diagnosis Credit to @SoulCookie
+
 ## 1.0.4 (2023-11-18)
 
 #### New Features
