@@ -27,42 +27,55 @@ function log(...message) {
   console.log(`${MODULE_NAME} |`, message);
 }
 
+var registeredHandlebars = false;
+
 /* Handlebars */
 
-Handlebars.registerHelper("ownedPlayers", function (playerIds, players, options) {
-  let result = "";
-  for (const player of players.filter((player) => playerIds.includes(player.uuid))) {
-    result += options.fn(player);
+function registerHandlebarHelpers() {
+  if (registeredHandlebars) {
+    return;
   }
+  registeredHandlebars = true;
+  Handlebars.registerHelper("ownedPlayers", function (playerIds, players, options) {
+    let result = "";
+    for (const player of players.filter((player) => playerIds.includes(player.uuid))) {
+      result += options.fn(player);
+    }
 
-  return result;
-});
+    return result;
+  });
 
-Handlebars.registerHelper("ownedPlayersCount", function (playerIds, players, options) {
-  return players?.filter((player) => playerIds.includes(player.uuid)).length ?? 0 > 0
-    ? options.fn(this)
-    : options.inverse(this);
-});
+  Handlebars.registerHelper("ownedPlayersCount", function (playerIds, players, options) {
+    return players?.filter((player) => playerIds.includes(player.uuid)).length ?? 0 > 0
+      ? options.fn(this)
+      : options.inverse(this);
+  });
 
-Handlebars.registerHelper("unownedPlayersCount", function (playerIds, players, options) {
-  return players?.filter((player) => !playerIds.includes(player.uuid)).length ?? 0 > 0
-    ? options.fn(this)
-    : options.inverse(this);
-});
+  Handlebars.registerHelper("unownedPlayersCount", function (playerIds, players, options) {
+    return players?.filter((player) => !playerIds.includes(player.uuid)).length ?? 0 > 0
+      ? options.fn(this)
+      : options.inverse(this);
+  });
 
-Handlebars.registerHelper("unownedPlayers", function (playerIds, players, options) {
-  let result = "";
+  Handlebars.registerHelper("unownedPlayers", function (playerIds, players, options) {
+    let result = "";
 
-  for (const player of players.filter((player) => !playerIds.includes(player.uuid))) {
-    result += options.fn(player);
-  }
+    for (const player of players.filter((player) => !playerIds.includes(player.uuid))) {
+      result += options.fn(player);
+    }
 
-  return result;
-});
+    return result;
+  });
 
-Handlebars.registerHelper("ifcompachi", function (achievement, myuuid, options) {
-  return achievement.completedActors.includes(myuuid) ? options.fn(this) : options.inverse(this);
-});
+  Handlebars.registerHelper("ifcompachi", function (achievement, myuuid, options) {
+    return achievement.completedActors.includes(myuuid) ? options.fn(this) : options.inverse(this);
+  });
+
+  Handlebars.registerHelper("iflockedachi", function (achievement_id, options) {
+    const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
+    return lockedAchievements.includes(achievement_id) ? options.fn(this) : options.inverse(this);
+  });
+}
 
 /* Functions */
 
@@ -225,17 +238,18 @@ Hooks.once("socketlib.ready", () => {
 Hooks.on("init", async () => {
   log("Initializing");
 
+  registerSettings();
+
   const achievementblock = await fetch("modules/fvtt-player-achievements/templates/achievement-block.hbs").then((r) =>
     r.text(),
   );
 
   Handlebars.registerPartial("achievement-block", achievementblock);
-
-  registerSettings();
 });
 
 Hooks.on("ready", async () => {
   log("Ready");
+  registerHandlebarHelpers();
 });
 
 Hooks.on("renderSceneNavigation", () => {});

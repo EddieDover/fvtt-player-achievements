@@ -98,6 +98,7 @@ export class AchievementForm extends FormApplication {
       hideDetails: this.hideDetails,
       hideAwarded: this.hideAwarded,
       hideUnawarded: this.hideUnawarded,
+      lockedAchievements: game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [],
       seluuid: this.seluuid,
       currentPlayers: players?.map((player) => {
         return {
@@ -133,8 +134,9 @@ export class AchievementForm extends FormApplication {
     inputElement.keyup(this.onFilterChange.bind(this));
     inputElement.ready(this.onInputLoad.bind(this));
     $('button[name="add-achievement"]', html).click(this.onAddAchievement.bind(this));
-    $('button[name="edit"]', html).click(this.onEditAchievement.bind(this));
-    $('button[name="delete"]', html).click(this.onDeleteAchievement.bind(this));
+    $(".edit-button", html).click(this.onEditAchievement.bind(this));
+    $(".delete-button", html).click(this.onDeleteAchievement.bind(this));
+    $(".toggle-lock", html).click(this.onToggleLock.bind(this));
     $('button[class="assign"]', html).click(this.assignAchievement.bind(this));
     $('button[class="unassign"]', html).click(this.unassignAchievement.bind(this));
     $('input[name="hide-awarded"]', html).on("change", this.onToggleHideAwarded.bind(this));
@@ -227,10 +229,47 @@ export class AchievementForm extends FormApplication {
     this.hideDetails = event.target.checked;
   }
 
+  lockAchievement(achievementId) {
+    const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
+    const index = lockedAchievements.indexOf(achievementId);
+    if (index === -1) {
+      lockedAchievements.push(achievementId);
+    } else {
+      lockedAchievements.splice(index, 1);
+    }
+    game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
+  }
+
+  unlockAchievement(achievementId) {
+    const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
+    const index = lockedAchievements.indexOf(achievementId);
+    if (index !== -1) {
+      lockedAchievements.splice(index, 1);
+    }
+    game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
+  }
+
+  onToggleLock(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const achievementId = event.currentTarget.dataset.achievement_id;
+    if (!achievementId) return;
+    const isLockedAchievement = game.settings
+      .get("fvtt-player-achievements", "lockedAchievements")
+      ?.includes(achievementId);
+    console.log(isLockedAchievement);
+    if (isLockedAchievement) {
+      this.unlockAchievement(achievementId);
+    } else {
+      this.lockAchievement(achievementId);
+    }
+    this.render(true);
+  }
+
   async assignAchievement(event) {
     event.preventDefault();
-    const achievementId = event.target.dataset.achievement_id;
-    const playerId = event.target.dataset.player_id;
+    const achievementId = event.currentTarget.dataset.achievement_id;
+    const playerId = event.currentTarget.dataset.player_id;
     const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
     const players = awardedAchievements[achievementId] ?? [];
     players.push(playerId);
@@ -243,8 +282,8 @@ export class AchievementForm extends FormApplication {
 
   unassignAchievement(event) {
     event.preventDefault();
-    const achievementId = event.target.dataset.achievement_id;
-    const playerId = event.target.dataset.player_id;
+    const achievementId = event.currentTarget.dataset.achievement_id;
+    const playerId = event.currentTarget.dataset.player_id;
     const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
     const players = awardedAchievements[achievementId] ?? [];
     const index = players.indexOf((p) => p === playerId);
@@ -282,7 +321,8 @@ export class AchievementForm extends FormApplication {
       return;
     }
 
-    const id = event.target.dataset.achievement_id;
+    const id = event.currentTarget.dataset.achievement_id;
+    this.unlockAchievement(id);
     const achievements = game.settings.get("fvtt-player-achievements", "customAchievements");
     const index = achievements.findIndex((a) => a.id === id);
     achievements.splice(index, 1);
@@ -301,7 +341,7 @@ export class AchievementForm extends FormApplication {
   }
 
   onEditAchievement(event) {
-    const id = event.target.dataset.achievement_id;
+    const id = event.currentTarget.dataset.achievement_id;
     const overrides = {
       onend: () => {
         setTimeout(() => {

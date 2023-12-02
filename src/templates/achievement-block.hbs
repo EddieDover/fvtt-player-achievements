@@ -6,7 +6,23 @@
     </div>
     {{/unless}}
     <div class="achievement-block__content">
-      <h3 class="achievement-block__title">{{title}}</h3>
+      <div class="achievement-block-title-row">
+        <h3 class="achievement-block__title">{{title}}</h3>
+        {{#if isDM}}
+        <button
+          class="btn btn--primary achievement-block__toggle-lock toggle-lock"
+          type="button"
+          title={{localize "fvtt-player-achievements.forms.achievement-block.toggle-lock"}}
+          data-achievement_id="{{id}}"
+        >
+         {{#iflockedachi id}}
+          <i class="fas fa-lock"></i>
+        {{else}}
+          <i class="fas fa-lock-open"></i>
+        {{/iflockedachi}}
+        </button>
+        {{/if}}
+      </div>
       {{#unless hideDetails}}
         <p class="achievement-block__description">{{description}}</p>
       {{/unless}}
@@ -14,11 +30,12 @@
   </div>
   <div class="achievement-block__image-holder-buttons-container" style="">
     {{#if isDM}}
+      {{#iflockedachi id}}
+      {{else}}
       <div class="achievement-block__image-holder-buttons">
         <button
-          class="achievement-block__image-holder-button achievement-block__image-holder-button--edit"
+          class="achievement-block__image-holder-button achievement-block__image-holder-button--edit edit-button"
           type="button"
-          name="edit"
           title={{localize "fvtt-player-achievements.forms.achievement-block.edit"}}
           data-achievement_id="{{id}}"
         >
@@ -26,9 +43,8 @@
           {{localize "fvtt-player-achievements.forms.achievement-block.edit"}}
         </button>
         <button
-          class="achievement-block__image-holder-button achievement-block__image-holder-button--delete"
+          class="achievement-block__image-holder-button achievement-block__image-holder-button--delete delete-button"
           type="button"
-          name="delete"
           title={{ localize "fvtt-player-achievements.forms.achievement-block.delete"}}
           data-achievement_id="{{id}}"
         >
@@ -36,6 +52,7 @@
           {{localize "fvtt-player-achievements.forms.achievement-block.delete"}}
         </button>
       </div>
+      {{/iflockedachi}}
       {{#if players }}
       <div class="achievement-block__image-holder-award-buttons-area">
         {{#ownedPlayersCount completedActors players }}

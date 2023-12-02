@@ -144,6 +144,34 @@
     flex-direction:column;
     flex-wrap: nowrap;
     flex: 1 1 auto;
+
+    .achievement-block-title-row {
+      display: flex;
+      flex-direction:row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      width: 100%;
+
+      .achievement-block__toggle-lock {
+        // width: 2rem;
+        // height: 2rem;
+        height: 28px;
+        margin-right: 1px;
+        margin-top: 1px;
+        background: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px var(--color-shadow-dark);
+        border: 1px solid var(--color-border-dark);
+        border-radius: 5px;
+        cursor: pointer;
+        pointer-events: all;
+        display: flex;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+      }
+    }
+
   }
 
   .achievement-block__header {
