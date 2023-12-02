@@ -246,7 +246,7 @@ Hooks.on("renderSceneControls", () => {
 
   if (controls && !button) {
     const newli = document.createElement("li");
-    newli.classList.add("control-tool");
+    newli.classList.add("scene-control");
     newli.id = "AchievementButton";
     newli.dataset.tool = "AchievementSheet";
     newli.setAttribute("aria-label", "Show Achievement Sheet");
