@@ -37,7 +37,7 @@
         "filter": "Filter by achievement name",
         "hide-awarded": "Hide Awarded",
         "hide-unawarded": "Hide Unawarded",
-        "hide-details": "Hide Details",
+        "hide-details": "Compact View",
         "no-achievements-match-filter": "No achievements match your filter.",
         "no-achievements-added": "No achievements have been added yet.",
         "bugreport": "File a Bug Report",
@@ -91,6 +91,10 @@
       "import-achievements": {
         "title": "Import Achievements",
         "content": "This will overwrite all existing achievements with data from your clipboard. Are you sure?"
+      },
+      "delete-achievement": {
+        "title": "Delete Achievement",
+        "content": "Are you sure you want to delete this achievement?"
       }
     }
   }

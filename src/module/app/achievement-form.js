@@ -18,6 +18,7 @@
 import { AchievementsExportDialog } from "./achievement-export-dialog";
 import { AchievementsImportDialog } from "./achievement-import-dialog";
 import { AddAchievementForm } from "./add-achievement-form";
+import { localize } from "../utils";
 
 const FEEDBACK_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=feature_request.md";
 const BUGREPORT_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=bug_report.md";
@@ -265,7 +266,22 @@ export class AchievementForm extends FormApplication {
     addAchievementForm.render(true);
   }
 
-  onDeleteAchievement(event) {
+  async onDeleteAchievement(event) {
+    const destructiveyesno = await Dialog.confirm({
+      title: localize("fvtt-player-achievements.messages.delete-achievement.title"),
+      content: localize("fvtt-player-achievements.messages.delete-achievement.content"),
+      yes: () => {
+        return true;
+      },
+      no: () => {
+        return false;
+      },
+    });
+
+    if (!destructiveyesno) {
+      return;
+    }
+
     const id = event.target.dataset.achievement_id;
     const achievements = game.settings.get("fvtt-player-achievements", "customAchievements");
     const index = achievements.findIndex((a) => a.id === id);
