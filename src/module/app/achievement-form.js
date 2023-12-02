@@ -257,7 +257,6 @@ export class AchievementForm extends FormApplication {
     const isLockedAchievement = game.settings
       .get("fvtt-player-achievements", "lockedAchievements")
       ?.includes(achievementId);
-    console.log(isLockedAchievement);
     if (isLockedAchievement) {
       this.unlockAchievement(achievementId);
     } else {
