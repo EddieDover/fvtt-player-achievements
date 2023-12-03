@@ -244,6 +244,19 @@
       margin:0;
     }
 
+    .pcolumn {
+      display:flex;
+      flex-flow:column nowrap;
+      width: 100%;
+      padding: 5px;
+    }
+
+    .pcolumn:nth-child(2) {
+      border-left: 1px black solid;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
     .owned,.unowned {
       display:flex;
       flex-flow: column nowrap;

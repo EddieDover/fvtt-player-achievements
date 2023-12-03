@@ -57,7 +57,7 @@
       <div class="achievement-block__image-holder-award-buttons-area">
 
         {{#ownedPlayersCount completedActors players }}
-          <div style="display:flex;flex-flow:column nowrap">
+          <div class="pcolumn">
             <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-remove"}})</span></p>
             <div class="owned">
               <button class="unassign" data-achievement_id="{{id}}" data-player_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-players"}}</button>
@@ -68,7 +68,7 @@
           </div>
           {{/ownedPlayersCount}}
         {{#unownedPlayersCount completedActors players }}
-          <div style="display:flex;flex-flow:column nowrap">
+          <div class="pcolumn">
             <p>{{localize "fvtt-player-achievements.forms.achievement-block.unowned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-award"}})</span></p>
             <div class="unowned">
                 <button class="assign" data-achievement_id="{{id}}" data-player_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-players"}}</button>
