@@ -54,7 +54,8 @@
         "click-to-award": "Click to award",
         "no-players-to-award": "No players to award.",
         "toggle-lock": "Lock",
-        "toggle-unlock": "Unlock"
+        "toggle-unlock": "Unlock",
+        "all-players": "All Players"
       },
       "add-achievement-form": {
         "id": "ID",

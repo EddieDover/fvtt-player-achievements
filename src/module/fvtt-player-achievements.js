@@ -17,7 +17,7 @@
 
 import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
-import { deepCopy } from "./utils.js";
+import { deepCopy, hydrateAwardedAchievements } from "./utils.js";
 
 let currentAchievementScreen;
 let achievement_socket;
@@ -68,6 +68,9 @@ function registerHandlebarHelpers() {
   });
 
   Handlebars.registerHelper("ifcompachi", function (achievement, myuuid, options) {
+    // return game.settings.get("fvtt-player-achievements", "awardedAchievements")[achievement.id]?.includes(myuuid)
+    //   ? options.fn(this)
+    //   : options.inverse(this);
     return achievement.completedActors.includes(myuuid) ? options.fn(this) : options.inverse(this);
   });
 
@@ -106,7 +109,7 @@ async function awardAchievement(achievementId, playerId) {
 
   const playerOwner =
     game.users
-      .filter((user) => user.active)
+      //.filter((user) => user.active)
       .filter((user) => user.character)
       .find((user) => user.character.uuid === playerId) ?? undefined;
   if (!playerOwner) return;
@@ -215,15 +218,6 @@ async function getAchivements(overrides) {
   return retachievements;
 }
 
-function hydrateAwardedAchievements(awardedAchievements) {
-  const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements") ?? [];
-  const hydratedAchievements = customAchievements.map((achievement) => {
-    achievement.completedActors = awardedAchievements[achievement.id] ?? [];
-    return achievement;
-  });
-  return hydratedAchievements;
-}
-
 /* Hooks */
 
 Hooks.once("socketlib.ready", () => {
@@ -250,6 +244,19 @@ Hooks.on("init", async () => {
 Hooks.on("ready", async () => {
   log("Ready");
   registerHandlebarHelpers();
+
+  // log("Cleaing achievements");
+  // const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements") ?? [];
+  // for (const achievement of customAchievements) {
+  //   achievement.completedActors = [];
+  // }
+  // console.log(customAchievements);
+  // await game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+  // await game.settings.set("fvtt-player-achievements", "awardedAchievements", {});
+
+  console.log(game.settings.get("fvtt-player-achievements", "awardedAchievements"));
+  console.log(game.settings.get("fvtt-player-achievements", "customAchievements"));
+  // log("Done Clearing");
 });
 
 Hooks.on("renderSceneNavigation", () => {});

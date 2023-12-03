@@ -236,7 +236,7 @@
   .achievement-block__image-holder-award-buttons-area {
     display:flex;
     flex-basis:content;
-    flex-direction:column;
+    flex-direction:row;
     flex-wrap:nowrap;
     justify-content: center;
 
@@ -244,58 +244,22 @@
       margin:0;
     }
 
-    .owned {
+    .owned,.unowned {
       display:flex;
-      flex-flow: row nowrap;
-      justify-content: center;
-      align-items: center;
-      margin-bottom:5px;
-      margin-top:5px;
-      border-bottom: 1px solid black;
-
-      button {
-        height: 28px;
-        background: rgba(0, 0, 0, 0.5);
-        box-shadow: 0 0 10px var(--color-shadow-dark);
-        border: 1px solid var(--color-border-dark);
-        border-radius: 5px;
-        cursor: pointer;
-        pointer-events: all;
-        display: flex;
-        color: white;
-        align-items: center;
-        justify-content: center;
-        width:fit-content;
-        margin:2px;
-      }
-    }
-
-    .unowned {
-      display:flex;
-      flex-flow: row nowrap;
-      justify-content: center;
-      align-items: center;
+      flex-flow: column nowrap;
       margin-bottom:5px;
       margin-top:5px;
 
       button {
         height: 28px;
         background: rgba(0, 0, 0, 0.5);
-        box-shadow: 0 0 10px var(--color-shadow-dark);
-        border: 1px solid var(--color-border-dark);
-        border-radius: 5px;
         cursor: pointer;
         pointer-events: all;
-        display: flex;
         color: white;
-        align-items: center;
-        justify-content: center;
-        width:fit-content;
         margin:2px;
+        overflow-x: clip;
       }
     }
-
-
   }
 
   .achievement-block__title {
