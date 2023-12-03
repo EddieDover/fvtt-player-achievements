@@ -52,7 +52,9 @@
         "unowned": "Sin propietario",
         "click-to-remove": "Haga clic para eliminar",
         "click-to-award": "Haga clic para premiar",
-        "no-players-to-award": "No hay jugadores para premiar."
+        "no-players-to-award": "No hay jugadores para premiar.",
+        "toggle-lock": "Alternar bloqueo",
+        "toggle-unlock": "Alternar desbloqueo"
       },
       "add-achievement-form": {
         "id": "ID",

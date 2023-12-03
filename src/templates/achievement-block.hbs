@@ -13,7 +13,7 @@
           <button
             class="achievement-block__image-holder-button achievement-block__image-holder-button--toggle-lock toggle-lock"
             type="button"
-            title={{localize "fvtt-player-achievements.forms.achievement-block.toggle-lock"}}
+            title={{#iflockedachi id}}{{localize "fvtt-player-achievements.forms.achievement-block.toggle-unlock"}}{{else}}{{localize "fvtt-player-achievements.forms.achievement-block.toggle-lock"}}{{/iflockedachi}}
             data-achievement_id="{{id}}"
           >
           {{#iflockedachi id}}
