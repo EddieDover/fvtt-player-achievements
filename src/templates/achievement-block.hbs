@@ -7,20 +7,41 @@
     {{/unless}}
     <div class="achievement-block__content">
       <div class="achievement-block-title-row">
-        <h3 class="achievement-block__title">{{title}}</h3>
+        <p class={{#iflockedachi id}}{{#if hideDetails}}"achievement-block__title-lock"{{else}}"achievement-block__title"{{/if}}{{else}}"achievement-block__title"{{/iflockedachi}}>{{title}}</p>
         {{#if isDM}}
-        <button
-          class="btn btn--primary achievement-block__toggle-lock toggle-lock"
-          type="button"
-          title={{localize "fvtt-player-achievements.forms.achievement-block.toggle-lock"}}
-          data-achievement_id="{{id}}"
-        >
-         {{#iflockedachi id}}
-          <i class="fas fa-lock"></i>
-        {{else}}
-          <i class="fas fa-lock-open"></i>
-        {{/iflockedachi}}
-        </button>
+        <div class="achievement-block__title-buttons">
+          <button
+            class="achievement-block__image-holder-button achievement-block__image-holder-button--toggle-lock toggle-lock"
+            type="button"
+            title={{localize "fvtt-player-achievements.forms.achievement-block.toggle-lock"}}
+            data-achievement_id="{{id}}"
+          >
+          {{#iflockedachi id}}
+            <i class="fas fa-lock"></i>
+          {{else}}
+            <i class="fas fa-lock-open"></i>
+          {{/iflockedachi}}
+          </button>
+          {{#iflockedachi id}}
+          {{else}}
+          <button
+            class="achievement-block__image-holder-button achievement-block__image-holder-button--delete delete-button"
+            type="button"
+            title={{ localize "fvtt-player-achievements.forms.achievement-block.delete"}}
+            data-achievement_id="{{id}}"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <button
+            class="achievement-block__image-holder-button achievement-block__image-holder-button--edit edit-button"
+            type="button"
+            title={{localize "fvtt-player-achievements.forms.achievement-block.edit"}}
+            data-achievement_id="{{id}}"
+          >
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          {{/iflockedachi}}
+        </div>
         {{/if}}
       </div>
       {{#unless hideDetails}}
@@ -32,27 +53,6 @@
     {{#if isDM}}
       {{#iflockedachi id}}
       {{else}}
-      <div class="achievement-block__image-holder-buttons">
-        <button
-          class="achievement-block__image-holder-button achievement-block__image-holder-button--edit edit-button"
-          type="button"
-          title={{localize "fvtt-player-achievements.forms.achievement-block.edit"}}
-          data-achievement_id="{{id}}"
-        >
-          <i class="fas fa-pencil-alt"></i>
-          {{localize "fvtt-player-achievements.forms.achievement-block.edit"}}
-        </button>
-        <button
-          class="achievement-block__image-holder-button achievement-block__image-holder-button--delete delete-button"
-          type="button"
-          title={{ localize "fvtt-player-achievements.forms.achievement-block.delete"}}
-          data-achievement_id="{{id}}"
-        >
-          <i class="fas fa-trash-alt"></i>
-          {{localize "fvtt-player-achievements.forms.achievement-block.delete"}}
-        </button>
-      </div>
-      {{/iflockedachi}}
       {{#if players }}
       <div class="achievement-block__image-holder-award-buttons-area">
         {{#ownedPlayersCount completedActors players }}
@@ -73,8 +73,9 @@
         {{/unownedPlayersCount}}
       </div>
       {{else}}
-        <p>{{localize "fvtt-player-achievements.forms.achievement-block.no-players-to-award"}}</p>
+        <p style="margin-left:0.25rem">{{localize "fvtt-player-achievements.forms.achievement-block.no-players-to-award"}}</p>
       {{/if}}
+      {{/iflockedachi}}
     {{else}}
       {{#if players }}
       {{#unless hideDetails}}

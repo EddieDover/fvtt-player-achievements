@@ -297,29 +297,71 @@
 
   }
 
-  .achievement-block__image-holder-buttons {
-    display:flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
+  .achievement-block__title {
+    border-bottom: 1px solid black;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    align-content: center;
     align-items: center;
-    margin-bottom:5px;
-    margin-top:5px;
+    align-self: center;
+    font-size: 1.25em;
+  }
 
-    .achievement-block__image-holder-button {
-      height: 28px;
-      background: rgba(0, 0, 0, 0.5);
-      box-shadow: 0 0 10px var(--color-shadow-dark);
-      border: 1px solid var(--color-border-dark);
-      border-radius: 5px;
-      cursor: pointer;
-      pointer-events: all;
-      display: flex;
-      color: white;
-      align-items: center;
-      justify-content: center;
+  .achievement-block__title-lock {
+    border-bottom: none;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    font-size: 1.25em;
+  }
+
+  .achievement-block__title-buttons {
+    display:flex;
+    flex-flow:row-reverse;
+    flex-wrap:nowrap;
+  }
+
+  // .achievement-block__image-holder-buttons {
+  //   display:flex;
+  //   flex-flow: row nowrap;
+  //   justify-content: space-between;
+  //   align-items: center;
+  //   margin-bottom:5px;
+  //   margin-top:5px;
+
+  .achievement-block__image-holder-button {
+    height: 28px;
+    width: 28px;
+    margin-top: 0.25rem;
+    margin-left: 0.05rem;
+    margin-right:0.05rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 5px;
+    cursor: pointer;
+    pointer-events: all;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.75);
     }
 
   }
+
+  .achievement-block__image-holder-button:first-of-type {
+    margin-right:0.25rem;
+  }
+
+  // }
 
 
 }
