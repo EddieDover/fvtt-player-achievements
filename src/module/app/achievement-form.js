@@ -102,7 +102,7 @@ export class AchievementForm extends FormApplication {
       seluuid: this.seluuid,
       currentPlayers: players?.map((player) => {
         return {
-          name: player?.name + player?.uuid,
+          name: player?.name,
           uuid: player?.uuid,
         };
       }),
@@ -266,7 +266,6 @@ export class AchievementForm extends FormApplication {
   }
 
   async awardAchievement(achievementId, playerId) {
-    console.log("Awarding Achievement ID", achievementId, "for Player ID", playerId);
     const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
     var players = [...awardedAchievements[achievementId]] ?? [];
     players.push(playerId);
@@ -277,10 +276,8 @@ export class AchievementForm extends FormApplication {
   }
 
   unawardAchievement(achievementId, playerId) {
-    console.log("Unawarding Achievement ID", achievementId, "for Player ID", playerId);
     const awardedAchievements = { ...game.settings.get("fvtt-player-achievements", "awardedAchievements") };
     const awardedPlayers = [...awardedAchievements[achievementId]] ?? [];
-    console.log(awardedPlayers);
 
     if (Array.isArray(playerId)) {
       for (const player of playerId) {
@@ -298,25 +295,19 @@ export class AchievementForm extends FormApplication {
       }
     }
     //const index = awardedPlayers.indexOf((p) => p === playerId);
-    print(awardedPlayers);
     awardedAchievements[achievementId] = awardedPlayers;
-    print(awardedAchievements);
     game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
 
     const hydratedAchievements = hydrateAwardedAchievements(awardedAchievements);
     game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
-
-    console.log(game.settings.get("fvtt-player-achievements", "awardedAchievements"));
   }
 
   async assignAchievement(event) {
     event.preventDefault();
     const achievementId = event.currentTarget.dataset.achievement_id;
     const playerId = event.currentTarget.dataset.player_id;
-    console.log("Assigning Achievement ID", achievementId, "for Player ID", playerId);
     // get the player name for debug purposes
     const playerName = game.users.find((user) => user.character?.uuid === playerId)?.character?.name;
-    console.log(playerName);
     if (playerId === "ALL") {
       const currentUsers = game.users.filter((user) => /*user.active &&*/ !user.isGM);
       //Filter out the users who already have the achievement
@@ -332,8 +323,6 @@ export class AchievementForm extends FormApplication {
       await this.awardAchievement(achievementId, playerId);
     }
 
-    console.log(game.settings.get("fvtt-player-achievements", "awardedAchievements"));
-
     this.render(true);
   }
 
@@ -341,12 +330,8 @@ export class AchievementForm extends FormApplication {
     event.preventDefault();
     const achievementId = event.currentTarget.dataset.achievement_id;
     const playerId = event.currentTarget.dataset.player_id;
-    console.log("Unassigning Achievement ID", achievementId, "for Player ID", playerId);
     // get the player name for debug purposes
-    const playerName = game.users.find((user) => user.character?.uuid === playerId)?.character?.name;
-    console.log(playerName);
     if (playerId === "ALL") {
-      console.log("ALL DETECTED");
       // const currentUsers = game.users.filter((user) => /*user.active &&*/ !user.isGM);
       // for (const user of currentUsers) {
       //   this.unawardAchievement(achievementId, user.character?.uuid);
@@ -354,7 +339,6 @@ export class AchievementForm extends FormApplication {
       const currentUserUUIDs = game.users
         .filter((user) => /*user.active &&*/ !user.isGM)
         .map((user) => user.character?.uuid);
-      console.log(currentUserUUIDs);
       this.unawardAchievement(achievementId, currentUserUUIDs);
     } else {
       this.unawardAchievement(achievementId, playerId);

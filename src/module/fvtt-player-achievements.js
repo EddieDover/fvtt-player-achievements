@@ -244,19 +244,6 @@ Hooks.on("init", async () => {
 Hooks.on("ready", async () => {
   log("Ready");
   registerHandlebarHelpers();
-
-  // log("Cleaing achievements");
-  // const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements") ?? [];
-  // for (const achievement of customAchievements) {
-  //   achievement.completedActors = [];
-  // }
-  // console.log(customAchievements);
-  // await game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
-  // await game.settings.set("fvtt-player-achievements", "awardedAchievements", {});
-
-  console.log(game.settings.get("fvtt-player-achievements", "awardedAchievements"));
-  console.log(game.settings.get("fvtt-player-achievements", "customAchievements"));
-  // log("Done Clearing");
 });
 
 Hooks.on("renderSceneNavigation", () => {});
