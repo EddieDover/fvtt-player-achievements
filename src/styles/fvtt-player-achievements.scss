@@ -197,28 +197,50 @@
       margin:0;
     }
 
-    .owned {
+    // .owned {
+    //   display:flex;
+    //   flex-flow: row nowrap;
+    //   justify-content: center;
+    //   align-items: center;
+    //   margin-bottom:5px;
+    //   margin-top:5px;
+
+    //   button {
+    //     height: 28px;
+    //     background: rgba(0, 0, 0, 0.5);
+    //     box-shadow: 0 0 10px var(--color-shadow-dark);
+    //     border: 1px solid var(--color-border-dark);
+    //     border-radius: 5px;
+    //     cursor: pointer;
+    //     pointer-events: all;
+    //     display: flex;
+    //     color: white;
+    //     align-items: center;
+    //     justify-content: center;
+    //     width:fit-content;
+    //     margin:5px;
+    //   }
+    // }
+
+
+    .owned,.unowned {
       display:flex;
-      flex-flow: row nowrap;
-      justify-content: center;
-      align-items: center;
+      flex-flow: row wrap;
       margin-bottom:5px;
       margin-top:5px;
 
       button {
         height: 28px;
         background: rgba(0, 0, 0, 0.5);
-        box-shadow: 0 0 10px var(--color-shadow-dark);
-        border: 1px solid var(--color-border-dark);
-        border-radius: 5px;
         cursor: pointer;
         pointer-events: all;
-        display: flex;
         color: white;
-        align-items: center;
+        margin: 2px;
         justify-content: center;
+        overflow: clip;
+        text-overflow: ellipsis;
+        line-height: 24px;
         width:fit-content;
-        margin:5px;
       }
     }
   }
@@ -269,8 +291,11 @@
         cursor: pointer;
         pointer-events: all;
         color: white;
-        margin:2px;
-        overflow-x: clip;
+        margin: 2px;
+        justify-content: center;
+        overflow: clip;
+        text-overflow: ellipsis;
+        line-height: 24px;
       }
     }
   }

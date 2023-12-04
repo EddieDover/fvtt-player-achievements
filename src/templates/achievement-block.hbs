@@ -89,13 +89,9 @@
       <div class="achievement-block__image-holder-other-players-area">
         {{#ownedPlayersCount completedActors players }}
           <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned-by"}}: </p>
-          <div class="owned
-           {{#each completedActors as |actor|}}
-            owned-by-{{actor.uuid}}
-          {{/each}}
-          ">
+          <div class="owned">
             {{#ownedPlayers completedActors players}}
-              <button disabled>{{this.name}}</button>
+              <button class="playerowned" disabled>{{this.name}}</button>
             {{/ownedPlayers}}
           </div>
           {{/ownedPlayersCount}}
