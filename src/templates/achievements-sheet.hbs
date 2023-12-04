@@ -55,10 +55,14 @@
       {{/if}}
     </button>
   </div>
+  <div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;">
+    <input type="checkbox" name="hide-details" id="hide-details" class="achievements-sheet__hide-details" {{#if hideDetails}}checked{{/if}}>
+    <label for="hide-details">{{localize "fvtt-player-achievements.forms.achievements-sheet.hide-details"}}</label>
+  </div>
   {{#if achievements}}
     <div class="achievements-container">
       {{#each achievements as |achievement|}}
-          {{> achievement-block isDM=../isDM myuuid=../myuuid achievement=achievement  players=../currentPlayers }}
+          {{> achievement-block isDM=../isDM myuuid=../myuuid achievement=achievement players=../currentPlayers hideDetails=../hideDetails lockedAchievements=../lockedAchievements}}
       {{/each}}
     </div>
   {{else}}

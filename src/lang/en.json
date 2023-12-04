@@ -37,6 +37,7 @@
         "filter": "Filter by achievement name",
         "hide-awarded": "Hide Awarded",
         "hide-unawarded": "Hide Unawarded",
+        "hide-details": "Compact View",
         "no-achievements-match-filter": "No achievements match your filter.",
         "no-achievements-added": "No achievements have been added yet.",
         "bugreport": "File a Bug Report",
@@ -51,7 +52,10 @@
         "unowned": "Unowned",
         "click-to-remove": "Click to remove",
         "click-to-award": "Click to award",
-        "no-players-to-award": "No players to award."
+        "no-players-to-award": "No players to award.",
+        "toggle-lock": "Lock",
+        "toggle-unlock": "Unlock",
+        "all-players": "All Players"
       },
       "add-achievement-form": {
         "id": "ID",
@@ -90,6 +94,10 @@
       "import-achievements": {
         "title": "Import Achievements",
         "content": "This will overwrite all existing achievements with data from your clipboard. Are you sure?"
+      },
+      "delete-achievement": {
+        "title": "Delete Achievement",
+        "content": "Are you sure you want to delete this achievement?"
       }
     }
   }

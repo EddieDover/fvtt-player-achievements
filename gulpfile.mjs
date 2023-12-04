@@ -5,6 +5,8 @@
 
 import fs from "fs-extra";
 import gulp from "gulp";
+import zip from "gulp-zip";
+import rename from "gulp-rename";
 import sass from "gulp-dart-sass";
 import sourcemaps from "gulp-sourcemaps";
 import path from "node:path";
@@ -110,6 +112,23 @@ export async function clean() {
   }
 }
 
+/** ******************/
+/*      PACKAGE      */
+/** ******************/
+
+// Define a task to zip the contents of the /dist folder into a subfolder
+gulp.task("zip-dist", () => {
+  return gulp
+    .src("dist/**/*")
+    .pipe(
+      rename((path) => {
+        // Rename to put the contents inside 'subsubsub' folder
+        path.dirname = "fvtt-player-achievements/" + path.dirname;
+      }),
+    )
+    .pipe(zip("fvtt-player-achievements.zip"))
+    .pipe(gulp.dest("."));
+});
 /** ******************/
 /*       LINK       */
 /** ******************/
