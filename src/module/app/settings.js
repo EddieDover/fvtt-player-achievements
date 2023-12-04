@@ -32,6 +32,14 @@ export const registerSettings = () => {
     "type": Array,
   });
 
+  game.settings.register("fvtt-player-achievements", "lockedAchievements", {
+    "data": [],
+    "scope": "world",
+    "config": false,
+    "default": [],
+    "type": Array,
+  });
+
   game.settings.register("fvtt-player-achievements", "enablePlayerAchievements", {
     "name": "fvtt-player-achievements.settings.enable-player-achievements.name",
     "hint": "fvtt-player-achievements.settings.enable-player-achievements.hint",
@@ -73,7 +81,7 @@ export const registerSettings = () => {
     "hint": "fvtt-player-achievements.settings.self-sound-volume.hint",
     "scope": "local",
     "config": true,
-    "default": 0.1,
+    "default": 0.5,
     "type": Number,
     "range": {
       "min": 0,

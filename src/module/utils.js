@@ -22,3 +22,12 @@ export function deepCopy(object) {
 export function localize(incstr) {
   return game.i18n.localize(incstr);
 }
+
+export function hydrateAwardedAchievements(awardedAchievements) {
+  const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements") ?? [];
+  const hydratedAchievements = customAchievements.map((achievement) => {
+    achievement.completedActors = awardedAchievements[achievement.id] ?? [];
+    return achievement;
+  });
+  return hydratedAchievements;
+}

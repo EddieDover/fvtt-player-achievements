@@ -17,7 +17,7 @@
 
 import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
-import { deepCopy } from "./utils.js";
+import { deepCopy, hydrateAwardedAchievements } from "./utils.js";
 
 let currentAchievementScreen;
 let achievement_socket;
@@ -27,42 +27,58 @@ function log(...message) {
   console.log(`${MODULE_NAME} |`, message);
 }
 
+var registeredHandlebars = false;
+
 /* Handlebars */
 
-Handlebars.registerHelper("ownedPlayers", function (playerIds, players, options) {
-  let result = "";
-  for (const player of players.filter((player) => playerIds.includes(player.uuid))) {
-    result += options.fn(player);
+function registerHandlebarHelpers() {
+  if (registeredHandlebars) {
+    return;
   }
+  registeredHandlebars = true;
+  Handlebars.registerHelper("ownedPlayers", function (playerIds, players, options) {
+    let result = "";
+    for (const player of players.filter((player) => playerIds.includes(player.uuid))) {
+      result += options.fn(player);
+    }
 
-  return result;
-});
+    return result;
+  });
 
-Handlebars.registerHelper("ownedPlayersCount", function (playerIds, players, options) {
-  return players?.filter((player) => playerIds.includes(player.uuid)).length ?? 0 > 0
-    ? options.fn(this)
-    : options.inverse(this);
-});
+  Handlebars.registerHelper("ownedPlayersCount", function (playerIds, players, options) {
+    return players?.filter((player) => playerIds.includes(player.uuid)).length ?? 0 > 0
+      ? options.fn(this)
+      : options.inverse(this);
+  });
 
-Handlebars.registerHelper("unownedPlayersCount", function (playerIds, players, options) {
-  return players?.filter((player) => !playerIds.includes(player.uuid)).length ?? 0 > 0
-    ? options.fn(this)
-    : options.inverse(this);
-});
+  Handlebars.registerHelper("unownedPlayersCount", function (playerIds, players, options) {
+    return players?.filter((player) => !playerIds.includes(player.uuid)).length ?? 0 > 0
+      ? options.fn(this)
+      : options.inverse(this);
+  });
 
-Handlebars.registerHelper("unownedPlayers", function (playerIds, players, options) {
-  let result = "";
+  Handlebars.registerHelper("unownedPlayers", function (playerIds, players, options) {
+    let result = "";
 
-  for (const player of players.filter((player) => !playerIds.includes(player.uuid))) {
-    result += options.fn(player);
-  }
+    for (const player of players.filter((player) => !playerIds.includes(player.uuid))) {
+      result += options.fn(player);
+    }
 
-  return result;
-});
+    return result;
+  });
 
-Handlebars.registerHelper("ifcompachi", function (achievement, myuuid, options) {
-  return achievement.completedActors.includes(myuuid) ? options.fn(this) : options.inverse(this);
-});
+  Handlebars.registerHelper("ifcompachi", function (achievement, myuuid, options) {
+    // return game.settings.get("fvtt-player-achievements", "awardedAchievements")[achievement.id]?.includes(myuuid)
+    //   ? options.fn(this)
+    //   : options.inverse(this);
+    return achievement.completedActors.includes(myuuid) ? options.fn(this) : options.inverse(this);
+  });
+
+  Handlebars.registerHelper("iflockedachi", function (achievement_id, options) {
+    const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
+    return lockedAchievements.includes(achievement_id) ? options.fn(this) : options.inverse(this);
+  });
+}
 
 /* Functions */
 
@@ -93,7 +109,7 @@ async function awardAchievement(achievementId, playerId) {
 
   const playerOwner =
     game.users
-      .filter((user) => user.active)
+      //.filter((user) => user.active)
       .filter((user) => user.character)
       .find((user) => user.character.uuid === playerId) ?? undefined;
   if (!playerOwner) return;
@@ -202,15 +218,6 @@ async function getAchivements(overrides) {
   return retachievements;
 }
 
-function hydrateAwardedAchievements(awardedAchievements) {
-  const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements") ?? [];
-  const hydratedAchievements = customAchievements.map((achievement) => {
-    achievement.completedActors = awardedAchievements[achievement.id] ?? [];
-    return achievement;
-  });
-  return hydratedAchievements;
-}
-
 /* Hooks */
 
 Hooks.once("socketlib.ready", () => {
@@ -225,17 +232,18 @@ Hooks.once("socketlib.ready", () => {
 Hooks.on("init", async () => {
   log("Initializing");
 
+  registerSettings();
+
   const achievementblock = await fetch("modules/fvtt-player-achievements/templates/achievement-block.hbs").then((r) =>
     r.text(),
   );
 
   Handlebars.registerPartial("achievement-block", achievementblock);
-
-  registerSettings();
 });
 
 Hooks.on("ready", async () => {
   log("Ready");
+  registerHandlebarHelpers();
 });
 
 Hooks.on("renderSceneNavigation", () => {});
@@ -246,7 +254,7 @@ Hooks.on("renderSceneControls", () => {
 
   if (controls && !button) {
     const newli = document.createElement("li");
-    newli.classList.add("control-tool");
+    newli.classList.add("scene-control");
     newli.id = "AchievementButton";
     newli.dataset.tool = "AchievementSheet";
     newli.setAttribute("aria-label", "Show Achievement Sheet");
