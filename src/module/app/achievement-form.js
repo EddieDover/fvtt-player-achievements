@@ -55,7 +55,7 @@ export class AchievementForm extends FormApplication {
   }
 
   async getData(options) {
-    const currentUsers = game.users.filter((user) => /*user.active &&*/ !user.isGM);
+    const currentUsers = game.users.filter((user) => user.active && !user.isGM);
 
     const players = currentUsers.map((user) => user.character);
     if (!players) return;
@@ -308,9 +308,8 @@ export class AchievementForm extends FormApplication {
     const achievementId = event.currentTarget.dataset.achievement_id;
     const playerId = event.currentTarget.dataset.player_id;
     // get the player name for debug purposes
-    const playerName = game.users.find((user) => user.character?.uuid === playerId)?.character?.name;
     if (playerId === "ALL") {
-      const currentUsers = game.users.filter((user) => /*user.active &&*/ !user.isGM);
+      const currentUsers = game.users.filter((user) => user.active && !user.isGM);
       //Filter out the users who already have the achievement
       const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
       const players = awardedAchievements[achievementId] ?? [];
@@ -333,12 +332,8 @@ export class AchievementForm extends FormApplication {
     const playerId = event.currentTarget.dataset.player_id;
     // get the player name for debug purposes
     if (playerId === "ALL") {
-      // const currentUsers = game.users.filter((user) => /*user.active &&*/ !user.isGM);
-      // for (const user of currentUsers) {
-      //   this.unawardAchievement(achievementId, user.character?.uuid);
-      // }
       const currentUserUUIDs = game.users
-        .filter((user) => /*user.active &&*/ !user.isGM)
+        .filter((user) => user.active && !user.isGM)
         .map((user) => user.character?.uuid);
       this.unawardAchievement(achievementId, currentUserUUIDs);
     } else {
