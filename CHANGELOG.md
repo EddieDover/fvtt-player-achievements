@@ -1,3 +1,18 @@
+#### 1.1.0 (2023-12-04)
+
+##### New Features
+
+*  Added the ability to assign/unassign an achievement to all players who have/don't have it. ([1427fbc4](https://github.com/EddieDover/fvtt-player-achievements/commit/1427fbc4b1304143e3211d9bfcd70179cfbed0e3))
+*  Moved all buttons to top  and cleaned up interface. ([bf938071](https://github.com/EddieDover/fvtt-player-achievements/commit/bf9380712c43c32bdb993df8b2ab1609dda463ed))
+*  Added the ability to lock achievements from being edited/deleted. ([8a67f584](https://github.com/EddieDover/fvtt-player-achievements/commit/8a67f584cc8d4b73506098ce685c2669dfc19e79))
+*  Added confirmation when deleting achievements ([1dc41c7d](https://github.com/EddieDover/fvtt-player-achievements/commit/1dc41c7dd2c0af110d18bf55599e6988322a9a53))
+*  Achievement details can be hidden to minimize clutter while viewing the achievements list. ([87781d71](https://github.com/EddieDover/fvtt-player-achievements/commit/87781d71f907b547ab00f1003dbfd884a55b2d4e))
+
+##### Bug Fixes
+
+*  Fixed primary button class. This will fix Minimal-UI issues. ([b0a9f785](https://github.com/EddieDover/fvtt-player-achievements/commit/b0a9f7855129a492c523127aa2846e249e12c3c5))
+*  Increased the default player achievement volume from 0.1 to 0.5 ([fd12449f](https://github.com/EddieDover/fvtt-player-achievements/commit/fd12449f84e34a3870bef5c4ed0b541d1c61d311))
+
 #### 1.0.6 (2023-11-23)
 
 ##### New Features
