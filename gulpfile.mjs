@@ -117,7 +117,7 @@ export async function clean() {
 /** ******************/
 
 // Define a task to zip the contents of the /dist folder into a subfolder
-gulp.task("zip-dist", build, () => {
+gulp.task("zip-dist", () => {
   return gulp
     .src("dist/**/*")
     .pipe(
