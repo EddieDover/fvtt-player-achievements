@@ -267,7 +267,8 @@ export class AchievementForm extends FormApplication {
 
   async awardAchievement(achievementId, playerId) {
     const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
-    var players = [...awardedAchievements[achievementId]] ?? [];
+    var awardBlock = awardedAchievements[achievementId] ?? [];
+    var players = [...awardBlock];
     players.push(playerId);
     players = [...new Set(players)];
     awardedAchievements[achievementId] = players;
