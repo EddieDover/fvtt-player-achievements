@@ -1,6 +1,6 @@
 {
   "name": "fvtt-player-achievements",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Player Achievements for Foundry VTT",
   "main": "index.js",
   "author": {
@@ -20,8 +20,16 @@
       "email": "ed@eddiedover.dev"
     }
   ],
-  "type": "module",
+  "bugs": {
+    "url": "https://www.github.com/EddieDover/fvtt-player-achievements/issues",
+    "email": "ed@eddiedover.dev"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/EddieDover"
+  },
   "scripts": {
+    "package": "gulp zip-dist",
     "build": "gulp build",
     "build:watch": "gulp watch",
     "link-project": "gulp link",
@@ -48,7 +56,9 @@
     "fs-extra": "^11.1.1",
     "gulp": "^4.0.2",
     "gulp-dart-sass": "^1.1.0",
+    "gulp-rename": "^2.0.0",
     "gulp-sourcemaps": "^3.0.0",
+    "gulp-zip": "^6.0.0",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",

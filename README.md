@@ -33,11 +33,21 @@ This module provides GMs with a way to award players with achievements.
 | --- | --- | --- |
 | Argon - Combat Hud | enhancedcombathud | Opens the Achievement Window after selecting target. |
 
-# Support
+## Support
 
 Feel free to file a Bug Report / Feature Request under the Issues tab of Github.
 
 Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
+
+## How to Use
+
+### First, click the Icon on your side panel: <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"></img>
+
+<img src="./previews/achievementScreenDMInstructions.png" title="DM Instructions for main panel" />
+
+<img src="./previews/addAchievementScreenDMInstructions.png" title="DM Instructions for adding an Achievement" />
+
+<img src="./previews/achievementScreenDMInstructions2.png" title="DM Instructions for awarding achievements" />
 
 ## Screenshots
 
