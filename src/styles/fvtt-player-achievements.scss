@@ -275,8 +275,6 @@
 
     .pcolumn:nth-child(2) {
       border-left: 1px black solid;
-      margin-left: 5px;
-      margin-right: 5px;
     }
 
     .owned,.unowned {
@@ -284,6 +282,7 @@
       flex-flow: column nowrap;
       margin-bottom:5px;
       margin-top:5px;
+      align-items: center;
 
       button {
         height: 28px;
