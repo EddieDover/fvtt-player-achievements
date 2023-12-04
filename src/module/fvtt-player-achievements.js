@@ -18,6 +18,7 @@
 import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
 import { deepCopy, hydrateAwardedAchievements } from "./utils.js";
+import PA_API from "./api.js";
 
 let currentAchievementScreen;
 let achievement_socket;
@@ -78,6 +79,15 @@ function registerHandlebarHelpers() {
     const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
     return lockedAchievements.includes(achievement_id) ? options.fn(this) : options.inverse(this);
   });
+}
+
+function registerAPI() {
+  game[MODULE_NAME] = {};
+  game[MODULE_NAME].api = {
+    getAchievements: PA_API.getAchievements,
+    actorHasAchievement: PA_API.actorHasAchievement,
+  };
+  log("API Registered");
 }
 
 /* Functions */
@@ -244,6 +254,7 @@ Hooks.on("init", async () => {
 Hooks.on("ready", async () => {
   log("Ready");
   registerHandlebarHelpers();
+  registerAPI();
 });
 
 Hooks.on("renderSceneNavigation", () => {});
