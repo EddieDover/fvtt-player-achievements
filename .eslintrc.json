@@ -13,9 +13,10 @@
       // "eslint:recommended",
       "@typhonjs-fvtt/eslint-config-foundry.js/0.8.0",
       "plugin:jest/recommended",
-      "plugin:prettier/recommended"
+      "plugin:prettier/recommended",
+      "plugin:jsdoc/recommended"
     ],
-    "plugins": ["jest","unicorn","prettier"],
+    "plugins": ["jest","unicorn","prettier", "jsdoc"],
     "parserOptions": {
       "ecmaVersion": 2020,
       "extraFileExtensions": [".cjs", ".mjs"],
@@ -33,9 +34,10 @@
     //
     // Note: if you are using Typescript you must use `@typescript-eslint/no-shadow`
     "rules": {
+      "linebreak-style": ["error", "unix"],
       // "no-shadow": ["error", { "builtinGlobals": true, "hoist": "all", "allow": ["event"] }],
       // "brace-style": ["error", "1tbs"],
-      // "require-jsdoc": "off",
+      "require-jsdoc": 2
       // "quotes": ["error", "double", { "avoidEscape": true }],
       // "no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
       //"unicorn/better-regex": "error"

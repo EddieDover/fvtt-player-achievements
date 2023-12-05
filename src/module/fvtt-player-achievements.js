@@ -25,6 +25,9 @@ var registeredHandlebars = false;
 
 /* Handlebars */
 
+/**
+ * Register Handlebar Helpers
+ */
 function registerHandlebarHelpers() {
   if (registeredHandlebars) {
     return;
@@ -74,6 +77,9 @@ function registerHandlebarHelpers() {
   });
 }
 
+/**
+ * Register the API
+ */
 function registerAPI() {
   game[MODULE_NAME] = {};
   game[MODULE_NAME].api = {
@@ -85,6 +91,9 @@ function registerAPI() {
 
 /* Functions */
 
+/**
+ * Toggle the Achievement Screen
+ */
 async function toggleAchievementScreen() {
   if (currentAchievementScreen?.rendered) {
     currentAchievementScreen.close();

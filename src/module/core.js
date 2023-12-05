@@ -1,11 +1,35 @@
+/*
+ Copyright (c) 2023 Eddie Dover
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 export const MODULE_NAME = "fvtt-player-achievements";
 import { deepCopy, hydrateAwardedAchievements } from "./utils.js";
 var achievement_socket;
 
+/**
+ * Log a message to the console
+ * @param {any} message The message to log
+ */
 export function log(...message) {
   console.log(`${MODULE_NAME} |`, message);
 }
 
+/**
+ * Setup the Achievement Data Socket
+ */
 export function setupAchievementSocket() {
   achievement_socket = socketlib.registerModule("fvtt-player-achievements");
   achievement_socket.register("getAchievements", getAchivements);
@@ -15,12 +39,33 @@ export function setupAchievementSocket() {
   achievement_socket.register("awardAchievementSelf", awardAchievementSelf);
 }
 
+/**
+ * Achievement Interface
+ * @interface Achievement
+ * @property {string} id Unique ID
+ * @property {string} title Title
+ * @property {string} description Description
+ * @property {string} image Image URL
+ * @property {string} cloakedImage Cloaked Image URL
+ * @property {string} soundEffect Sound Effect URL
+ * @property {Array} completedActors Array of Actor UUIDs
+ * @property {boolean} showTitleCloaked Show Title Cloaked
+ */
+
+/**
+ * Create an Achievement
+ * @param {Achievement} achievement The achievement
+ */
 export function createAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, soundEffect }) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
   customAchievements.push({ id, title, showTitleCloaked, description, image, cloakedImage, soundEffect });
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
+/**
+ * Edit an Achievement
+ * @param {Achievement} achievement The achievement
+ */
 export function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, soundEffect }) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
   const index = customAchievements.findIndex((a) => a.id === id);
@@ -31,6 +76,11 @@ export function editAchievement({ id, title, showTitleCloaked, description, imag
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
+/**
+ * Get the array of Achievements
+ * @param {{}} overrides Overrides
+ * @returns {Array<Achievement>} The array of Achievements
+ */
 export async function getAchivements(overrides) {
   let callingUser;
   let callingCharacterId = "";
@@ -93,6 +143,11 @@ export async function getAchivements(overrides) {
   return retachievements;
 }
 
+/**
+ * Award an achievement to the actor
+ * @param {string} achievementId The achievement id
+ * @param {string} playerId The player id
+ */
 export async function awardAchievement(achievementId, playerId) {
   const achievement = game.settings
     .get("fvtt-player-achievements", "customAchievements")
@@ -133,6 +188,10 @@ export async function awardAchievement(achievementId, playerId) {
   });
 }
 
+/**
+ * Award an achievement to self
+ * @param {{ achievement: string, playerId: string }} data Achievement and Player ID
+ */
 export async function awardAchievementSelf({ achievement, playerId }) {
   let playAwardSound = false;
 
