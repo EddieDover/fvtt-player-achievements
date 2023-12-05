@@ -15,6 +15,7 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { createAchievement, editAchievement } from "../core";
 import { localize } from "../utils";
 
 export class AddAchievementForm extends FormApplication {
@@ -285,9 +286,7 @@ export class AddAchievementForm extends FormApplication {
 
     if (editing) {
       achievement.id = this.overrides.achievement.id;
-      const index = customAchievements.findIndex((a) => a.id === achievement.id);
-      customAchievements[index] = achievement;
-      game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+      editAchievement(achievement);
       ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-updated"));
     } else {
       // Verify the achievement doesn't already exist
@@ -295,8 +294,7 @@ export class AddAchievementForm extends FormApplication {
         ui.notifications.error(localize("fvtt-player-achievements.messages.duplicate-id"));
         return;
       }
-      customAchievements.push(achievement);
-      game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+      createAchievement(achievement);
       ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-added"));
     }
     const onendfunc = this.overrides?.onend;
