@@ -109,7 +109,7 @@ async function awardAchievement(achievementId, playerId) {
 
   const playerOwner =
     game.users
-      //.filter((user) => user.active)
+      .filter((user) => user.active)
       .filter((user) => user.character)
       .find((user) => user.character.uuid === playerId) ?? undefined;
   if (!playerOwner) return;
