@@ -37,7 +37,7 @@ const createReturnPayload = (errorMessage, payload) => {
  * @property {string} description The achievement description
  * @property {string} image The achievement image
  * @property {string} cloakedImage The achievement cloaked image
- * @property {string} soundEffect The achievement sound effect
+ * @property {string} sound The achievement sound effect
  */
 
 /**
@@ -144,11 +144,11 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} description The achievement description
    * @param {string} image The achievement image
    * @param {string} cloakedImage The achievement cloaked image
-   * @param {string} soundEffect The achievement sound effect
+   * @param {string} sound The achievement sound effect
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement created?
    */
-  function createAchievement(id, title, showTitleCloaked, description, image, cloakedImage, soundEffect) {
-    if (!id || !title || !description || !image || !cloakedImage || !soundEffect) {
+  function createAchievement(id, title, showTitleCloaked, description, image, cloakedImage, sound) {
+    if (!id || !title || !description || !image || !cloakedImage || !sound) {
       return createReturnPayload("Missing required field(s).", false);
     }
 
@@ -159,7 +159,7 @@ const PlayerAchievementsAPI = (function () {
       description,
       image,
       cloakedImage,
-      sound: soundEffect,
+      sound,
     };
 
     prime_createAchievement(achievement);
@@ -175,11 +175,11 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} description The achievement description
    * @param {string} image The achievement image
    * @param {string} cloakedImage The achievement cloaked image
-   * @param {string} soundEffect The achievement sound effect
+   * @param {string} sound The achievement sound effect
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement edited?
    */
-  function editAchievement(id, title, showTitleCloaked, description, image, cloakedImage, soundEffect) {
-    if (!id || !title || !description || !image || !cloakedImage || !soundEffect) {
+  function editAchievement(id, title, showTitleCloaked, description, image, cloakedImage, sound) {
+    if (!id || !title || !description || !image || !cloakedImage || !sound) {
       return createReturnPayload("Missing required field(s).", false);
     }
 
@@ -190,14 +190,14 @@ const PlayerAchievementsAPI = (function () {
       description,
       image,
       cloakedImage,
-      sound: soundEffect,
+      sound,
     };
 
     prime_editAchievement(achievement);
-    return true;
+    return createReturnPayload("", true);
   }
 
-  return createReturnPayload("", {
+  return {
     awardAchievementToCharacter,
     createAchievement,
     editAchievement,
@@ -206,7 +206,7 @@ const PlayerAchievementsAPI = (function () {
     getAchievements,
     getAchievementsByCharacter,
     removeAchievementFromCharacter,
-  });
+  };
 })();
 
 export default PlayerAchievementsAPI;

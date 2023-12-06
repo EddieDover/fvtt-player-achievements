@@ -96,7 +96,7 @@ All functions return the following object:
 
   &nbsp;&nbsp;&nbsp;&nbsp;  - `cloakedImage` (string): The achievement cloaked image
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `soundEffect` (string): The achievement sound effect
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `sound` (string): The achievement sound effect
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Was the achievement created?
@@ -121,7 +121,7 @@ All functions return the following object:
 
   &nbsp;&nbsp;&nbsp;&nbsp;  - `cloakedImage` (string): The achievement cloaked image
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `soundEffect` (string): The achievement sound effect
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `sound` (string): The achievement sound effect
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Was the achievement edited?
