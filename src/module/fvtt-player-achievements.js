@@ -18,7 +18,7 @@
 import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
 import PA_API from "./api.js";
-import { MODULE_NAME, awardAchievement, getAchivements, log, setupAchievementSocket } from "./core.js";
+import { MODULE_NAME, awardAchievementMessage, getAchivements, log, setupAchievementSocket } from "./core.js";
 
 let currentAchievementScreen;
 var registeredHandlebars = false;
@@ -33,41 +33,38 @@ function registerHandlebarHelpers() {
     return;
   }
   registeredHandlebars = true;
-  Handlebars.registerHelper("ownedPlayers", function (playerIds, players, options) {
+  Handlebars.registerHelper("ownedCharacters", function (characterIds, characters, options) {
     let result = "";
-    for (const player of players.filter((player) => playerIds.includes(player.uuid))) {
-      result += options.fn(player);
+    for (const character of characters.filter((cha) => characterIds.includes(cha.uuid))) {
+      result += options.fn(character);
     }
 
     return result;
   });
 
-  Handlebars.registerHelper("ownedPlayersCount", function (playerIds, players, options) {
-    return players?.filter((player) => playerIds.includes(player.uuid)).length ?? 0 > 0
+  Handlebars.registerHelper("ownedCharactersCount", function (characterIds, characters, options) {
+    return characters?.filter((character) => characterIds.includes(character.uuid)).length ?? 0 > 0
       ? options.fn(this)
       : options.inverse(this);
   });
 
-  Handlebars.registerHelper("unownedPlayersCount", function (playerIds, players, options) {
-    return players?.filter((player) => !playerIds.includes(player.uuid)).length ?? 0 > 0
+  Handlebars.registerHelper("unownedCharactersCount", function (characterIds, characters, options) {
+    return characters?.filter((character) => !characterIds.includes(character.uuid)).length ?? 0 > 0
       ? options.fn(this)
       : options.inverse(this);
   });
 
-  Handlebars.registerHelper("unownedPlayers", function (playerIds, players, options) {
+  Handlebars.registerHelper("unownedCharacters", function (characterIds, characters, options) {
     let result = "";
 
-    for (const player of players.filter((player) => !playerIds.includes(player.uuid))) {
-      result += options.fn(player);
+    for (const character of characters.filter((character) => !characterIds.includes(character.uuid))) {
+      result += options.fn(character);
     }
 
     return result;
   });
 
   Handlebars.registerHelper("ifcompachi", function (achievement, myuuid, options) {
-    // return game.settings.get("fvtt-player-achievements", "awardedAchievements")[achievement.id]?.includes(myuuid)
-    //   ? options.fn(this)
-    //   : options.inverse(this);
     return achievement.completedActors.includes(myuuid) ? options.fn(this) : options.inverse(this);
   });
 
@@ -100,13 +97,7 @@ async function toggleAchievementScreen() {
   } else {
     const overrides = {
       updateAchievements: async () => {
-        return await getAchivements();
-      },
-      processAward: async (achievementId, playerId) => {
-        // Hooks.call("fvtt-player-achievements.beforeAchievementBestowed", achievementId, playerId);
-        return await awardAchievement(achievementId, playerId);
-        // Hooks.call("fvtt-player-achievements.afterAchievementBestowed", achievementId, playerId);
-        // return;
+        return getAchivements();
       },
     };
     currentAchievementScreen = new AchievementForm(overrides);

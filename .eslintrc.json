@@ -45,7 +45,7 @@
 
     "overrides": [
       {
-        "files": ["./*.js", "./*.cjs", "./*.mjs"],
+        "files": ["./src/**/*.js", "./*.cjs", "./*.mjs"],
         "env": {
           "node": true
         }

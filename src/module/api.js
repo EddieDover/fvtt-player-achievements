@@ -17,20 +17,18 @@
 
 import {
   awardAchievement as prime_awardAchievement,
+  unAwardAchievement as prime_unAwardAchievement,
   createAchievement as prime_createAchievement,
   editAchievement as prime_editAchievement,
 } from "./core";
 
 /**
- * API Return Payload
- * @interface APIReturnPayload
- * @property {string} message The message
- * @property {boolean} payload The payload
+ * @namespace
  */
-
-const PA_API = (function () {
+const PlayerAchievementsAPI = (function () {
   /**
    * Returns the achievements array
+   * @memberof PlayerAchievementsAPI
    * @returns {Array} Achievements List
    */
   function getAchievements() {
@@ -39,54 +37,76 @@ const PA_API = (function () {
 
   /**
    * Does the achievement exist?
-   * @param {string} achievement_id The achievement id
+   * @memberof PlayerAchievementsAPI
+   * @param {string} achievementId The achievement id
    * @returns {boolean} Does the achievement exist?
    */
-  function doesAchievementExist(achievement_id) {
-    return getAchievements().some((a) => a.id === achievement_id);
+  function doesAchievementExist(achievementId) {
+    return getAchievements().some((a) => a.id === achievementId);
   }
 
   /**
-   * Does the actor have the achievement?
-   * @param {string} uuid The actor uuid
-   * @param {string} achievement_id The achievement id
-   * @returns {boolean} Does the actor have the achievement?
+   * Does the character have the achievement?
+   * @memberof PlayerAchievementsAPI
+   * @param {string} characterUUID The character uuid
+   * @param {string} achievementId The achievement id
+   * @returns {boolean} Does the character have the achievement?
    */
-  function doesActorHaveAchievement(uuid, achievement_id) {
-    const achievement = getAchievements().find((a) => a.id === achievement_id);
+  function doesCharacterHaveAchievement(characterUUID, achievementId) {
+    const achievement = getAchievements().find((a) => a.id === achievementId);
     if (!achievement) {
       return false;
     }
 
-    return achievement.completedActors.includes(uuid);
+    return achievement.completedActors.includes(characterUUID);
   }
 
   /**
-   * Award the achievement to the actor
-   * @param {string} achievement_id The achievement id
-   * @param {string} uuid The actor uuid
-   * @returns {boolean} success
+   * Award the achievement to the character
+   * @memberof PlayerAchievementsAPI
+   * @param {string} achievementId The achievement id
+   * @param {string} characterUUID The character uuid
+   * @returns {boolean} Was the achievement awarded?
    */
-  async function awardAchievementToActor(achievement_id, uuid) {
-    const achievement = getAchievements().find((a) => a.id === achievement_id);
+  function awardAchievementToCharacter(achievementId, characterUUID) {
+    const achievement = getAchievements().find((a) => a.id === achievementId);
     if (!achievement) {
       return false;
     }
 
-    await prime_awardAchievement(achievement_id, uuid);
+    prime_awardAchievement(achievementId, characterUUID);
+    return true;
   }
 
   /**
-   * Get the achievements for the actor
-   * @param {string} uuid The actor uuid
-   * @returns {Array} achievements for the actor
+   * Remove an achievement from the character
+   * @param {string} achievementId The achievement id
+   * @param {string} characterUUID The character uuid
+   * @returns {boolean} Was the achievement removed?
    */
-  function getAchievementsByActor(uuid) {
-    return getAchievements().filter((a) => a.completedActors.includes(uuid));
+  async function removeAchievementFromCharacter(achievementId, characterUUID) {
+    const achievement = getAchievements().find((a) => a.id === achievementId);
+    if (!achievement) {
+      return false;
+    }
+
+    prime_unAwardAchievement(achievementId, characterUUID);
+    return true;
+  }
+
+  /**
+   * Get the achievements for the character
+   * @memberof PlayerAchievementsAPI
+   * @param {string} characterUUID The character uuid
+   * @returns {Array} achievements for the character
+   */
+  function getAchievementsByCharacter(characterUUID) {
+    return getAchievements().filter((a) => a.completedActors.includes(characterUUID));
   }
 
   /**
    * Create an achievement
+   * @memberof PlayerAchievementsAPI
    * @param {string} id The achievement id
    * @param {string} title The achievement title
    * @param {boolean} showTitleCloaked Show the title cloaked?
@@ -94,11 +114,11 @@ const PA_API = (function () {
    * @param {string} image The achievement image
    * @param {string} cloakedImage The achievement cloaked image
    * @param {string} soundEffect The achievement sound effect
-   * @returns {APIReturnPayload} API Return Payload
+   * @returns {boolean} Was the achievement created?
    */
   function createAchievement(id, title, showTitleCloaked, description, image, cloakedImage, soundEffect) {
     if (!id || !title || !description || !image || !cloakedImage || !soundEffect) {
-      return { message: "Missing required parameter", payload: false };
+      return false;
     }
 
     const achievement = {
@@ -112,11 +132,12 @@ const PA_API = (function () {
     };
 
     prime_createAchievement(achievement);
-    return { message: "", payload: true };
+    return true;
   }
 
   /**
    * Edit an achievement
+   * @memberof PlayerAchievementsAPI
    * @param {string} id The achievement id
    * @param {string} title The achievement title
    * @param {boolean} showTitleCloaked Show the title cloaked?
@@ -124,11 +145,11 @@ const PA_API = (function () {
    * @param {string} image The achievement image
    * @param {string} cloakedImage The achievement cloaked image
    * @param {string} soundEffect The achievement sound effect
-   * @returns {APIReturnPayload} API Return Payload
+   * @returns {boolean} Was the achievement edited?
    */
   function editAchievement(id, title, showTitleCloaked, description, image, cloakedImage, soundEffect) {
     if (!id || !title || !description || !image || !cloakedImage || !soundEffect) {
-      return { message: "", payload: false };
+      return false;
     }
 
     const achievement = {
@@ -142,18 +163,19 @@ const PA_API = (function () {
     };
 
     prime_editAchievement(achievement);
-    return { message: "", payload: true };
+    return true;
   }
 
   return {
-    awardAchievementToActor,
+    awardAchievementToCharacter,
     createAchievement,
     editAchievement,
-    doesActorHaveAchievement,
+    doesCharacterHaveAchievement,
     doesAchievementExist,
     getAchievements,
-    getAchievementsByActor,
+    getAchievementsByCharacter,
+    removeAchievementFromCharacter,
   };
 })();
 
-export default PA_API;
+export default PlayerAchievementsAPI;

@@ -36,8 +36,8 @@
   <div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;">
     <select id="actor-filter" name="actor-filter">
       <option value="" {{#if (eq seluuid "")}}selected{{/if}}>{{localize "fvtt-player-achievements.forms.achievements-sheet.all-players"}}</option>
-      {{#each currentPlayers as |player|}}
-        <option value="{{player.uuid}}" {{#if (eq ../seluuid player.uuid)}}selected{{/if}}>{{player.name}}</option>
+      {{#each currentCharacters as |character|}}
+        <option value="{{character.uuid}}" {{#if (eq ../seluuid character.uuid)}}selected{{/if}}>{{character.name}}</option>
       {{/each}}
     </select>
   <input
@@ -62,7 +62,7 @@
   {{#if achievements}}
     <div class="achievements-container">
       {{#each achievements as |achievement|}}
-          {{> achievement-block isDM=../isDM myuuid=../myuuid achievement=achievement players=../currentPlayers hideDetails=../hideDetails lockedAchievements=../lockedAchievements}}
+          {{> achievement-block isDM=../isDM myuuid=../myuuid achievement=achievement characters=../currentCharacters hideDetails=../hideDetails lockedAchievements=../lockedAchievements}}
       {{/each}}
     </div>
   {{else}}

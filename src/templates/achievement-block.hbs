@@ -53,48 +53,48 @@
     {{#if isDM}}
       {{#iflockedachi id}}
       {{else}}
-      {{#if players }}
+      {{#if characters }}
       <div class="achievement-block__image-holder-award-buttons-area">
 
-        {{#ownedPlayersCount completedActors players }}
+        {{#ownedCharactersCount completedActors characters }}
           <div class="pcolumn">
             <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-remove"}})</span></p>
             <div class="owned">
-              <button class="unassign" data-achievement_id="{{id}}" data-player_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-players"}}</button>
-              {{#ownedPlayers completedActors players}}
-                <button class="unassign" data-achievement_id="{{../id}}" title="{{this.name}}"  data-player_id="{{this.uuid}}">{{this.name}}</button>
-              {{/ownedPlayers}}
+              <button class="unassign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-players"}}</button>
+              {{#ownedCharacters completedActors characters}}
+                <button class="unassign" data-achievement_id="{{../id}}" title="{{this.name}}"  data-character_id="{{this.uuid}}">{{this.name}}</button>
+              {{/ownedCharacters}}
             </div>
           </div>
-          {{/ownedPlayersCount}}
-        {{#unownedPlayersCount completedActors players }}
+          {{/ownedCharactersCount}}
+        {{#unownedCharactersCount completedActors characters }}
           <div class="pcolumn">
             <p>{{localize "fvtt-player-achievements.forms.achievement-block.unowned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-award"}})</span></p>
             <div class="unowned">
-                <button class="assign" data-achievement_id="{{id}}" data-player_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-players"}}</button>
-              {{#unownedPlayers completedActors players}}
-                <button class="assign" data-achievement_id="{{../id}}" title="{{this.name}}" data-player_id="{{this.uuid}}">{{this.name}}</button>
-              {{/unownedPlayers}}
+                <button class="assign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-players"}}</button>
+              {{#unownedCharacters completedActors characters}}
+                <button class="assign" data-achievement_id="{{../id}}" title="{{this.name}}" data-character_id="{{this.uuid}}">{{this.name}}</button>
+              {{/unownedCharacters}}
             </div>
           </div>
-        {{/unownedPlayersCount}}
+        {{/unownedCharactersCount}}
       </div>
       {{else}}
         <p style="margin-left:0.25rem">{{localize "fvtt-player-achievements.forms.achievement-block.no-players-to-award"}}</p>
       {{/if}}
       {{/iflockedachi}}
     {{else}}
-      {{#if players }}
+      {{#if characters }}
       {{#unless hideDetails}}
       <div class="achievement-block__image-holder-other-players-area">
-        {{#ownedPlayersCount completedActors players }}
+        {{#ownedCharactersCount completedActors characters }}
           <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned-by"}}: </p>
           <div class="owned">
-            {{#ownedPlayers completedActors players}}
+            {{#ownedCharacters completedActors characters}}
               <button class="playerowned" disabled>{{this.name}}</button>
-            {{/ownedPlayers}}
+            {{/ownedCharacters}}
           </div>
-          {{/ownedPlayersCount}}
+          {{/ownedCharactersCount}}
           </div>
           {{/unless}}
         {{/if}}

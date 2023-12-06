@@ -273,7 +273,7 @@ export class AddAchievementForm extends FormApplication {
     const achievement = {
       id: data.achievement_id,
       title: data.achievement_title,
-      showTitleCloaked: data.achievement_title_hiddenoption ? true : false,
+      showTitleCloaked: !!data.achievement_title_hiddenoption,
       description: data.achievement_description,
       image: data.achievement_image,
       cloakedImage: data.achievement_cloaked_image,
