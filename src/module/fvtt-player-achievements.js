@@ -81,7 +81,13 @@ function registerAPI() {
   game[MODULE_NAME] = {};
   game[MODULE_NAME].api = {
     getAchievements: PA_API.getAchievements,
-    actorHasAchievement: PA_API.actorHasAchievement,
+    awardAchievementToCharacter: PA_API.awardAchievementToCharacter,
+    createAchievement: PA_API.createAchievement,
+    editAchievement: PA_API.editAchievement,
+    doesCharacterHaveAchievement: PA_API.doesCharacterHaveAchievement,
+    doesAchievementExist: PA_API.doesAchievementExist,
+    getAchievementsByCharacter: PA_API.getAchievementsByCharacter,
+    removeAchievementFromCharacter: PA_API.removeAchievementFromCharacter,
   };
   log("API Registered");
 }

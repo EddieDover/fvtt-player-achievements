@@ -22,6 +22,31 @@ import {
   editAchievement as prime_editAchievement,
 } from "./core";
 
+const createReturnPayload = (errorMessage, payload) => {
+  return {
+    errorMessage,
+    payload,
+  };
+};
+
+/**
+ * @typedef {object} Achievement
+ * @property {string} id The achievement id
+ * @property {string} title The achievement title
+ * @property {boolean} showTitleCloaked Show the title cloaked?
+ * @property {string} description The achievement description
+ * @property {string} image The achievement image
+ * @property {string} cloakedImage The achievement cloaked image
+ * @property {string} soundEffect The achievement sound effect
+ */
+
+/**
+ * @interface PlayerAchievementReturn
+ * @property {string} errorMessage - The error message
+ * @property {T} payload - The payload
+ * @template T
+ */
+
 /**
  * @namespace
  */
@@ -29,20 +54,23 @@ const PlayerAchievementsAPI = (function () {
   /**
    * Returns the achievements array
    * @memberof PlayerAchievementsAPI
-   * @returns {Array} Achievements List
+   * @returns { PlayerAchievementReturn<Array<Achievement>> } Achievements List
    */
   function getAchievements() {
-    return game.settings.get("fvtt-player-achievements", "customAchievements");
+    return createReturnPayload("", game.settings.get("fvtt-player-achievements", "customAchievements"));
   }
 
   /**
    * Does the achievement exist?
    * @memberof PlayerAchievementsAPI
    * @param {string} achievementId The achievement id
-   * @returns {boolean} Does the achievement exist?
+   * @returns { PlayerAchievementReturn<boolean> } Does the achievement exist?
    */
   function doesAchievementExist(achievementId) {
-    return getAchievements().some((a) => a.id === achievementId);
+    return createReturnPayload(
+      "",
+      getAchievements().some((a) => a.id === achievementId),
+    );
   }
 
   /**
@@ -50,15 +78,15 @@ const PlayerAchievementsAPI = (function () {
    * @memberof PlayerAchievementsAPI
    * @param {string} characterUUID The character uuid
    * @param {string} achievementId The achievement id
-   * @returns {boolean} Does the character have the achievement?
+   * @returns { PlayerAchievementReturn<boolean> } Does the character have the achievement?
    */
   function doesCharacterHaveAchievement(characterUUID, achievementId) {
     const achievement = getAchievements().find((a) => a.id === achievementId);
     if (!achievement) {
-      return false;
+      return createReturnPayload("Achievement does not exist.", false);
     }
 
-    return achievement.completedActors.includes(characterUUID);
+    return createReturnPayload("", achievement.completedActors.includes(characterUUID));
   }
 
   /**
@@ -66,42 +94,45 @@ const PlayerAchievementsAPI = (function () {
    * @memberof PlayerAchievementsAPI
    * @param {string} achievementId The achievement id
    * @param {string} characterUUID The character uuid
-   * @returns {boolean} Was the achievement awarded?
+   * @returns { PlayerAchievementReturn<boolean> } Was the achievement awarded?
    */
   function awardAchievementToCharacter(achievementId, characterUUID) {
     const achievement = getAchievements().find((a) => a.id === achievementId);
     if (!achievement) {
-      return false;
+      return createReturnPayload("Achievement does not exist.", false);
     }
 
     prime_awardAchievement(achievementId, characterUUID);
-    return true;
+    return createReturnPayload("", true);
   }
 
   /**
    * Remove an achievement from the character
    * @param {string} achievementId The achievement id
    * @param {string} characterUUID The character uuid
-   * @returns {boolean} Was the achievement removed?
+   * @returns { PlayerAchievementReturn<boolean> } Was the achievement removed?
    */
   async function removeAchievementFromCharacter(achievementId, characterUUID) {
     const achievement = getAchievements().find((a) => a.id === achievementId);
     if (!achievement) {
-      return false;
+      return createReturnPayload("Achievement does not exist.", false);
     }
 
     prime_unAwardAchievement(achievementId, characterUUID);
-    return true;
+    return createReturnPayload("", true);
   }
 
   /**
    * Get the achievements for the character
    * @memberof PlayerAchievementsAPI
    * @param {string} characterUUID The character uuid
-   * @returns {Array} achievements for the character
+   * @returns { PlayerAchievementReturn<Array<Achievement>> } achievements for the character
    */
   function getAchievementsByCharacter(characterUUID) {
-    return getAchievements().filter((a) => a.completedActors.includes(characterUUID));
+    return createReturnPayload(
+      "",
+      getAchievements().filter((a) => a.completedActors.includes(characterUUID)),
+    );
   }
 
   /**
@@ -114,11 +145,11 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} image The achievement image
    * @param {string} cloakedImage The achievement cloaked image
    * @param {string} soundEffect The achievement sound effect
-   * @returns {boolean} Was the achievement created?
+   * @returns { PlayerAchievementReturn<boolean> } Was the achievement created?
    */
   function createAchievement(id, title, showTitleCloaked, description, image, cloakedImage, soundEffect) {
     if (!id || !title || !description || !image || !cloakedImage || !soundEffect) {
-      return false;
+      return createReturnPayload("Missing required field(s).", false);
     }
 
     const achievement = {
@@ -132,7 +163,7 @@ const PlayerAchievementsAPI = (function () {
     };
 
     prime_createAchievement(achievement);
-    return true;
+    return createReturnPayload("", true);
   }
 
   /**
@@ -145,11 +176,11 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} image The achievement image
    * @param {string} cloakedImage The achievement cloaked image
    * @param {string} soundEffect The achievement sound effect
-   * @returns {boolean} Was the achievement edited?
+   * @returns { PlayerAchievementReturn<boolean> } Was the achievement edited?
    */
   function editAchievement(id, title, showTitleCloaked, description, image, cloakedImage, soundEffect) {
     if (!id || !title || !description || !image || !cloakedImage || !soundEffect) {
-      return false;
+      return createReturnPayload("Missing required field(s).", false);
     }
 
     const achievement = {
@@ -166,7 +197,7 @@ const PlayerAchievementsAPI = (function () {
     return true;
   }
 
-  return {
+  return createReturnPayload("", {
     awardAchievementToCharacter,
     createAchievement,
     editAchievement,
@@ -175,7 +206,7 @@ const PlayerAchievementsAPI = (function () {
     getAchievements,
     getAchievementsByCharacter,
     removeAchievementFromCharacter,
-  };
+  });
 })();
 
 export default PlayerAchievementsAPI;

@@ -8,6 +8,8 @@ This module provides GMs with a way to award players with achievements.
 [![Foundry Hub Comments](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Ffvtt-player-achievements%2Fshield%2Fcomments)](https://www.foundryvtt-hub.com/package/fvtt-player-achievements/)
 
 ## Features
+  ### Developers
+  - Provides an API documented in [API.md](./API.md)
   ### GMs
   - Create your own achievements.
   - Assign/Unassign achievements to/from players.
@@ -39,7 +41,10 @@ Feel free to file a Bug Report / Feature Request under the Issues tab of Github.
 
 Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
 
-## How to Use
+## How to Use - DMs & Players
+
+    Note: Players will see achievements that they are allowed to see based on the DMs options.
+    Players will also not see the add-achievement/export/import/award/unaward/etc buttons.
 
 ### First, click the Icon on your side panel: <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"></img>
 
@@ -48,6 +53,11 @@ Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
 <img src="./previews/addAchievementScreenDMInstructions.png" title="DM Instructions for adding an Achievement" />
 
 <img src="./previews/achievementScreenDMInstructions2.png" title="DM Instructions for awarding achievements" />
+
+
+## How to Use - Developers
+
+See [API.md](./API.md)
 
 ## Screenshots
 

@@ -1,0 +1,38 @@
+# API functions
+
+Access functions via `game["fvtt-player-achievements"].api`.
+
+All functions return the following object:
+
+  ```javascript
+  {
+    errorMessage: 'Error message',
+    payload: object
+  }
+  ```
+
+## Current API Functions:
+{{#functions}}
+
+### {{name}} - {{description}}
+
+
+{{#if params}}
+&nbsp;&nbsp;&nbsp;&nbsp; **Parameters:**
+  {{#each params}}
+
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `{{name}}` ({{ type.names.[0] }}): {{description}}
+  {{/each}}
+{{/if}}
+{{#if returns}}
+&nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
+  {{#each returns}}
+
+&nbsp;&nbsp;&nbsp;&nbsp;  - `{{stringify type.names.[0]}}`: {{description}}
+  {{/each}}
+{{/if}}
+
+<hr/>
+
+{{/functions}}
+
