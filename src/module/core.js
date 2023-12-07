@@ -16,6 +16,9 @@
  */
 
 export const MODULE_NAME = "fvtt-player-achievements";
+export const DEFAULT_IMAGE = "/modules/fvtt-player-achievements/images/default.webp";
+export const DEFAULT_SOUND = "/modules/fvtt-player-achievements/sounds/notification.ogg";
+
 import { deepCopy, hydrateAwardedAchievements } from "./utils.js";
 let achievement_socket;
 
@@ -58,7 +61,15 @@ export function setupAchievementSocket() {
  */
 export function createAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, soundEffect }) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
-  customAchievements.push({ id, title, showTitleCloaked, description, image, cloakedImage, soundEffect });
+  customAchievements.push({
+    id,
+    title,
+    showTitleCloaked,
+    description,
+    image: image ?? DEFAULT_IMAGE,
+    cloakedImage: cloakedImage ?? DEFAULT_IMAGE,
+    soundEffect: soundEffect ?? DEFAULT_SOUND,
+  });
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
@@ -74,6 +85,26 @@ export function editAchievement({ id, title, showTitleCloaked, description, imag
   }
   customAchievements[index] = { id, title, showTitleCloaked, description, image, cloakedImage, soundEffect };
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+}
+
+/**
+ * Delete an Achievement
+ * @param {string} achievementId The achievement id
+ */
+export function deleteAchievement(achievementId) {
+  const achievements = game.settings.get("fvtt-player-achievements", "customAchievements");
+  const index = achievements.findIndex((a) => a.id === achievementId);
+  achievements.splice(index, 1);
+  game.settings.set("fvtt-player-achievements", "customAchievements", achievements);
+
+  const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
+
+  for (const [aid, _character] of Object.entries(awardedAchievements)) {
+    if (aid === achievementId) {
+      delete awardedAchievements[achievementId];
+    }
+  }
+  game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
 }
 
 /**
@@ -246,4 +277,14 @@ export function unAwardAchievement(achievementId, characterIds) {
 
   const hydratedAchievements = hydrateAwardedAchievements(awardedAchievements);
   game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
+}
+
+/**
+ * Does the actor exist?
+ * @param {string} actorId
+ * @returns {boolean}
+ */
+export function doesActorExist(actorId) {
+  const nonNPCActors = game.actors.filter((actor) => actor.type !== "npc");
+  return nonNPCActors.filter((actor) => actor.uuid === actorId).length == 1;
 }

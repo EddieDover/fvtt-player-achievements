@@ -19,7 +19,7 @@ import { AchievementsExportDialog } from "./achievement-export-dialog";
 import { AchievementsImportDialog } from "./achievement-import-dialog";
 import { AddAchievementForm } from "./add-achievement-form";
 import { localize } from "../utils";
-import { awardAchievement, unAwardAchievement } from "../core";
+import { awardAchievement, deleteAchievement, unAwardAchievement } from "../core";
 
 const FEEDBACK_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=feature_request.md";
 const BUGREPORT_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=bug_report.md";
@@ -338,20 +338,7 @@ export class AchievementForm extends FormApplication {
 
     const id = event.currentTarget.dataset.achievement_id;
     this.unlockAchievement(id);
-    const achievements = game.settings.get("fvtt-player-achievements", "customAchievements");
-    const index = achievements.findIndex((a) => a.id === id);
-    achievements.splice(index, 1);
-    game.settings.set("fvtt-player-achievements", "customAchievements", achievements);
-
-    const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
-
-    for (const [achievementId, _character] of Object.entries(awardedAchievements)) {
-      if (achievementId === id) {
-        delete awardedAchievements[achievementId];
-      }
-    }
-    game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
-
+    deleteAchievement(id);
     this.render(true);
   }
 

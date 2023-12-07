@@ -20,6 +20,10 @@ import {
   unAwardAchievement as prime_unAwardAchievement,
   createAchievement as prime_createAchievement,
   editAchievement as prime_editAchievement,
+  deleteAchievement as prime_deleteAchievement,
+  DEFAULT_IMAGE,
+  DEFAULT_SOUND,
+  doesActorExist,
 } from "./core";
 
 const createReturnPayload = (errorMessage, payload) => {
@@ -47,13 +51,14 @@ const createReturnPayload = (errorMessage, payload) => {
  * @template T
  */
 
+const assureActorUUID = (id) => {
+  return id.startsWith("Actor.") ? id : `Actor.${id}`;
+};
+
 /**
  * @namespace
  */
 const PlayerAchievementsAPI = (function () {
-  const DEFAULT_SOUND = "/modules/fvtt-player-achievements/sounds/notification.ogg";
-  const DEFAULT_IMAGE = "/modules/fvtt-player-achievements/images/default.webp";
-
   /**
    * Returns the achievements array
    * @memberof PlayerAchievementsAPI
@@ -72,7 +77,7 @@ const PlayerAchievementsAPI = (function () {
   function doesAchievementExist(achievementId) {
     return createReturnPayload(
       "",
-      getAchievements().some((a) => a.id === achievementId),
+      getAchievements().payload.some((a) => a.id === achievementId),
     );
   }
 
@@ -84,12 +89,17 @@ const PlayerAchievementsAPI = (function () {
    * @returns { PlayerAchievementReturn<boolean> } Does the character have the achievement?
    */
   function doesCharacterHaveAchievement(characterUUID, achievementId) {
-    const achievement = getAchievements().find((a) => a.id === achievementId);
+    const cuuid = assureActorUUID(characterUUID);
+    const achievement = getAchievements().payload.find((a) => a.id === achievementId);
     if (!achievement) {
       return createReturnPayload("Achievement does not exist.", false);
     }
 
-    return createReturnPayload("", achievement.completedActors.includes(characterUUID));
+    if (!doesActorExist(cuuid)) {
+      return createReturnPayload("Character does not exist.", false);
+    }
+
+    return createReturnPayload("", achievement.completedActors.includes(cuuid));
   }
 
   /**
@@ -100,12 +110,21 @@ const PlayerAchievementsAPI = (function () {
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement awarded?
    */
   function awardAchievementToCharacter(achievementId, characterUUID) {
-    const achievement = getAchievements().find((a) => a.id === achievementId);
+    const cuuid = assureActorUUID(characterUUID);
+    const achievement = getAchievements().payload.find((a) => a.id === achievementId);
     if (!achievement) {
       return createReturnPayload("Achievement does not exist.", false);
     }
 
-    prime_awardAchievement(achievementId, characterUUID);
+    if (!doesActorExist(cuuid)) {
+      return createReturnPayload("Character does not exist.", false);
+    }
+
+    if (doesCharacterHaveAchievement(cuuid, achievementId).payload) {
+      return createReturnPayload("Character already has achievement.", false);
+    }
+
+    prime_awardAchievement(achievementId, cuuid);
     return createReturnPayload("", true);
   }
 
@@ -115,13 +134,22 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} characterUUID The character uuid
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement removed?
    */
-  async function removeAchievementFromCharacter(achievementId, characterUUID) {
-    const achievement = getAchievements().find((a) => a.id === achievementId);
+  function removeAchievementFromCharacter(achievementId, characterUUID) {
+    const cuuid = assureActorUUID(characterUUID);
+    const achievement = getAchievements().payload.find((a) => a.id === achievementId);
     if (!achievement) {
       return createReturnPayload("Achievement does not exist.", false);
     }
 
-    prime_unAwardAchievement(achievementId, characterUUID);
+    if (!doesActorExist(cuuid)) {
+      return createReturnPayload("Character does not exist.", false);
+    }
+
+    if (!doesCharacterHaveAchievement(cuuid, achievementId).payload) {
+      return createReturnPayload("Character does not have achievement.", false);
+    }
+
+    prime_unAwardAchievement(achievementId, cuuid);
     return createReturnPayload("", true);
   }
 
@@ -132,9 +160,10 @@ const PlayerAchievementsAPI = (function () {
    * @returns { PlayerAchievementReturn<Array<Achievement>> } achievements for the character
    */
   function getAchievementsByCharacter(characterUUID) {
+    const cuuid = assureActorUUID(characterUUID);
     return createReturnPayload(
       "",
-      getAchievements().filter((a) => a.completedActors.includes(characterUUID)),
+      getAchievements().payload.filter((a) => a.completedActors.includes(cuuid)),
     );
   }
 
@@ -163,6 +192,10 @@ const PlayerAchievementsAPI = (function () {
       return createReturnPayload("Missing required field(s).", false);
     }
 
+    if (doesAchievementExist(id).payload === true) {
+      return createReturnPayload("Achievement already exists.", false);
+    }
+
     const achievement = {
       id,
       title,
@@ -174,6 +207,24 @@ const PlayerAchievementsAPI = (function () {
     };
 
     prime_createAchievement(achievement);
+    return createReturnPayload("", true);
+  }
+
+  /**
+   * Delete an achievement
+   * @param {string} id
+   * @returns {PlayerAchievementReturn<boolean>} Was the achievement deleted?
+   */
+  function deleteAchievement(id) {
+    if (!id) {
+      return createReturnPayload("Missing required field(s).", false);
+    }
+
+    if (!doesAchievementExist(id).payload === true) {
+      return createReturnPayload("Achievement does not exist.", false);
+    }
+
+    prime_deleteAchievement(id);
     return createReturnPayload("", true);
   }
 
@@ -202,6 +253,10 @@ const PlayerAchievementsAPI = (function () {
       return createReturnPayload("Missing required field(s).", false);
     }
 
+    if (!doesAchievementExist(id).payload === true) {
+      return createReturnPayload("Achievement does not exist.", false);
+    }
+
     const achievement = {
       id,
       title,
@@ -220,6 +275,7 @@ const PlayerAchievementsAPI = (function () {
     awardAchievementToCharacter,
     createAchievement,
     editAchievement,
+    deleteAchievement,
     doesCharacterHaveAchievement,
     doesAchievementExist,
     getAchievements,

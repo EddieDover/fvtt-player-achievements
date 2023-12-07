@@ -15,7 +15,7 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { createAchievement, editAchievement } from "../core";
+import { DEFAULT_IMAGE, DEFAULT_SOUND, createAchievement, editAchievement } from "../core";
 import { localize } from "../utils";
 
 export class AddAchievementForm extends FormApplication {
@@ -82,21 +82,21 @@ export class AddAchievementForm extends FormApplication {
   setupDefaults() {
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
-    imageInput.value = "modules/fvtt-player-achievements/images/default.webp";
+    imageInput.value = DEFAULT_IMAGE;
     imagePreview.style.display = "block";
-    imagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
+    imagePreview.src = DEFAULT_IMAGE;
 
     const cloakedImageInput = document.querySelector("#achievement_cloaked_image");
     const cloakedImagePreview = document.querySelector("#achievement_cloaked_image_preview");
-    cloakedImageInput.value = "modules/fvtt-player-achievements/images/default.webp";
+    cloakedImageInput.value = DEFAULT_IMAGE;
     cloakedImagePreview.style.display = "block";
-    cloakedImagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
+    cloakedImagePreview.src = DEFAULT_IMAGE;
 
     const soundInput = document.querySelector("#achievement_sound");
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    soundInput.value = "modules/fvtt-player-achievements/sounds/notification.ogg";
+    soundInput.value = DEFAULT_SOUND;
     soundPreview.style.display = "none";
-    soundPreview.src = "modules/fvtt-player-achievements/sounds/notification.ogg";
+    soundPreview.src = DEFAULT_SOUND;
   }
 
   validateFields() {
@@ -111,7 +111,7 @@ export class AddAchievementForm extends FormApplication {
     event.preventDefault();
     const soundPreview = document.querySelector("#achievement_sound_preview");
     if (soundPreview.src === window.location.href) {
-      new Audio("/modules/fvtt-player-achievements/sounds/notification.ogg").play();
+      new Audio(DEFAULT_SOUND).play();
     } else {
       soundPreview.play();
     }
@@ -120,9 +120,9 @@ export class AddAchievementForm extends FormApplication {
   handleClearSound(event) {
     event.preventDefault();
     const soundInput = document.querySelector("#achievement_sound");
-    soundInput.value = "";
+    soundInput.value = DEFAULT_SOUND;
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    soundPreview.src = "";
+    soundPreview.src = DEFAULT_SOUND;
   }
 
   updateSelectSound() {
@@ -263,6 +263,10 @@ export class AddAchievementForm extends FormApplication {
         return accumulator;
       }
     }, {});
+
+    if (!data.achievement_sound) {
+      data.achievement_sound = DEFAULT_SOUND;
+    }
 
     // Verify none of the fields are blank
     if (Object.values(data).some((value) => !value)) {

@@ -152,3 +152,17 @@ All functions return the following object:
 <hr/>
 
 
+### deleteAchievement - Delete an achievement
+
+
+&nbsp;&nbsp;&nbsp;&nbsp; **Parameters:**
+
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `id` (string): 
+
+&nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Was the achievement deleted?
+
+<hr/>
+
+

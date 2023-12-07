@@ -84,6 +84,7 @@ function registerAPI() {
     awardAchievementToCharacter: PA_API.awardAchievementToCharacter,
     createAchievement: PA_API.createAchievement,
     editAchievement: PA_API.editAchievement,
+    deleteAchievement: PA_API.deleteAchievement,
     doesCharacterHaveAchievement: PA_API.doesCharacterHaveAchievement,
     doesAchievementExist: PA_API.doesAchievementExist,
     getAchievementsByCharacter: PA_API.getAchievementsByCharacter,
