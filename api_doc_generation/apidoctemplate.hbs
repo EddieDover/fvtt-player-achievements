@@ -21,9 +21,10 @@ All functions return the following object:
 &nbsp;&nbsp;&nbsp;&nbsp; **Parameters:**
   {{#each params}}
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `{{name}}` ({{ type.names.[0] }}): {{description}}
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `{{name}}` ({{ type.names.[0] }}){{#if optional}} [**Optional**]{{/if}}: {{description}}{{#if optional}} (Default: {{defaultvalue}}){{/if}}
   {{/each}}
 {{/if}}
+
 {{#if returns}}
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
   {{#each returns}}

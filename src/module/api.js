@@ -51,6 +51,9 @@ const createReturnPayload = (errorMessage, payload) => {
  * @namespace
  */
 const PlayerAchievementsAPI = (function () {
+  const DEFAULT_SOUND = "/modules/fvtt-player-achievements/sounds/notification.ogg";
+  const DEFAULT_IMAGE = "/modules/fvtt-player-achievements/images/default.webp";
+
   /**
    * Returns the achievements array
    * @memberof PlayerAchievementsAPI
@@ -140,14 +143,22 @@ const PlayerAchievementsAPI = (function () {
    * @memberof PlayerAchievementsAPI
    * @param {string} id The achievement id
    * @param {string} title The achievement title
-   * @param {boolean} showTitleCloaked Show the title cloaked?
    * @param {string} description The achievement description
-   * @param {string} image The achievement image
-   * @param {string} cloakedImage The achievement cloaked image
-   * @param {string} sound The achievement sound effect
+   * @param {boolean} [showTitleCloaked=false] Show the title cloaked?
+   * @param {string} [image="/modules/fvtt-player-achievements/images/default.webp"] The achievement image
+   * @param {string} [cloakedImage="/modules/fvtt-player-achievements/images/default.webp"] The achievement cloaked image
+   * @param {string} [sound="/modules/fvtt-player-achievements/sounds/notification.ogg"] The achievement sound effect
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement created?
    */
-  function createAchievement(id, title, showTitleCloaked, description, image, cloakedImage, sound) {
+  function createAchievement(
+    id,
+    title,
+    description,
+    showTitleCloaked = false,
+    image = DEFAULT_IMAGE,
+    cloakedImage = DEFAULT_IMAGE,
+    sound = DEFAULT_SOUND,
+  ) {
     if (!id || !title || !description || !image || !cloakedImage || !sound) {
       return createReturnPayload("Missing required field(s).", false);
     }
@@ -171,14 +182,22 @@ const PlayerAchievementsAPI = (function () {
    * @memberof PlayerAchievementsAPI
    * @param {string} id The achievement id
    * @param {string} title The achievement title
-   * @param {boolean} showTitleCloaked Show the title cloaked?
    * @param {string} description The achievement description
-   * @param {string} image The achievement image
-   * @param {string} cloakedImage The achievement cloaked image
-   * @param {string} sound The achievement sound effect
+   * @param {boolean} [showTitleCloaked=false] Show the title cloaked?
+   * @param {string} [image="/modules/fvtt-player-achievements/images/default.webp"] The achievement image
+   * @param {string} [cloakedImage="/modules/fvtt-player-achievements/images/default.webp"] The achievement cloaked image
+   * @param {string} [sound="/modules/fvtt-player-achievements/sounds/notification.ogg"] The achievement sound effect
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement edited?
    */
-  function editAchievement(id, title, showTitleCloaked, description, image, cloakedImage, sound) {
+  function editAchievement(
+    id,
+    title,
+    description,
+    showTitleCloaked = false,
+    image = DEFAULT_IMAGE,
+    cloakedImage = DEFAULT_IMAGE,
+    sound = DEFAULT_SOUND,
+  ) {
     if (!id || !title || !description || !image || !cloakedImage || !sound) {
       return createReturnPayload("Missing required field(s).", false);
     }
