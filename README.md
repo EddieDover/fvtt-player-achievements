@@ -10,6 +10,7 @@ This module provides GMs with a way to award players with achievements.
 ## Features
   ### Developers
   - Provides an API documented in [API.md](./API.md)
+  - Provides hooks for after achievement award/unaward.
   ### GMs
   - Create your own achievements.
   - Assign/Unassign achievements to/from players.
@@ -57,7 +58,24 @@ Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
 
 ## How to Use - Developers
 
-See [API.md](./API.md)
+### Hooks for Achievement Events
+
+The module provides two hooks, "**fvtt-player-achievements.awardAchievement**" and "**fvtt-player-achievements.unAwardAchievement**", allowing developers to integrate custom functionality after an achievement is granted or removed to/from a character.
+
+***Both hooks grant two parameters, the Achievement ID and the Character UUID, in that order.***
+
+#### Example Usage:
+
+```javascript
+// Triggered after an achievement is granted to a character
+Hooks.on("fvtt-player-achievements.awardAchievement", (achievementId, characterUUID) => {
+  console.log(`Character ${characterUUID} has gained the achievement: ${achievementId}`);
+});
+```
+
+### API
+
+An API is also provided that allows direct control of this module. See [API.md](./API.md)
 
 ## Screenshots
 
