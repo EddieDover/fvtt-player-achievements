@@ -251,6 +251,7 @@ export function awardAchievement(achievementId, characterId) {
   awardedAchievements[achievementId] = characters;
   game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
   awardAchievementMessage(achievementId, characterId);
+  Hooks.call(MODULE_NAME + ".awardAchievement", achievementId, characterId);
 }
 
 /**
@@ -277,6 +278,10 @@ export function unAwardAchievement(achievementId, characterIds) {
 
   const hydratedAchievements = hydrateAwardedAchievements(awardedAchievements);
   game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
+
+  for (const characterId of cids) {
+    Hooks.call(MODULE_NAME + ".unAwardAchievement", achievementId, characterId);
+  }
 }
 
 /**
