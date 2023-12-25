@@ -286,7 +286,7 @@ export function unAwardAchievement(achievementId, characterIds) {
 
 /**
  * Does the actor exist?
- * @param {string} actorId
+ * @param {string} actorId The actor id
  * @returns {boolean}
  */
 export function doesActorExist(actorId) {
