@@ -1,0 +1,104 @@
+{
+  "fvtt-player-achievements": {
+    "settings": {
+      "enable-player-achievements": {
+        "name": "Habilitar Conquistas de Jogadores",
+        "hint": "Habilitar Conquistas de Jogadores"
+      },
+      "play-self-sounds": {
+        "name": "Tocar Sons de Conquista",
+        "hint": "Toca um som se você receber uma conquista"
+      },
+      "self-sound-volume": {
+        "name": "Volume de Som de Conquista",
+        "hint": "O volume do som tocado quando você ganha uma conquista"
+      },
+      "hide-unearned": {
+        "name": "Esconder Conquistas não-alcançadas",
+        "hint": "Esconde todas as conquistas não-alcançadas do Jogador. (Isso tem prioridade em cima da configuração de Ocultar)"
+      },
+      "cloak-unearned": {
+        "name": "Ocultar Conquistas não-alcançadas",
+        "hint": "Jogadores podem ver que existe uma conquista, mas não sabem o que é. (Isso é sobrescrito pela configuração de Esconder)"
+      },
+      "show-only-to-awarded-user": {
+        "name": "Exibir apenas para Usuário ganhador",
+        "hint": "Exibir mensagem apenas para o usuário que ganhar a conquista."
+      }
+    },
+    "forms": {
+      "achievements-sheet": {
+        "all-players": "Todos Jogadores",
+        "add-achievement": "Adicionar Conquista",
+        "export": "Exportar",
+        "export-achievements": "Exportar dados de conquista para o clipboard",
+        "import-achievements": "Sobrescrever atuais conquistar com exportação de dados do clipboard",
+        "import": "Importar",
+        "filter": "Filtrar por nome de conquista",
+        "hide-awarded": "Esconder entregues",
+        "hide-unawarded": "Esconder não-entregues",
+        "hide-details": "Visão Compacta",
+        "no-achievements-match-filter": "Nenhuma conquista encontrada com o filtro.",
+        "no-achievements-added": "Nenhuma conquista foi adicionada ainda.",
+        "bugreport": "Enviar Report de Bug",
+        "feedback": "Enviar Feedback",
+        "discord": "Discord"
+      },
+      "achievement-block": {
+        "edit": "Editar",
+        "delete": "Deletar",
+        "owned": "Alcançada",
+        "owned-by": "Alcançada por",
+        "unowned": "não-alcançada",
+        "click-to-remove": "Click para remover",
+        "click-to-award": "Click para entregar",
+        "no-players-to-award": "Nenhum jogador para entregar.",
+        "toggle-lock": "Trancar",
+        "toggle-unlock": "Destrancar",
+        "all-players": "Todos Jogadores"
+      },
+      "add-achievement-form": {
+        "id": "ID",
+        "title": "Título",
+        "title-hiddenoption": "Mostrar título se ocultada?",
+        "description": "Descrição",
+        "image": "Imagem",
+        "cloaked-image": "Imagem Ocultada",
+        "select": "Selecionar",
+        "sound": "Som",
+        "preview": "Preview",
+        "clear": "Limpar",
+        "add-achievement": "Adicionar Conquista",
+        "update-achievement": "Atualizar Conquista",
+        "window-title": "Adicionar/Editar Conquista"
+      },
+      "achievements-export": {
+        "export-message": "Por favor copiar os seguintes dados para um local seguro, caso precise restaurar mais tarde."
+      },
+      "achievements-import": {
+        "import-message": "Trazer os dados que deseja importar para a caixa a baixo.",
+        "button": "Importar dados de Conquista"
+      }
+    },
+    "messages": {
+      "achievements-imported": "Conquistas importadas do clipboard.",
+      "achievements-exported": "Conquistas exportadas para o clipboard.",
+      "achievement-updated": "Conquista atualizada.",
+      "achievement-added": "Conquista adicionada.",
+      "duplicate-id": "Uma conquista com esse ID já existe.",
+      "id-no-spaces": "ID não pode conter espaços.",
+      "invalid-achievement-format": "Formato de conquista inválido.",
+      "missing-fields": "Por favor preencher todos os campos.",
+      "no-clipboard-data": "Nenhum dado encontrado para importar.",
+      "no-achievements-in-clipboard": "Nenhuma conquistas encontrada no clipboard.",
+      "import-achievements": {
+        "title": "Importar Conquistas",
+        "content": "Isso irá sobrescrever todas as Conquistas existentes com os dados do clipboard. Tem certeza?"
+      },
+      "delete-achievement": {
+        "title": "Deletar Conquista",
+        "content": "Tem certeza que deseja deletar essa conquista?"
+      }
+    }
+  }
+}
