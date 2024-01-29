@@ -94,7 +94,6 @@ export class AchievementsImportDialog extends Application {
     ui.notifications.info(
       `${importedAchievements.length} ${localize("fvtt-player-achievements.messages.achievements-imported")}`,
     );
-    // this.achievements = importedAchievements;
     game.settings.set("fvtt-player-achievements", "customAchievements", importedAchievements);
     game.settings.set("fvtt-player-achievements", "awardedAchievements", newAwardedAchievements);
     this.onFinished();

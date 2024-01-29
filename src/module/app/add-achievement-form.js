@@ -15,6 +15,7 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { DEFAULT_IMAGE, DEFAULT_SOUND, createAchievement, editAchievement } from "../core";
 import { localize } from "../utils";
 
 export class AddAchievementForm extends FormApplication {
@@ -81,21 +82,21 @@ export class AddAchievementForm extends FormApplication {
   setupDefaults() {
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
-    imageInput.value = "modules/fvtt-player-achievements/images/default.webp";
+    imageInput.value = DEFAULT_IMAGE;
     imagePreview.style.display = "block";
-    imagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
+    imagePreview.src = DEFAULT_IMAGE;
 
     const cloakedImageInput = document.querySelector("#achievement_cloaked_image");
     const cloakedImagePreview = document.querySelector("#achievement_cloaked_image_preview");
-    cloakedImageInput.value = "modules/fvtt-player-achievements/images/default.webp";
+    cloakedImageInput.value = DEFAULT_IMAGE;
     cloakedImagePreview.style.display = "block";
-    cloakedImagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
+    cloakedImagePreview.src = DEFAULT_IMAGE;
 
     const soundInput = document.querySelector("#achievement_sound");
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    soundInput.value = "modules/fvtt-player-achievements/sounds/notification.ogg";
+    soundInput.value = DEFAULT_SOUND;
     soundPreview.style.display = "none";
-    soundPreview.src = "modules/fvtt-player-achievements/sounds/notification.ogg";
+    soundPreview.src = DEFAULT_SOUND;
   }
 
   validateFields() {
@@ -110,7 +111,7 @@ export class AddAchievementForm extends FormApplication {
     event.preventDefault();
     const soundPreview = document.querySelector("#achievement_sound_preview");
     if (soundPreview.src === window.location.href) {
-      new Audio("/modules/fvtt-player-achievements/sounds/notification.ogg").play();
+      new Audio(DEFAULT_SOUND).play();
     } else {
       soundPreview.play();
     }
@@ -119,9 +120,9 @@ export class AddAchievementForm extends FormApplication {
   handleClearSound(event) {
     event.preventDefault();
     const soundInput = document.querySelector("#achievement_sound");
-    soundInput.value = "";
+    soundInput.value = DEFAULT_SOUND;
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    soundPreview.src = "";
+    soundPreview.src = DEFAULT_SOUND;
   }
 
   updateSelectSound() {
@@ -263,6 +264,10 @@ export class AddAchievementForm extends FormApplication {
       }
     }, {});
 
+    if (!data.achievement_sound) {
+      data.achievement_sound = DEFAULT_SOUND;
+    }
+
     // Verify none of the fields are blank
     if (Object.values(data).some((value) => !value)) {
       ui.notifications.error(localize("fvtt-player-achievements.messages.missing-fields"));
@@ -272,7 +277,7 @@ export class AddAchievementForm extends FormApplication {
     const achievement = {
       id: data.achievement_id,
       title: data.achievement_title,
-      showTitleCloaked: data.achievement_title_hiddenoption ? true : false,
+      showTitleCloaked: !!data.achievement_title_hiddenoption,
       description: data.achievement_description,
       image: data.achievement_image,
       cloakedImage: data.achievement_cloaked_image,
@@ -285,9 +290,7 @@ export class AddAchievementForm extends FormApplication {
 
     if (editing) {
       achievement.id = this.overrides.achievement.id;
-      const index = customAchievements.findIndex((a) => a.id === achievement.id);
-      customAchievements[index] = achievement;
-      game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+      editAchievement(achievement);
       ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-updated"));
     } else {
       // Verify the achievement doesn't already exist
@@ -295,8 +298,7 @@ export class AddAchievementForm extends FormApplication {
         ui.notifications.error(localize("fvtt-player-achievements.messages.duplicate-id"));
         return;
       }
-      customAchievements.push(achievement);
-      game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+      createAchievement(achievement);
       ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-added"));
     }
     const onendfunc = this.overrides?.onend;

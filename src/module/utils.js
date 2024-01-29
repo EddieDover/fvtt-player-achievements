@@ -15,14 +15,29 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+/**
+ * Perform a deep copy of an object
+ * @param {any} object Object to deep copy
+ * @returns {any} Deep copied object
+ */
 export function deepCopy(object) {
   return JSON.parse(JSON.stringify(object));
 }
 
-export function localize(incstr) {
-  return game.i18n.localize(incstr);
+/**
+ * Localize a string
+ * @param {string} key localization key
+ * @returns {string} localized string
+ */
+export function localize(key) {
+  return game.i18n.localize(key);
 }
 
+/**
+ * Hydrate achievements with awarded actors
+ * @param {Array} awardedAchievements Array of awarded achievements
+ * @returns {Array} hydratedAchievements
+ */
 export function hydrateAwardedAchievements(awardedAchievements) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements") ?? [];
   const hydratedAchievements = customAchievements.map((achievement) => {

@@ -1,6 +1,6 @@
 {
   "name": "fvtt-player-achievements",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Player Achievements for Foundry VTT",
   "main": "index.js",
   "author": {
@@ -42,7 +42,8 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
     "postinstall": "husky install",
-    "changelog2": "generate-changelog -u https://github.com/EddieDover/fvtt-player-achievements"
+    "changelog2": "generate-changelog -u https://github.com/EddieDover/fvtt-player-achievements",
+    "genapidoc": "npx jsdoc2md --helper ./api_doc_generation/apihelpers.js --template ./api_doc_generation/apidoctemplate.hbs ./src/module/api.js > ./API.md"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.1",
@@ -51,6 +52,7 @@
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-jest": "^27.4.2",
+    "eslint-plugin-jsdoc": "^46.9.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-unicorn": "^48.0.1",
     "fs-extra": "^11.1.1",
@@ -63,6 +65,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-junit": "^16.0.0",
+    "jsdoc-to-markdown": "^8.0.0",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "rollup": "^2.79.1",

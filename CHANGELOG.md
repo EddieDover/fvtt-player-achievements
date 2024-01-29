@@ -1,3 +1,11 @@
+## 1.2.0 (2024-01-29)
+
+##### New Features
+
+*  Translated into Brazilian Portuguese, credits to Daniel Norberto ([f6293dc3](https://github.com/EddieDover/fvtt-player-achievements/commit/f6293dc3c09123311797f3cfb80556c6bb48598f))
+*  Added award/unward hooks. ([7d5c7edb](https://github.com/EddieDover/fvtt-player-achievements/commit/7d5c7edbaba7d5991cbe51a08a0a9c914a593173))
+*  Added API for external access to the plugin ([adb681dc](https://github.com/EddieDover/fvtt-player-achievements/commit/adb681dcaba3fad8331372729f80a8387ec4245e))
+
 ## 1.1.0 (2023-12-04)
 
 #### New Features
