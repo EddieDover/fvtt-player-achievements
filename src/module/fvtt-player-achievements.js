@@ -18,7 +18,7 @@
 import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
 import PA_API from "./api.js";
-import { MODULE_NAME, awardAchievementMessage, getAchivements, log, setupAchievementSocket } from "./core.js";
+import { MODULE_NAME, getAchivements, log, setupAchievementSocket } from "./core.js";
 
 let currentAchievementScreen;
 var registeredHandlebars = false;
