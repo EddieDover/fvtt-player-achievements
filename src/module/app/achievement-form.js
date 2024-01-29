@@ -56,7 +56,7 @@ export class AchievementForm extends FormApplication {
   }
 
   async getData(options) {
-    const currentUsers = game.users.filter((user) => user.active && !user.isGM);
+    const currentUsers = game.users.filter((user) => user.active && user.character != undefined && !user.isGM);
 
     const characters = currentUsers.map((user) => user.character);
     if (!characters) return;
