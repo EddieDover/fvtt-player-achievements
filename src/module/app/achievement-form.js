@@ -18,7 +18,8 @@
 import { AchievementsExportDialog } from "./achievement-export-dialog";
 import { AchievementsImportDialog } from "./achievement-import-dialog";
 import { AddAchievementForm } from "./add-achievement-form";
-import { hydrateAwardedAchievements, localize } from "../utils";
+import { localize } from "../utils";
+import { awardAchievement, deleteAchievement, unAwardAchievement } from "../core";
 
 const FEEDBACK_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=feature_request.md";
 const BUGREPORT_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=bug_report.md";
@@ -57,8 +58,8 @@ export class AchievementForm extends FormApplication {
   async getData(options) {
     const currentUsers = game.users.filter((user) => user.active && user.character != undefined && !user.isGM);
 
-    const players = currentUsers.map((user) => user.character);
-    if (!players) return;
+    const characters = currentUsers.map((user) => user.character);
+    if (!characters) return;
 
     let achievements = await this.filterAchievements();
 
@@ -69,17 +70,17 @@ export class AchievementForm extends FormApplication {
         return 0;
       });
     }
-    const myUUID = game.user.character?.uuid;
+    const myCharacterUUID = game.user.character?.uuid;
 
-    if (this.hideAwarded && myUUID) {
+    if (this.hideAwarded && myCharacterUUID) {
       achievements = achievements.filter((achievement) => {
-        return !achievement.completedActors.includes(myUUID);
+        return !achievement.completedActors.includes(myCharacterUUID);
       });
     }
 
-    if (this.hideUnawarded && myUUID) {
+    if (this.hideUnawarded && myCharacterUUID) {
       achievements = achievements.filter((achievement) => {
-        return achievement.completedActors.includes(myUUID);
+        return achievement.completedActors.includes(myCharacterUUID);
       });
     }
 
@@ -100,10 +101,10 @@ export class AchievementForm extends FormApplication {
       hideUnawarded: this.hideUnawarded,
       lockedAchievements: game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [],
       seluuid: this.seluuid,
-      currentPlayers: players?.map((player) => {
+      currentCharacters: characters?.map((character) => {
         return {
-          name: player?.name,
-          uuid: player?.uuid,
+          name: character?.name,
+          uuid: character?.uuid,
         };
       }),
     });
@@ -143,7 +144,7 @@ export class AchievementForm extends FormApplication {
     $('input[name="hide-unawarded"]', html).on("change", this.onToggleHideUnawarded.bind(this));
     $('input[name="hide-details"]', html).on("change", this.onToggleHideDetails.bind(this));
     $('button[name="filter-azza"]', html).click(this.onSort.bind(this));
-    $('select[name="actor-filter"]', html).on("change", this.onSelectPlayer.bind(this));
+    $('select[name="actor-filter"]', html).on("change", this.onSelectCharacter.bind(this));
     $('button[name="import-achievements"]', html).click(await this.onImportAchievements.bind(this));
     $('button[name="export-achievements"]', html).click(this.onExportAchievements.bind(this));
 
@@ -202,7 +203,7 @@ export class AchievementForm extends FormApplication {
     }
   }
 
-  onSelectPlayer(event) {
+  onSelectCharacter(event) {
     event.preventDefault();
     this.seluuid = event.target.value;
     this.render(true);
@@ -265,62 +266,24 @@ export class AchievementForm extends FormApplication {
     this.render(true);
   }
 
-  async awardAchievement(achievementId, playerId) {
-    const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
-    var awardBlock = awardedAchievements[achievementId] ?? [];
-    var players = [...awardBlock];
-    players.push(playerId);
-    players = [...new Set(players)];
-    awardedAchievements[achievementId] = players;
-    game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
-    await this.overrides.processAward(achievementId, playerId);
-  }
-
-  unawardAchievement(achievementId, playerId) {
-    const awardedAchievements = { ...game.settings.get("fvtt-player-achievements", "awardedAchievements") };
-    const awardedPlayers = [...awardedAchievements[achievementId]] ?? [];
-
-    if (Array.isArray(playerId)) {
-      for (const player of playerId) {
-        for (const [index, awardedPlayer] of awardedPlayers.entries()) {
-          if (awardedPlayer === player) {
-            awardedPlayers.splice(index, 1);
-          }
-        }
-      }
-    } else {
-      for (const [index, player] of awardedPlayers.entries()) {
-        if (player === playerId) {
-          awardedPlayers.splice(index, 1);
-        }
-      }
-    }
-    //const index = awardedPlayers.indexOf((p) => p === playerId);
-    awardedAchievements[achievementId] = awardedPlayers;
-    game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
-
-    const hydratedAchievements = hydrateAwardedAchievements(awardedAchievements);
-    game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
-  }
-
   async assignAchievement(event) {
     event.preventDefault();
     const achievementId = event.currentTarget.dataset.achievement_id;
-    const playerId = event.currentTarget.dataset.player_id;
+    const characterId = event.currentTarget.dataset.character_id;
     // get the player name for debug purposes
-    if (playerId === "ALL") {
+    if (characterId === "ALL") {
       const currentUsers = game.users.filter((user) => user.active && !user.isGM);
       //Filter out the users who already have the achievement
       const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
-      const players = awardedAchievements[achievementId] ?? [];
+      const characters = awardedAchievements[achievementId] ?? [];
       const filteredUsers = currentUsers.filter((user) => {
-        return !players.includes(user.character?.uuid);
+        return !characters.includes(user.character?.uuid);
       });
       for (const user of filteredUsers) {
-        await this.awardAchievement(achievementId, user.character?.uuid);
+        awardAchievement(achievementId, user.character?.uuid);
       }
     } else {
-      await this.awardAchievement(achievementId, playerId);
+      awardAchievement(achievementId, characterId);
     }
 
     this.render(true);
@@ -329,15 +292,15 @@ export class AchievementForm extends FormApplication {
   unassignAchievement(event) {
     event.preventDefault();
     const achievementId = event.currentTarget.dataset.achievement_id;
-    const playerId = event.currentTarget.dataset.player_id;
+    const characterId = event.currentTarget.dataset.character_id;
     // get the player name for debug purposes
-    if (playerId === "ALL") {
+    if (characterId === "ALL") {
       const currentUserUUIDs = game.users
         .filter((user) => user.active && !user.isGM)
         .map((user) => user.character?.uuid);
-      this.unawardAchievement(achievementId, currentUserUUIDs);
+      unAwardAchievement(achievementId, currentUserUUIDs);
     } else {
-      this.unawardAchievement(achievementId, playerId);
+      unAwardAchievement(achievementId, characterId);
     }
 
     setTimeout(() => {
@@ -375,20 +338,7 @@ export class AchievementForm extends FormApplication {
 
     const id = event.currentTarget.dataset.achievement_id;
     this.unlockAchievement(id);
-    const achievements = game.settings.get("fvtt-player-achievements", "customAchievements");
-    const index = achievements.findIndex((a) => a.id === id);
-    achievements.splice(index, 1);
-    game.settings.set("fvtt-player-achievements", "customAchievements", achievements);
-
-    const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
-
-    for (const [achievementId, _players] of Object.entries(awardedAchievements)) {
-      if (achievementId === id) {
-        delete awardedAchievements[achievementId];
-      }
-    }
-    game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
-
+    deleteAchievement(id);
     this.render(true);
   }
 
