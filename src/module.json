@@ -45,6 +45,12 @@
     "verified": "11"
   },
   "relationships": {
+    "requires": [
+      {
+        "id": "socketlib",
+        "type": "module"
+      }
+    ],
     "conflicts": [
       {
         "id": "enhancedcombathud",
