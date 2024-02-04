@@ -1,3 +1,10 @@
+## 1.2.1 (2024-02-04)
+
+##### Bug Fixes
+
+*  added socketlib as a dependency ([f68aa849](https://github.com/EddieDover/fvtt-player-achievements/commit/f68aa84973878bd2aec4d120ef5bb8b0fcf56f29))
+*  players who have not selected a character are now able to see the achievements window ([f3b36414](https://github.com/EddieDover/fvtt-player-achievements/commit/f3b364146a84528c7c133483c2a5c06f64f63b36))
+
 ## 1.2.0 (2024-01-29)
 
 ##### New Features

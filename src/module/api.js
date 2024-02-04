@@ -173,10 +173,10 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} id The achievement id
    * @param {string} title The achievement title
    * @param {string} description The achievement description
-   * @param {boolean} [showTitleCloaked=false] Show the title cloaked?
-   * @param {string} [image="/modules/fvtt-player-achievements/images/default.webp"] The achievement image
-   * @param {string} [cloakedImage="/modules/fvtt-player-achievements/images/default.webp"] The achievement cloaked image
-   * @param {string} [sound="/modules/fvtt-player-achievements/sounds/notification.ogg"] The achievement sound effect
+   * @param {boolean} showTitleCloaked Show the title cloaked?
+   * @param {string} image The achievement image
+   * @param {string} cloakedImage The achievement cloaked image
+   * @param {string} sound The achievement sound effect
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement created?
    */
   function createAchievement(
@@ -212,7 +212,7 @@ const PlayerAchievementsAPI = (function () {
 
   /**
    * Delete an achievement
-   * @param {string} id
+   * @param {string} id The achievement id
    * @returns {PlayerAchievementReturn<boolean>} Was the achievement deleted?
    */
   function deleteAchievement(id) {
@@ -234,10 +234,10 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} id The achievement id
    * @param {string} title The achievement title
    * @param {string} description The achievement description
-   * @param {boolean} [showTitleCloaked=false] Show the title cloaked?
-   * @param {string} [image="/modules/fvtt-player-achievements/images/default.webp"] The achievement image
-   * @param {string} [cloakedImage="/modules/fvtt-player-achievements/images/default.webp"] The achievement cloaked image
-   * @param {string} [sound="/modules/fvtt-player-achievements/sounds/notification.ogg"] The achievement sound effect
+   * @param {boolean} showTitleCloaked Show the title cloaked?
+   * @param {string} image The achievement image
+   * @param {string} cloakedImage The achievement cloaked image
+   * @param {string} sound The achievement sound effect
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement edited?
    */
   function editAchievement(
