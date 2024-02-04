@@ -126,7 +126,7 @@ export async function getAchivements(overrides) {
   if (!game.user.isGM) {
     return await achievement_socket.executeAsGM("getAchievements", {
       callingUser: game.user,
-      callingCharacterId: `Actor.${game.user.character.id ?? ""}`,
+      callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
     });
   }
 
@@ -287,7 +287,7 @@ export function unAwardAchievement(achievementId, characterIds) {
 /**
  * Does the actor exist?
  * @param {string} actorId The actor id
- * @returns {boolean}
+ * @returns {boolean} Does the actor exist?
  */
 export function doesActorExist(actorId) {
   const nonNPCActors = game.actors.filter((actor) => actor.type !== "npc");
