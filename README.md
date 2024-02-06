@@ -120,3 +120,4 @@ An API is also provided that allows direct control of this module. See [API.md](
 ### Localization
 
   Spanish - @maeonian
+  Brazilian Portuguese - Daniel Norberto
