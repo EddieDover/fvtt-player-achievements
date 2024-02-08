@@ -1,3 +1,9 @@
+## 1.2.2 (2024-02-08)
+
+##### Bug Fixes
+
+*  adjusted achievement block color to be more flexible when using theme overrides ([#43](https://github.com/EddieDover/fvtt-player-achievements/pull/43)) ([cbb67cb2](https://github.com/EddieDover/fvtt-player-achievements/commit/cbb67cb2afc14fb777b3bcbee410c7a2917009c3))
+
 ## 1.2.1 (2024-02-04)
 
 ##### Bug Fixes
