@@ -5,6 +5,7 @@
 
 import fs from "fs-extra";
 import gulp from "gulp";
+import { deleteAsync } from "del";
 import zip from "gulp-zip";
 import rename from "gulp-rename";
 import sass from "gulp-dart-sass";
@@ -25,7 +26,7 @@ import rollupConfig from "./rollup.config.mjs";
 
 const packageId = "fvtt-player-achievements";
 const sourceDirectory = "./src";
-const distributionDirectory = "./dist";
+const distDirectory = "./dist";
 const stylesDirectory = `${sourceDirectory}/styles`;
 const stylesExtension = "scss";
 const sourceFileExtension = "js";
@@ -50,7 +51,7 @@ function buildCode() {
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest(`${distributionDirectory}/module`));
+    .pipe(gulp.dest(`${distDirectory}/module`));
 }
 
 /**
@@ -61,7 +62,7 @@ function buildStyles() {
   return gulp
     .src(`${stylesDirectory}/${packageId}.${stylesExtension}`)
     .pipe(sass().on("error", sass.logError))
-    .pipe(gulp.dest(`${distributionDirectory}/styles`));
+    .pipe(gulp.dest(`${distDirectory}/styles`));
 }
 
 /**
@@ -70,9 +71,37 @@ function buildStyles() {
 async function copyFiles() {
   for (const file of staticFiles) {
     if (fs.existsSync(`${sourceDirectory}/${file}`)) {
-      await fs.copy(`${sourceDirectory}/${file}`, `${distributionDirectory}/${file}`);
+      await fs.copy(`${sourceDirectory}/${file}`, `${distDirectory}/${file}`);
     }
   }
+}
+
+/**
+ * Cleans the dist folder
+ * @returns {NodeJS.ReadWriteStream} The cleaned files
+ */
+async function cleanDist() {
+  return await deleteAsync([`${distDirectory}/**/*`, `${distDirectory}`]);
+}
+
+/**
+ * Copies the files ot the dist folder in prep for packaging
+ * @returns {NodeJS.ReadWriteStream} The copied files
+ */
+function copyDist() {
+  // Take everything inside the dist folder and zip it into a subfolder named totm.zip
+  return gulp.src(`${distDirectory}/**/*`).pipe(gulp.dest(`${distDirectory}/${packageId}`));
+}
+
+/**
+ * Packages the dist subfolderfolder into a zip file
+ * @returns {NodeJS.ReadWriteStream} The zipped files
+ */
+function zipDist() {
+  return gulp
+    .src(`${distDirectory}/${packageId}/**/*`, { base: `${distDirectory}` })
+    .pipe(zip(`${packageId}.zip`))
+    .pipe(gulp.dest(`${distDirectory}`));
 }
 
 /**
@@ -89,6 +118,12 @@ export function watch() {
 }
 
 export const build = gulp.series(clean, gulp.parallel(buildCode, buildStyles, copyFiles));
+
+/********************/
+/*    DEV EXPORT    */
+/********************/
+
+export const devexport = gulp.series(cleanDist, build, copyDist, zipDist);
 
 /** ******************/
 /*      CLEAN       */
@@ -108,7 +143,7 @@ export async function clean() {
   console.log("   ", files.join("\n    "));
 
   for (const filePath of files) {
-    await fs.remove(`${distributionDirectory}/${filePath}`);
+    await fs.remove(`${distDirectory}/${filePath}`);
   }
 }
 
@@ -121,12 +156,12 @@ gulp.task("zip-dist", () => {
   return gulp
     .src("dist/**/*")
     .pipe(
-      rename((path) => {
+      rename((ipath) => {
         // Rename to put the contents inside 'subsubsub' folder
-        path.dirname = "fvtt-player-achievements/" + path.dirname;
+        path.dirname = `${packageId}/${ipath.dirname}`;
       }),
     )
-    .pipe(zip("fvtt-player-achievements.zip"))
+    .pipe(zip(`${packageId}.zip`))
     .pipe(gulp.dest("."));
 });
 /** ******************/

@@ -16,7 +16,7 @@ export default () => ({
     nodeResolve(),
     copy({
       targets: [
-        { src: "CHANGELOG.md", dest: "dist" },
+        { src: "*.md", dest: "dist" },
         { src: "src/images/*", dest: "dist/images" },
         { src: "src/sounds/*", dest: "dist/sounds" },
       ],
