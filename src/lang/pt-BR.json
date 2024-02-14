@@ -95,6 +95,9 @@
         "title": "Importar Conquistas",
         "content": "Isso irá sobrescrever todas as Conquistas existentes com os dados do clipboard. Tem certeza?"
       },
+      "while-away": "Enquanto estavam fora",
+      "has-unlocked": "{character_name} ({player_name}) desbloqueou",
+      "next-login-notify": "Eles serão notificados no próximo login.",
       "delete-achievement": {
         "title": "Deletar Conquista",
         "content": "Tem certeza que deseja deletar essa conquista?"

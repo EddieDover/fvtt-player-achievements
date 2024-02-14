@@ -95,6 +95,9 @@
         "title": "Import Achievements",
         "content": "This will overwrite all existing achievements with data from your clipboard. Are you sure?"
       },
+      "while-away": "While they were away",
+      "has-unlocked": "{while_away} {character_name} ({player_name}) has unlocked",
+      "next-login-notify": "They will be notified upon next login.",
       "delete-achievement": {
         "title": "Delete Achievement",
         "content": "Are you sure you want to delete this achievement?"
