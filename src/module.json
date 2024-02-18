@@ -24,6 +24,11 @@
       "lang": "es",
       "name": "Spanish",
       "path": "lang/es.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Portuguese (Brazil)",
+      "path": "lang/pt-BR.json"
     }
   ],
   "media": [
@@ -39,7 +44,7 @@
       "url": "https://github.com/eddiedover/"
     }
   ],
-  "version": "1.2.2",
+  "version": "1.2.3",
   "compatibility": {
     "minimum": "11",
     "verified": "11"
