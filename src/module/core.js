@@ -50,7 +50,7 @@ export function setupAchievementSocket() {
  * @property {string} description Description
  * @property {string} image Image URL
  * @property {string} cloakedImage Cloaked Image URL
- * @property {string} soundEffect Sound Effect URL
+ * @property {string} sound Sound Effect URL
  * @property {Array} completedActors Array of Actor UUIDs
  * @property {boolean} showTitleCloaked Show Title Cloaked
  */
@@ -59,7 +59,7 @@ export function setupAchievementSocket() {
  * Create an Achievement
  * @param {Achievement} achievement The achievement
  */
-export function createAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, soundEffect }) {
+export function createAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound }) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
   customAchievements.push({
     id,
@@ -68,7 +68,7 @@ export function createAchievement({ id, title, showTitleCloaked, description, im
     description,
     image: image ?? DEFAULT_IMAGE,
     cloakedImage: cloakedImage ?? DEFAULT_IMAGE,
-    soundEffect: soundEffect ?? DEFAULT_SOUND,
+    sound: sound ?? DEFAULT_SOUND,
   });
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
@@ -77,13 +77,13 @@ export function createAchievement({ id, title, showTitleCloaked, description, im
  * Edit an Achievement
  * @param {Achievement} achievement The achievement
  */
-export function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, soundEffect }) {
+export function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound }) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
   const index = customAchievements.findIndex((a) => a.id === id);
   if (index === -1) {
     return;
   }
-  customAchievements[index] = { id, title, showTitleCloaked, description, image, cloakedImage, soundEffect };
+  customAchievements[index] = { id, title, showTitleCloaked, description, image, cloakedImage, sound };
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
