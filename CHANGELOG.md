@@ -1,3 +1,9 @@
+#### 1.2.3 (2024-02-18)
+
+##### Bug Fixes
+
+*  custom sounds were not working after API update ([b4153ba2](https://github.com/EddieDover/fvtt-player-achievements/commit/b4153ba2a0484a71bba79311f00032daca444c63))
+
 ## 1.2.2 (2024-02-08)
 
 ##### Bug Fixes
