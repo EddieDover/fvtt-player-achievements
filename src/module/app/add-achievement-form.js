@@ -282,6 +282,7 @@ export class AddAchievementForm extends FormApplication {
       image: data.achievement_image,
       cloakedImage: data.achievement_cloaked_image,
       sound: data.achievement_sound,
+      tags: data.tags,
     };
 
     const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
