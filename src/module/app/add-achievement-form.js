@@ -305,8 +305,6 @@ export class AddAchievementForm extends FormApplication {
       return;
     }
 
-    console.log(achievement.tags);
-
     const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
 
     const editing = this.overrides.mode === "edit";
