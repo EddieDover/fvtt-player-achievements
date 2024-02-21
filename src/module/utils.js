@@ -20,6 +20,8 @@ const replaceMap = [
   { from: "{/i}", to: "</i>" },
   { from: "{b}", to: "<b>" },
   { from: "{/b}", to: "</b>" },
+  { from: "{u}", to: "<u>" },
+  { from: "{/u}", to: "</u>" },
   { from: "{nl}", to: "<br>" },
 ];
 

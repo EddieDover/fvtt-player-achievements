@@ -62,8 +62,9 @@ Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
 The following tags are supported in the Achievement Description:
 
 * {nl} - Inserts a line break
-* {b}{/b} - Contents will be **bold**
-* {i}{/i} - Contents will be _italics_
+* {b}{/b} - Contents will be <b>bold</b>
+* {i}{/i} - Contents will be <i>italics</i>
+* {u}{/u} - Contents will be <u>underlined</u>
 
 ## How to Use - Developers
 
