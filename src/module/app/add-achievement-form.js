@@ -301,6 +301,10 @@ export class AddAchievementForm extends FormApplication {
         .filter((tag) => tag !== ""),
     };
 
+    if (!achievement.id || !achievement.title) {
+      return;
+    }
+
     console.log(achievement.tags);
 
     const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
