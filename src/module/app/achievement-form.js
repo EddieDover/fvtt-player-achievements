@@ -69,13 +69,11 @@ export class AchievementForm extends FormApplication {
 
     let achievements = await this.filterAchievements();
 
-    if (this.sortza) {
-      achievements = achievements.sort((a, b) => {
-        if (a.title < b.title) return -1;
-        if (a.title > b.title) return 1;
-        return 0;
-      });
-    }
+    achievements.sort((a, b) => {
+      const comparison = a.title.localeCompare(b.title); // Compare titles (string comparison)
+      return this.sortza ? -comparison : comparison; // Sort based on sortasc, negative for descending
+    });
+
     const myCharacterUUID = game.user.character?.uuid;
 
     if (this.hideAwarded && myCharacterUUID) {
