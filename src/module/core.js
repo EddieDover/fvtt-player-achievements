@@ -19,7 +19,7 @@ export const MODULE_NAME = "fvtt-player-achievements";
 export const DEFAULT_IMAGE = "/modules/fvtt-player-achievements/images/default.webp";
 export const DEFAULT_SOUND = "/modules/fvtt-player-achievements/sounds/notification.ogg";
 
-import { deepCopy, hydrateAwardedAchievements } from "./utils.js";
+import { deepCopy, enrichText, hydrateAwardedAchievements } from "./utils.js";
 let achievement_socket;
 
 /**
@@ -191,6 +191,7 @@ export async function awardAchievementMessage(achievementId, characterId) {
       .find((user) => user.character.uuid === characterId) ?? undefined;
   if (!playerOwner) return;
   const character = playerOwner.character;
+  const parsedDescription = enrichText(achievement.description);
   const message = `
   <div class="achievement-message">
   <h2>Achievement Unlocked!</h2>
@@ -200,7 +201,7 @@ export async function awardAchievementMessage(achievementId, characterId) {
     <img src=${achievement.image} />
     <p>${achievement.title}</p>
   </div>
-  <p class="achievement-message-description">${achievement.description}</p>
+  <p class="achievement-message-description">${parsedDescription}</p>
   </div>`;
 
   const showOnlyToAwardedUser = game.settings.get("fvtt-player-achievements", "showOnlyToAwardedUser");

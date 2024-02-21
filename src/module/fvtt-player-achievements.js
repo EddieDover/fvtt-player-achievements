@@ -19,6 +19,7 @@ import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
 import PA_API from "./api.js";
 import { MODULE_NAME, getAchivements, log, setupAchievementSocket } from "./core.js";
+import { cleanString, enrichText } from "./utils.js";
 
 let currentAchievementScreen;
 var registeredHandlebars = false;
@@ -71,6 +72,10 @@ function registerHandlebarHelpers() {
   Handlebars.registerHelper("iflockedachi", function (achievement_id, options) {
     const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
     return lockedAchievements.includes(achievement_id) ? options.fn(this) : options.inverse(this);
+  });
+
+  Handlebars.registerHelper("enrichText", function (text) {
+    return new Handlebars.SafeString(enrichText(Handlebars.escapeExpression(text)));
   });
 }
 
