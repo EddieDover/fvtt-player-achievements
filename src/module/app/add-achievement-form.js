@@ -62,11 +62,13 @@ export class AddAchievementForm extends FormApplication {
       this.updateSelectImage();
       this.updateSelectCloakedImage();
       this.updateSelectSound();
+      this.overrides.achievement.tags = this.overrides.achievement.tags.join(", ");
     } else {
       this.setupDefaults();
     }
 
     const achievementId = $("input[name='achievement_id']", html);
+    const achievementTags = $("input[name='achievement_tags']", html);
 
     $("button[type='submit']", html).click(this.handleSubmit.bind(this));
     $("button[name='clear_image']", html).click(this.handleClearImage.bind(this));
@@ -282,7 +284,7 @@ export class AddAchievementForm extends FormApplication {
       image: data.achievement_image,
       cloakedImage: data.achievement_cloaked_image,
       sound: data.achievement_sound,
-      tags: data.tags,
+      tags: data.achievement_tags.split(",").map((tag) => tag.trim()),
     };
 
     const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");

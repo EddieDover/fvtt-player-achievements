@@ -79,7 +79,7 @@ export function createAchievement({ id, title, showTitleCloaked, description, im
  * Edit an Achievement
  * @param {Achievement} achievement The achievement
  */
-export function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound, taqs }) {
+export function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound, tags }) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
   const index = customAchievements.findIndex((a) => a.id === id);
   if (index === -1) {

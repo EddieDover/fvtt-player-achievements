@@ -49,6 +49,23 @@
       {{/unless}}
     </div>
   </div>
+  <div class="achievement-block-tags-container-area">
+    {{#if tags.length }}
+    <div class="achievement-block-tags-container">
+      <p>{{localize "fvtt-player-achievements.forms.achievement-block.tags"}}: </p>
+      <div class="">
+        {{#each tags as |tag|}}
+          <button
+            data-achievement_tag="{{tag}}"
+            class="achievement-block-tag{{#inStringArray ../currentTagFilter tag }} achievement-block-tag--selected{{/inStringArray}}"
+            >
+              {{tag}}
+          </button>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
   <div class="achievement-block__image-holder-buttons-container" style="">
     {{#if isDM}}
       {{#iflockedachi id}}
