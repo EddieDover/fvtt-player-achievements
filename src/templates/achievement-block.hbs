@@ -50,7 +50,7 @@
     </div>
   </div>
   <div class="achievement-block-tags-container-area">
-    {{#if tags.length }}
+    {{#ifgte tags.length 1 }}
     <div class="achievement-block-tags-container">
       <p>{{localize "fvtt-player-achievements.forms.achievement-block.tags"}}: </p>
       <div class="">
@@ -64,7 +64,7 @@
         {{/each}}
       </div>
     </div>
-    {{/if}}
+    {{/ifgte}}
   </div>
   <div class="achievement-block__image-holder-buttons-container" style="">
     {{#if isDM}}
