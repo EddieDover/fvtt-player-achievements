@@ -177,6 +177,7 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} image The achievement image
    * @param {string} cloakedImage The achievement cloaked image
    * @param {string} sound The achievement sound effect
+   * @param {Array<string>} tags The achievement tags
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement created?
    */
   function createAchievement(
@@ -187,8 +188,9 @@ const PlayerAchievementsAPI = (function () {
     image = DEFAULT_IMAGE,
     cloakedImage = DEFAULT_IMAGE,
     sound = DEFAULT_SOUND,
+    tags,
   ) {
-    if (!id || !title || !description || !image || !cloakedImage || !sound) {
+    if (!id || !title || !description || !image || !cloakedImage || !sound || !tags) {
       return createReturnPayload("Missing required field(s).", false);
     }
 
@@ -204,6 +206,7 @@ const PlayerAchievementsAPI = (function () {
       image,
       cloakedImage,
       sound,
+      tags,
     };
 
     prime_createAchievement(achievement);
@@ -248,8 +251,9 @@ const PlayerAchievementsAPI = (function () {
     image = DEFAULT_IMAGE,
     cloakedImage = DEFAULT_IMAGE,
     sound = DEFAULT_SOUND,
+    tags,
   ) {
-    if (!id || !title || !description || !image || !cloakedImage || !sound) {
+    if (!id || !title || !description || !image || !cloakedImage || !sound || !tags) {
       return createReturnPayload("Missing required field(s).", false);
     }
 
@@ -265,6 +269,7 @@ const PlayerAchievementsAPI = (function () {
       image,
       cloakedImage,
       sound,
+      tags,
     };
 
     prime_editAchievement(achievement);

@@ -62,7 +62,7 @@
   {{#if achievements}}
     <div class="achievements-container">
       {{#each achievements as |achievement|}}
-          {{> achievement-block isDM=../isDM myuuid=../myuuid achievement=achievement characters=../currentCharacters hideDetails=../hideDetails lockedAchievements=../lockedAchievements}}
+          {{> achievement-block isDM=../isDM myuuid=../myuuid achievement=achievement characters=../currentCharacters hideDetails=../hideDetails lockedAchievements=../lockedAchievements currentTagFilter=../currentTagFilter}}
       {{/each}}
     </div>
   {{else}}

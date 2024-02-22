@@ -362,7 +362,30 @@
     margin-right:0.25rem;
   }
 
-  // }
+  .achievement-block-tags-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+  }
 
+  .achievement-block-tag {
+    width: fit-content;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 5px;
+    height: fit-content;
+    padding: 2px;
+    margin: 1px;
+    line-height: 14px;
+    background: var(--color-shadow-light);
+    color: var(--color-text-dark-1);
+  }
+
+  .achievement-block-tag--selected {
+    background: var(--color-text-dark-secondary);
+    color: var(--color-text-hyperlink);
+  }
 
 }
