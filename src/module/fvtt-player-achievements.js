@@ -72,6 +72,17 @@ function registerHandlebarHelpers() {
     const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
     return lockedAchievements.includes(achievement_id) ? options.fn(this) : options.inverse(this);
   });
+
+  Handlebars.registerHelper("inStringArray", function (stringArray, string, options) {
+    return stringArray.includes(string) ? options.fn(this) : options.inverse(this);
+  });
+
+  Handlebars.registerHelper("ifgte", function (v1, v2, options) {
+    if (v1 >= v2) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
 }
 
 /**

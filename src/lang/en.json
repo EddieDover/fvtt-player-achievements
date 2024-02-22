@@ -55,7 +55,8 @@
         "no-players-to-award": "No players to award.",
         "toggle-lock": "Lock",
         "toggle-unlock": "Unlock",
-        "all-players": "All Players"
+        "all-players": "All Players",
+        "tags": "Tags"
       },
       "add-achievement-form": {
         "id": "ID",
@@ -70,7 +71,8 @@
         "clear": "Clear",
         "add-achievement": "Add Achievement",
         "update-achievement": "Update Achievement",
-        "window-title": "Add/Edit Achievement"
+        "window-title": "Add/Edit Achievement",
+        "tags": "Tags"
       },
       "achievements-export": {
         "export-message": "Please copy the following data to a safe place, in case you need to restore it later."

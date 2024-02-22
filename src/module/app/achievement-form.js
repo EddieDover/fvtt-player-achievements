@@ -33,6 +33,7 @@ export class AchievementForm extends FormApplication {
     super();
     this.overrides = overrides;
     this.currentFilter = "";
+    this.currentTagFilter = [];
     this.sortza = false;
     this.hideAwarded = false;
     this.hideUnawarded = false;
@@ -52,6 +53,11 @@ export class AchievementForm extends FormApplication {
       }
       return true;
     });
+    if (this.currentTagFilter.length > 0) {
+      return filtered.filter((achi) => {
+        return this.currentTagFilter.every((tag) => achi.tags.includes(tag));
+      });
+    }
     return filtered;
   }
 
@@ -63,13 +69,11 @@ export class AchievementForm extends FormApplication {
 
     let achievements = await this.filterAchievements();
 
-    if (this.sortza) {
-      achievements = achievements.sort((a, b) => {
-        if (a.title < b.title) return -1;
-        if (a.title > b.title) return 1;
-        return 0;
-      });
-    }
+    achievements.sort((a, b) => {
+      const comparison = a.title.localeCompare(b.title); // Compare titles (string comparison)
+      return this.sortza ? -comparison : comparison; // Sort based on sortasc, negative for descending
+    });
+
     const myCharacterUUID = game.user.character?.uuid;
 
     if (this.hideAwarded && myCharacterUUID) {
@@ -95,6 +99,7 @@ export class AchievementForm extends FormApplication {
       myuuid: game.user.character?.uuid,
       achievements: achievements,
       currentFilter: this.currentFilter,
+      currentTagFilter: this.currentTagFilter,
       sortza: this.sortza,
       hideDetails: this.hideDetails,
       hideAwarded: this.hideAwarded,
@@ -140,6 +145,7 @@ export class AchievementForm extends FormApplication {
     $(".toggle-lock", html).click(this.onToggleLock.bind(this));
     $('button[class="assign"]', html).click(this.assignAchievement.bind(this));
     $('button[class="unassign"]', html).click(this.unassignAchievement.bind(this));
+    $('button[class*="achievement-block-tag"]', html).click(this.toggleTagFilter.bind(this));
     $('input[name="hide-awarded"]', html).on("change", this.onToggleHideAwarded.bind(this));
     $('input[name="hide-unawarded"]', html).on("change", this.onToggleHideUnawarded.bind(this));
     $('input[name="hide-details"]', html).on("change", this.onToggleHideDetails.bind(this));
@@ -169,6 +175,17 @@ export class AchievementForm extends FormApplication {
     event.preventDefault();
     const newWindow = window.open(DISCORD_URL, "_blank", "noopener,noreferrer");
     if (newWindow) newWindow.opener = undefined;
+  }
+
+  async toggleTagFilter(event) {
+    event.preventDefault();
+    const tag = event.currentTarget.dataset.achievement_tag;
+    if (this.currentTagFilter.includes(tag)) {
+      this.currentTagFilter = this.currentTagFilter.filter((t) => t !== tag);
+    } else {
+      this.currentTagFilter.push(tag);
+    }
+    this.render(true);
   }
 
   async toggleImportDialog() {

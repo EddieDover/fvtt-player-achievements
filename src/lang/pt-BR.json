@@ -55,7 +55,8 @@
         "no-players-to-award": "Nenhum jogador para entregar.",
         "toggle-lock": "Trancar",
         "toggle-unlock": "Destrancar",
-        "all-players": "Todos Jogadores"
+        "all-players": "Todos Jogadores",
+        "tags": "Tags"
       },
       "add-achievement-form": {
         "id": "ID",
@@ -70,7 +71,8 @@
         "clear": "Limpar",
         "add-achievement": "Adicionar Conquista",
         "update-achievement": "Atualizar Conquista",
-        "window-title": "Adicionar/Editar Conquista"
+        "window-title": "Adicionar/Editar Conquista",
+        "tags": "Tags"
       },
       "achievements-export": {
         "export-message": "Por favor copiar os seguintes dados para um local seguro, caso precise restaurar mais tarde."

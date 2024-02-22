@@ -54,13 +54,14 @@ export function setupAchievementSocket() {
  * @property {string} sound Sound Effect URL
  * @property {Array} completedActors Array of Actor UUIDs
  * @property {boolean} showTitleCloaked Show Title Cloaked
+ * @property {Array<string>} tags Tags
  */
 
 /**
  * Create an Achievement
  * @param {Achievement} achievement The achievement
  */
-export function createAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound }) {
+export function createAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound, tags }) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
   customAchievements.push({
     id,
@@ -70,6 +71,7 @@ export function createAchievement({ id, title, showTitleCloaked, description, im
     image: image ?? DEFAULT_IMAGE,
     cloakedImage: cloakedImage ?? DEFAULT_IMAGE,
     sound: sound ?? DEFAULT_SOUND,
+    tags,
   });
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
@@ -78,13 +80,13 @@ export function createAchievement({ id, title, showTitleCloaked, description, im
  * Edit an Achievement
  * @param {Achievement} achievement The achievement
  */
-export function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound }) {
+export function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound, tags }) {
   const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
   const index = customAchievements.findIndex((a) => a.id === id);
   if (index === -1) {
     return;
   }
-  customAchievements[index] = { id, title, showTitleCloaked, description, image, cloakedImage, sound };
+  customAchievements[index] = { id, title, showTitleCloaked, description, image, cloakedImage, sound, tags };
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
