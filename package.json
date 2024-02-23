@@ -72,6 +72,7 @@
     "jsdoc-to-markdown": "^8.0.0",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
+    "postcss": ">=8.4.31",
     "rollup": "^2.79.1",
     "rollup-plugin-copy": "^3.5.0",
     "vinyl-buffer": "^1.0.1",

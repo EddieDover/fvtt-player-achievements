@@ -55,7 +55,7 @@ export class AchievementForm extends FormApplication {
     });
     if (this.currentTagFilter.length > 0) {
       return filtered.filter((achi) => {
-        return this.currentTagFilter.every((tag) => achi.tags.includes(tag));
+        return this.currentTagFilter.every((tag) => achi.tags?.includes(tag));
       });
     }
     return filtered;

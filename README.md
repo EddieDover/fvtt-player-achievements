@@ -13,6 +13,7 @@ This module provides GMs with a way to award players with achievements.
   - Provides hooks for after achievement award/unaward.
   ### GMs
   - Create your own achievements.
+  - Can use special markup to include newlines, bold, and italic text in descriptions of achievements.
   - Assign/Unassign achievements to/from players.
   - Award achievements to players that are offline and they will recieve them when they next login.
   - Customize sound played per achievement.
@@ -56,6 +57,15 @@ Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
 
 <img src="./previews/achievementScreenDMInstructions2.png" title="DM Instructions for awarding achievements" />
 
+
+### Markup
+
+The following tags are supported in the Achievement Description:
+
+* {nl} - Inserts a line break
+* {b}{/b} - Contents will be <b>bold</b>
+* {i}{/i} - Contents will be <i>italics</i>
+* {u}{/u} - Contents will be <u>underlined</u>
 
 ## How to Use - Developers
 

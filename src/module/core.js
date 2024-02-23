@@ -19,7 +19,7 @@ export const MODULE_NAME = "fvtt-player-achievements";
 export const DEFAULT_IMAGE = "/modules/fvtt-player-achievements/images/default.webp";
 export const DEFAULT_SOUND = "/modules/fvtt-player-achievements/sounds/notification.ogg";
 
-import { deepCopy, hydrateAwardedAchievements } from "./utils.js";
+import { deepCopy, enrichText, hydrateAwardedAchievements } from "./utils.js";
 let achievement_socket;
 
 /**
@@ -267,6 +267,7 @@ export async function awardAchievementMessage(achievementId, characterId, late =
   if (!userActive) {
     bmsg = `<p>${game.i18n.localize("fvtt-player-achievements.messages.next-login-notify")}</p>`;
   }
+  const parsedDescription = enrichText(achievement.description);
   const message = `
   <div class="achievement-message">
   <h2>Achievement Unlocked!</h2>
@@ -276,7 +277,7 @@ export async function awardAchievementMessage(achievementId, characterId, late =
     <img src=${achievement.image} />
     <p>${achievement.title}</p>
   </div>
-  <p class="achievement-message-description">${achievement.description}</p>
+  <p class="achievement-message-description">${parsedDescription}</p>
   ${bmsg}
   </div>`;
 

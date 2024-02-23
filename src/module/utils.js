@@ -15,6 +15,16 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+const replaceMap = [
+  { from: "{i}", to: "<i>" },
+  { from: "{/i}", to: "</i>" },
+  { from: "{b}", to: "<b>" },
+  { from: "{/b}", to: "</b>" },
+  { from: "{u}", to: "<u>" },
+  { from: "{/u}", to: "</u>" },
+  { from: "{nl}", to: "<br>" },
+];
+
 /**
  * Perform a deep copy of an object
  * @param {any} object Object to deep copy
@@ -45,4 +55,26 @@ export function hydrateAwardedAchievements(awardedAchievements) {
     return achievement;
   });
   return hydratedAchievements;
+}
+
+/**
+ * Enrich text with additional formatting
+ * @param {string} text Text to enrich
+ * @returns {string} enrichedText Enriched text
+ */
+export function enrichText(text) {
+  let enrichedText = text;
+  for (const replace of replaceMap) {
+    enrichedText = enrichedText.replaceAll(replace.from, replace.to);
+  }
+  return enrichedText;
+}
+
+/**
+ * Clean a string of html injection.
+ * @param {string} text - The string to clean
+ * @returns {string} The cleaned string
+ */
+export function cleanString(text) {
+  return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
