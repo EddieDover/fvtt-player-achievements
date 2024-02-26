@@ -48,8 +48,8 @@ export function localize(key) {
  * @param {Array} awardedAchievements Array of awarded achievements
  * @returns {Array} hydratedAchievements
  */
-export function hydrateAwardedAchievements(awardedAchievements) {
-  const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements") ?? [];
+export async function hydrateAwardedAchievements(awardedAchievements) {
+  const customAchievements = (await game.settings.get("fvtt-player-achievements", "customAchievements")) ?? [];
   const hydratedAchievements = customAchievements.map((achievement) => {
     achievement.completedActors = awardedAchievements[achievement.id] ?? [];
     return achievement;

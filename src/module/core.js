@@ -61,8 +61,17 @@ export function setupAchievementSocket() {
  * Create an Achievement
  * @param {Achievement} achievement The achievement
  */
-export function createAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound, tags }) {
-  const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
+export async function createAchievement({
+  id,
+  title,
+  showTitleCloaked,
+  description,
+  image,
+  cloakedImage,
+  sound,
+  tags,
+}) {
+  const customAchievements = await game.settings.get("fvtt-player-achievements", "customAchievements");
   customAchievements.push({
     id,
     title,
@@ -80,8 +89,8 @@ export function createAchievement({ id, title, showTitleCloaked, description, im
  * Edit an Achievement
  * @param {Achievement} achievement The achievement
  */
-export function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound, tags }) {
-  const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
+export async function editAchievement({ id, title, showTitleCloaked, description, image, cloakedImage, sound, tags }) {
+  const customAchievements = await game.settings.get("fvtt-player-achievements", "customAchievements");
   const index = customAchievements.findIndex((a) => a.id === id);
   if (index === -1) {
     return;
@@ -94,20 +103,20 @@ export function editAchievement({ id, title, showTitleCloaked, description, imag
  * Delete an Achievement
  * @param {string} achievementId The achievement id
  */
-export function deleteAchievement(achievementId) {
-  const achievements = game.settings.get("fvtt-player-achievements", "customAchievements");
+export async function deleteAchievement(achievementId) {
+  const achievements = await game.settings.get("fvtt-player-achievements", "customAchievements");
   const index = achievements.findIndex((a) => a.id === achievementId);
   achievements.splice(index, 1);
   game.settings.set("fvtt-player-achievements", "customAchievements", achievements);
 
-  const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
+  const awardedAchievements = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
 
   for (const [aid, _character] of Object.entries(awardedAchievements)) {
     if (aid === achievementId) {
       delete awardedAchievements[achievementId];
     }
   }
-  game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
+  await game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
 }
 
 /**
@@ -127,7 +136,7 @@ export async function getPendingAchievements(overrides) {
   }
 
   if (!game.user.isGM) {
-    return await achievement_socket.executeAsGM("getPendingAchievements", {
+    return achievement_socket.executeAsGM("getPendingAchievements", {
       callingUser: game.user,
       callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
     });
@@ -162,14 +171,14 @@ export async function getAchivements(overrides) {
   }
 
   if (!game.user.isGM) {
-    return await achievement_socket.executeAsGM("getAchievements", {
+    return achievement_socket.executeAsGM("getAchievements", {
       callingUser: game.user,
       callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
     });
   }
 
-  let achievements = hydrateAwardedAchievements(
-    game.settings.get("fvtt-player-achievements", "awardedAchievements") ?? {},
+  let achievements = await hydrateAwardedAchievements(
+    (await game.settings.get("fvtt-player-achievements", "awardedAchievements")) ?? {},
   );
 
   for (const achievement of achievements) {
@@ -181,8 +190,8 @@ export async function getAchivements(overrides) {
     }
   }
 
-  const hideUnearnedAchievements = game.settings.get("fvtt-player-achievements", "hideUnearnedAchievements");
-  const cloakUnearnedAchievements = game.settings.get("fvtt-player-achievements", "cloakUnearnedAchievements");
+  const hideUnearnedAchievements = await game.settings.get("fvtt-player-achievements", "hideUnearnedAchievements");
+  const cloakUnearnedAchievements = await game.settings.get("fvtt-player-achievements", "cloakUnearnedAchievements");
 
   let retachievements = deepCopy(achievements);
   if (!callingUser.isGM) {
@@ -218,7 +227,7 @@ export async function getAchivements(overrides) {
  * @param {*} characterId The character id
  */
 export async function awardPendingAchievementMessage(achievementId, characterId) {
-  const achievement = game.settings
+  const achievement = await game.settings
     .get("fvtt-player-achievements", "customAchievements")
     .find((a) => a.id === achievementId);
 
@@ -304,13 +313,13 @@ export async function awardAchievementMessage(achievementId, characterId, late =
 async function awardAchievementSelf({ achievement, characterId }) {
   let playAwardSound = false;
 
-  if (game.settings.get("fvtt-player-achievements", "playSelfSounds")) {
+  if (await game.settings.get("fvtt-player-achievements", "playSelfSounds")) {
     playAwardSound = true;
   }
 
   if (game.user.character?.uuid === characterId && playAwardSound) {
     const audio = new Audio(achievement.sound ?? "/modules/fvtt-player-achievements/sounds/notification.ogg");
-    audio.volume = game.settings.get("fvtt-player-achievements", "selfSoundVolume");
+    audio.volume = await game.settings.get("fvtt-player-achievements", "selfSoundVolume");
     audio.play();
   }
 }
@@ -321,13 +330,13 @@ async function awardAchievementSelf({ achievement, characterId }) {
  * @param {string} characterId The character id
  * @param {boolean} late Is this a late award?
  */
-export function awardAchievement(achievementId, characterId, late = false) {
+export async function awardAchievement(achievementId, characterId, late = false) {
   const awardingUser = game.users.find((user) => user.character?.uuid === characterId) ?? undefined;
   if (!awardingUser) {
     return;
   }
   const awardingUserActive = awardingUser?.active ?? false;
-  const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
+  const awardedAchievements = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
   const awardBlock = awardedAchievements[achievementId] ?? [];
   let characters = [...awardBlock];
   characters.push(characterId);
@@ -348,8 +357,9 @@ export function awardAchievement(achievementId, characterId, late = false) {
  * @param {string} achievementId The achievement id
  * @param {string} characterId The character id
  */
-export function pendAwardAchievement(achievementId, characterId) {
-  const pendingAchievements = { ...game.settings.get("fvtt-player-achievements", "pendingAwardedAchievements") };
+export async function pendAwardAchievement(achievementId, characterId) {
+  const achis = await game.settings.get("fvtt-player-achievements", "pendingAwardedAchievements");
+  const pendingAchievements = { ...achis };
   if (pendingAchievements[characterId] === undefined) {
     pendingAchievements[characterId] = [achievementId];
   } else {
@@ -365,9 +375,11 @@ export function pendAwardAchievement(achievementId, characterId) {
  * @param {string} achievementId The achievement id
  * @param {string} characterIds The character id
  */
-export function unAwardAchievement(achievementId, characterIds) {
-  const awardedAchievements = { ...game.settings.get("fvtt-player-achievements", "awardedAchievements") };
-  const pendingAchievements = { ...game.settings.get("fvtt-player-achievements", "pendingAwardedAchievements") };
+export async function unAwardAchievement(achievementId, characterIds) {
+  const awachis = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
+  const pwachis = await game.settings.get("fvtt-player-achievements", "pendingAwardedAchievements");
+  const awardedAchievements = { ...awachis };
+  const pendingAchievements = { ...pwachis };
   const awardedCharacters = [...awardedAchievements[achievementId]];
 
   const cids = Array.isArray(characterIds) ? characterIds : [characterIds];
@@ -389,7 +401,7 @@ export function unAwardAchievement(achievementId, characterIds) {
   game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
   game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
 
-  const hydratedAchievements = hydrateAwardedAchievements(awardedAchievements);
+  const hydratedAchievements = await hydrateAwardedAchievements(awardedAchievements);
   game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
 
   for (const characterId of cids) {

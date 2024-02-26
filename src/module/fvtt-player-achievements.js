@@ -77,7 +77,7 @@ function registerHandlebarHelpers() {
   Handlebars.registerHelper("enrichText", function (text) {
     return new Handlebars.SafeString(enrichText(Handlebars.escapeExpression(text)));
   });
-  
+
   Handlebars.registerHelper("inStringArray", function (stringArray, string, options) {
     return stringArray.includes(string) ? options.fn(this) : options.inverse(this);
   });
@@ -114,12 +114,12 @@ function registerAPI() {
 /**
  * Toggle the Achievement Screen
  */
-async function toggleAchievementScreen() {
+function toggleAchievementScreen() {
   if (currentAchievementScreen?.rendered) {
     currentAchievementScreen.close();
   } else {
     const overrides = {
-      updateAchievements: async () => {
+      updateAchievements: () => {
         return getAchivements();
       },
     };
@@ -146,7 +146,7 @@ Hooks.on("init", async () => {
   Handlebars.registerPartial("achievement-block", achievementblock);
 });
 
-Hooks.on("ready", async () => {
+Hooks.on("ready", () => {
   log("Ready");
   registerHandlebarHelpers();
   registerAPI();

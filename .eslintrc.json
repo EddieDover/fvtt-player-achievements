@@ -37,10 +37,13 @@
       "linebreak-style": ["error", "unix"],
       // "no-shadow": ["error", { "builtinGlobals": true, "hoist": "all", "allow": ["event"] }],
       // "brace-style": ["error", "1tbs"],
-      "require-jsdoc": 2
+      "require-jsdoc": 2,
+      "require-await": "error",
+      "no-return-await": "error"
       // "quotes": ["error", "double", { "avoidEscape": true }],
       // "no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
       //"unicorn/better-regex": "error"
+
     },
 
     "overrides": [
