@@ -22,7 +22,7 @@ export class AchievementsExportDialog extends Application {
     this.exportData = JSON.stringify(game.settings.get("fvtt-player-achievements", "customAchievements")).trim();
   }
 
-  async getData(options) {
+  getData(options) {
     return mergeObject(super.getData(options), {
       exportData: this.exportData,
     });
@@ -45,7 +45,7 @@ export class AchievementsExportDialog extends Application {
     this.close();
   }
 
-  async activateListeners(html) {
+  activateListeners(html) {
     super.activateListeners(html);
   }
 }

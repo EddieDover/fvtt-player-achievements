@@ -30,11 +30,11 @@ export class AddAchievementForm extends FormApplication {
   }
 
   // eslint-disable-next-line no-unused-vars
-  async _updateObject(event, formData) {
+  _updateObject(event, formData) {
     this.render(true);
   }
 
-  async getData(options) {
+  getData(options) {
     return mergeObject(super.getData(options), {
       isDM: game.user.isGM,
       overrides: this.overrides,
@@ -55,14 +55,14 @@ export class AddAchievementForm extends FormApplication {
     });
   }
 
-  activateListeners(html) {
+  async activateListeners(html) {
     super.activateListeners(html);
 
     if (this.overrides.mode === "edit") {
       this.updateSelectImage();
       this.updateSelectCloakedImage();
       this.updateSelectSound();
-      this.overrides.achievement.tags = this.overrides.achievement.tags.join(", ");
+      this.overrides.achievement.tags = this.overrides.achievement.tags?.join(", ") ?? "";
     } else {
       this.setupDefaults();
     }
@@ -70,7 +70,7 @@ export class AddAchievementForm extends FormApplication {
     const achievementId = $("input[name='achievement_id']", html);
     const achievementTags = $("input[name='achievement_tags']", html);
 
-    $("button[type='submit']", html).click(this.handleSubmit.bind(this));
+    $("button[type='submit']", html).click(await this.handleSubmit.bind(this));
     $("button[name='clear_image']", html).click(this.handleClearImage.bind(this));
     $("button[name='clear_cloaked_image']", html).click(this.handleClearCloakedImage.bind(this));
     $("button[name='preview_sound']", html).click(this.handlePreviewSound.bind(this));
@@ -252,7 +252,7 @@ export class AddAchievementForm extends FormApplication {
     imagePreview.src = unlcoakedImagePreview.src;
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target.form);
     // eslint-disable-next-line unicorn/no-array-reduce
@@ -301,19 +301,21 @@ export class AddAchievementForm extends FormApplication {
         .filter((tag) => tag !== ""),
     };
 
-    if (!achievement.id || !achievement.title) {
-      return;
-    }
-
-    const customAchievements = game.settings.get("fvtt-player-achievements", "customAchievements");
-
     const editing = this.overrides.mode === "edit";
+
+    const customAchievements = await game.settings.get("fvtt-player-achievements", "customAchievements");
 
     if (editing) {
       achievement.id = this.overrides.achievement.id;
+      if (!achievement.id || !achievement.title) {
+        return;
+      }
       editAchievement(achievement);
       ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-updated"));
     } else {
+      if (!achievement.id || !achievement.title) {
+        return;
+      }
       // Verify the achievement doesn't already exist
       if (customAchievements.some((a) => a.id === achievement.id)) {
         ui.notifications.error(localize("fvtt-player-achievements.messages.duplicate-id"));

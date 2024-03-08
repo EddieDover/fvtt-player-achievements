@@ -15,6 +15,7 @@ This module provides GMs with a way to award players with achievements.
   - Create your own achievements.
   - Can use special markup to include newlines, bold, and italic text in descriptions of achievements.
   - Assign/Unassign achievements to/from players.
+  - Award achievements to players that are offline and they will recieve them when they next login.
   - Customize sound played per achievement.
   - Can choose to cloak all unearned achievements details from players.
   - Can choose to allow cloaked achievements to show title on a per achievement basis.

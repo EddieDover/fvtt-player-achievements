@@ -97,6 +97,9 @@
         "title": "Logros de importación",
         "content": "Esto sobrescribirá todos los logros existentes con datos de su portapapeles. ¿Está seguro?"
       },
+      "while-away": "Mientras estaban fuera",
+      "has-unlocked": "{while_away} {character_name} ({player_name}) ha desbloqueado",
+      "next-login-notify": "Se le notificará en su próximo inicio de sesión.",
       "delete-achievement": {
         "title": "Eliminar el logro",
         "content": "¿Estás seguro de que quieres borrar este logro?"

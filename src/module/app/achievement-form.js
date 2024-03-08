@@ -41,7 +41,7 @@ export class AchievementForm extends FormApplication {
     this.seluuid = "";
   }
 
-  async _updateObject(_event, _formData) {
+  _updateObject(_event, _formData) {
     this.render(true);
   }
 
@@ -62,7 +62,7 @@ export class AchievementForm extends FormApplication {
   }
 
   async getData(options) {
-    const currentUsers = game.users.filter((user) => user.active && user.character != undefined && !user.isGM);
+    const currentUsers = game.users.filter((user) => user.character != undefined && !user.isGM);
 
     const characters = currentUsers.map((user) => user.character);
     if (!characters) return;
@@ -70,7 +70,7 @@ export class AchievementForm extends FormApplication {
     let achievements = await this.filterAchievements();
 
     achievements.sort((a, b) => {
-      const comparison = a.title.localeCompare(b.title); // Compare titles (string comparison)
+      const comparison = a.title?.localeCompare(b.title); // Compare titles (string comparison)
       return this.sortza ? -comparison : comparison; // Sort based on sortasc, negative for descending
     });
 
@@ -104,7 +104,7 @@ export class AchievementForm extends FormApplication {
       hideDetails: this.hideDetails,
       hideAwarded: this.hideAwarded,
       hideUnawarded: this.hideUnawarded,
-      lockedAchievements: game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [],
+      lockedAchievements: (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [],
       seluuid: this.seluuid,
       currentCharacters: characters?.map((character) => {
         return {
@@ -140,12 +140,12 @@ export class AchievementForm extends FormApplication {
     inputElement.keyup(this.onFilterChange.bind(this));
     inputElement.ready(this.onInputLoad.bind(this));
     $('button[name="add-achievement"]', html).click(this.onAddAchievement.bind(this));
-    $(".edit-button", html).click(this.onEditAchievement.bind(this));
-    $(".delete-button", html).click(this.onDeleteAchievement.bind(this));
+    $(".edit-button", html).click(await this.onEditAchievement.bind(this));
+    $(".delete-button", html).click(await this.onDeleteAchievement.bind(this));
     $(".toggle-lock", html).click(this.onToggleLock.bind(this));
-    $('button[class="assign"]', html).click(this.assignAchievement.bind(this));
-    $('button[class="unassign"]', html).click(this.unassignAchievement.bind(this));
-    $('button[class*="achievement-block-tag"]', html).click(this.toggleTagFilter.bind(this));
+    $('button[class="assign"]', html).click(await this.assignAchievement.bind(this));
+    $('button[class="unassign"]', html).click(await this.unassignAchievement.bind(this));
+    $('button[class*="achievement-block-tag"]', html).click(await this.toggleTagFilter.bind(this));
     $('input[name="hide-awarded"]', html).on("change", this.onToggleHideAwarded.bind(this));
     $('input[name="hide-unawarded"]', html).on("change", this.onToggleHideUnawarded.bind(this));
     $('input[name="hide-details"]', html).on("change", this.onToggleHideDetails.bind(this));
@@ -156,28 +156,28 @@ export class AchievementForm extends FormApplication {
 
     $('button[name="feedback"]', html).click(this.onFeedback.bind(this));
     $('button[name="bugreport"]', html).click(this.onBugReport.bind(this));
-    $('button[name="discord"]', html).click(this.onDiscord.bind(this));
+    $('button[name="discord"]', html).click(await this.onDiscord.bind(this));
   }
 
-  async onFeedback(event) {
+  onFeedback(event) {
     event.preventDefault();
     const newWindow = window.open(FEEDBACK_URL, "_blank", "noopener,noreferrer");
     if (newWindow) newWindow.opener = undefined;
   }
 
-  async onBugReport(event) {
+  onBugReport(event) {
     event.preventDefault();
     const newWindow = window.open(BUGREPORT_URL, "_blank", "noopener,noreferrer");
     if (newWindow) newWindow.opener = undefined;
   }
 
-  async onDiscord(event) {
+  onDiscord(event) {
     event.preventDefault();
     const newWindow = window.open(DISCORD_URL, "_blank", "noopener,noreferrer");
     if (newWindow) newWindow.opener = undefined;
   }
 
-  async toggleTagFilter(event) {
+  toggleTagFilter(event) {
     event.preventDefault();
     const tag = event.currentTarget.dataset.achievement_tag;
     if (this.currentTagFilter.includes(tag)) {
@@ -188,7 +188,7 @@ export class AchievementForm extends FormApplication {
     this.render(true);
   }
 
-  async toggleImportDialog() {
+  toggleImportDialog() {
     if (achievementsImportDialog?.rendered) {
       achievementsImportDialog.close();
     } else {
@@ -197,7 +197,7 @@ export class AchievementForm extends FormApplication {
     }
   }
 
-  async onImportAchievements(event) {
+  onImportAchievements(event) {
     event.preventDefault();
     this.toggleImportDialog();
   }
@@ -247,8 +247,8 @@ export class AchievementForm extends FormApplication {
     this.hideDetails = event.target.checked;
   }
 
-  lockAchievement(achievementId) {
-    const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
+  async lockAchievement(achievementId) {
+    const lockedAchievements = (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [];
     const index = lockedAchievements.indexOf(achievementId);
     if (index === -1) {
       lockedAchievements.push(achievementId);
@@ -258,8 +258,8 @@ export class AchievementForm extends FormApplication {
     game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
   }
 
-  unlockAchievement(achievementId) {
-    const lockedAchievements = game.settings.get("fvtt-player-achievements", "lockedAchievements") ?? [];
+  async unlockAchievement(achievementId) {
+    const lockedAchievements = (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [];
     const index = lockedAchievements.indexOf(achievementId);
     if (index !== -1) {
       lockedAchievements.splice(index, 1);
@@ -289,35 +289,33 @@ export class AchievementForm extends FormApplication {
     const characterId = event.currentTarget.dataset.character_id;
     // get the player name for debug purposes
     if (characterId === "ALL") {
-      const currentUsers = game.users.filter((user) => user.active && !user.isGM);
+      const currentUsers = game.users.filter((user) => !user.isGM);
       //Filter out the users who already have the achievement
-      const awardedAchievements = game.settings.get("fvtt-player-achievements", "awardedAchievements");
+      const awardedAchievements = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
       const characters = awardedAchievements[achievementId] ?? [];
       const filteredUsers = currentUsers.filter((user) => {
         return !characters.includes(user.character?.uuid);
       });
       for (const user of filteredUsers) {
-        awardAchievement(achievementId, user.character?.uuid);
+        await awardAchievement(achievementId, user.character?.uuid);
       }
     } else {
-      awardAchievement(achievementId, characterId);
+      await awardAchievement(achievementId, characterId);
     }
 
     this.render(true);
   }
 
-  unassignAchievement(event) {
+  async unassignAchievement(event) {
     event.preventDefault();
     const achievementId = event.currentTarget.dataset.achievement_id;
     const characterId = event.currentTarget.dataset.character_id;
     // get the player name for debug purposes
     if (characterId === "ALL") {
-      const currentUserUUIDs = game.users
-        .filter((user) => user.active && !user.isGM)
-        .map((user) => user.character?.uuid);
-      unAwardAchievement(achievementId, currentUserUUIDs);
+      const currentUserUUIDs = game.users.filter((user) => !user.isGM).map((user) => user.character?.uuid);
+      await unAwardAchievement(achievementId, currentUserUUIDs);
     } else {
-      unAwardAchievement(achievementId, characterId);
+      await unAwardAchievement(achievementId, characterId);
     }
 
     setTimeout(() => {
@@ -359,7 +357,7 @@ export class AchievementForm extends FormApplication {
     this.render(true);
   }
 
-  onEditAchievement(event) {
+  async onEditAchievement(event) {
     const id = event.currentTarget.dataset.achievement_id;
     const overrides = {
       onend: () => {
@@ -368,7 +366,7 @@ export class AchievementForm extends FormApplication {
         }, 350);
       },
       mode: "edit",
-      achievement: game.settings.get("fvtt-player-achievements", "customAchievements").find((a) => a.id === id),
+      achievement: await game.settings.get("fvtt-player-achievements", "customAchievements").find((a) => a.id === id),
     };
     const addAchievementForm = new AddAchievementForm(overrides);
     addAchievementForm.render(true);

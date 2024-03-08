@@ -35,6 +35,7 @@
     "link-project": "gulp link",
     "clean": "gulp clean",
     "clean:link": "gulp link --clean",
+    "devexport": "gulp devexport",
     "lint": "eslint --ext .js,.cjs,.mjs .",
     "lint:fix": "eslint --ext .js,.cjs,.mjs --fix .",
     "format": "prettier --write \"./**/*.(js|cjs|mjs|json|yml|scss)\"",
@@ -42,13 +43,16 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
     "postinstall": "husky install",
-    "changelog2": "generate-changelog -u https://github.com/EddieDover/fvtt-player-achievements",
-    "genapidoc": "npx jsdoc2md --helper ./api_doc_generation/apihelpers.js --template ./api_doc_generation/apidoctemplate.hbs ./src/module/api.js > ./API.md"
+    "genapidoc": "npx jsdoc2md --helper ./api_doc_generation/apihelpers.js --template ./api_doc_generation/apidoctemplate.hbs ./src/module/api.js > ./API.md",
+    "release": "commit-and-tag-version --sign",
+    "release:dry": "commit-and-tag-version --dry-run"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.1",
     "@rollup/stream": "^3.0.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "commit-and-tag-version": "^12.2.0",
+    "del": "^7.1.0",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-jest": "^27.4.2",
@@ -78,5 +82,11 @@
   "lint-staged": {
     "*.(js|cjs|mjs)": "eslint --fix",
     "*.(json|yml|scss)": "prettier --write"
+  },
+  "commit-and-tag-version": {
+    "skip": {
+      "commit": true,
+      "tag": true
+    }
   }
 }

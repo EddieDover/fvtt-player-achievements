@@ -24,6 +24,14 @@ export const registerSettings = () => {
     "type": Object,
   });
 
+  game.settings.register("fvtt-player-achievements", "pendingAwardedAchievements", {
+    "data": {},
+    "scope": "world",
+    "config": false,
+    "default": {},
+    "type": Object,
+  });
+
   game.settings.register("fvtt-player-achievements", "customAchievements", {
     "data": [],
     "scope": "world",
