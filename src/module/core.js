@@ -162,18 +162,22 @@ export async function getPendingAchievements(overrides) {
 export async function getAchivements(overrides) {
   let callingUser;
   let callingCharacterId = "";
+  let showTags;
   if (overrides?.callingUser) {
     callingUser = overrides.callingUser;
     callingCharacterId = overrides.callingCharacterId;
+    showTags = overrides.showTags;
   } else {
     callingUser = game.user;
     callingCharacterId = "";
+    showTags = true;
   }
 
   if (!game.user.isGM) {
     return achievement_socket.executeAsGM("getAchievements", {
       callingUser: game.user,
       callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
+      showTags: await game.settings.get("fvtt-player-achievements", "showTagsToPlayers"),
     });
   }
 
@@ -217,6 +221,11 @@ export async function getAchivements(overrides) {
   const uniqueAchievementIds = [...new Set(achievementIds)];
   if (achievementIds.length !== uniqueAchievementIds.length) {
     throw new Error("Duplicate achievement ids found");
+  }
+  if (!showTags) {
+    for (const achievement of retachievements) {
+      achievement.tags = [];
+    }
   }
   return retachievements;
 }

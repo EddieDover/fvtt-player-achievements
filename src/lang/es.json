@@ -24,6 +24,10 @@
       "show-only-to-awarded-user" : {
         "name": "Mostrar solo al usuario premiado",
         "hint": "Muestre el mensaje de logro solo al usuario que lo ganó."
+      },
+      "show-tags-to-players": {
+        "name": "Mostrar etiquetas a los jugadores",
+        "hint": "Muestre las etiquetas a los jugadores, permitiéndoles filtrar también."
       }
     },
     "forms": {

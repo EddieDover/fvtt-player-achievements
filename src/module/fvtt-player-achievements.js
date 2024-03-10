@@ -19,10 +19,10 @@ import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
 import PA_API from "./api.js";
 import { MODULE_NAME, getAchivements, getPendingAchievements, log, setupAchievementSocket } from "./core.js";
-import { cleanString, enrichText } from "./utils.js";
+import { enrichText } from "./utils.js";
 
 let currentAchievementScreen;
-var registeredHandlebars = false;
+let registeredHandlebars = false;
 
 /* Handlebars */
 
@@ -44,13 +44,13 @@ function registerHandlebarHelpers() {
   });
 
   Handlebars.registerHelper("ownedCharactersCount", function (characterIds, characters, options) {
-    return characters?.filter((character) => characterIds.includes(character.uuid)).length ?? 0 > 0
+    return (characters?.filter((character) => characterIds.includes(character.uuid)).length ?? 0) > 0
       ? options.fn(this)
       : options.inverse(this);
   });
 
   Handlebars.registerHelper("unownedCharactersCount", function (characterIds, characters, options) {
-    return characters?.filter((character) => !characterIds.includes(character.uuid)).length ?? 0 > 0
+    return (characters?.filter((character) => !characterIds.includes(character.uuid)).length ?? 0) > 0
       ? options.fn(this)
       : options.inverse(this);
   });

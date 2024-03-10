@@ -24,6 +24,10 @@
       "show-only-to-awarded-user": {
         "name": "Show Only to Awarded User",
         "hint": "Show the achievement message only to the user who gained it."
+      },
+      "show-tags-to-players": {
+        "name": "Show tags to Players",
+        "hint": "Show tags to players, allowing them to filter as well."
       }
     },
     "forms": {

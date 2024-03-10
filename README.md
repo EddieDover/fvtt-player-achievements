@@ -8,32 +8,42 @@ This module provides GMs with a way to award players with achievements.
 [![Foundry Hub Comments](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Ffvtt-player-achievements%2Fshield%2Fcomments)](https://www.foundryvtt-hub.com/package/fvtt-player-achievements/)
 
 ## Features
-  ### Developers
-  - Provides an API documented in [API.md](./API.md)
-  - Provides hooks for after achievement award/unaward.
-  ### GMs
-  - Create your own achievements.
-  - Can use special markup to include newlines, bold, and italic text in descriptions of achievements.
-  - Assign/Unassign achievements to/from players.
-  - Award achievements to players that are offline and they will recieve them when they next login.
-  - Customize sound played per achievement.
-  - Can choose to cloak all unearned achievements details from players.
-  - Can choose to allow cloaked achievements to show title on a per achievement basis.
-  - Can choose an image to show when an achievement is cloaked.
-  - Can choose to hide all unearned achievements from players.
-  - Can show achievement earn message to all players or only receiving player.
-  - Can backup achievement data to clipboard as JSON.
-  - Can restore achievement data from clipboard JSON text.
- ### Players
-  - Optionally play a sound when an achievement is earned.
-  - Control the volume of achievement sounds if they play.
- ### All
-  - Sort Achievement View by achievement name (ascending or descending).
-  - Sort Achievement View by owned player.
-  - Filter Achievement View by name.
 
+### Developers
+
+- Provides an API documented in [API.md](./API.md)
+- Provides hooks for after achievement award/unaward.
+
+### GMs
+
+- Create your own achievements.
+- Add tags to achievements for easier display filtering.
+- Choose to show or hide tags when players view achievements.
+- Assign/Unassign achievements to/from players.
+- Award achievements to players that are offline and they will recieve them when they next login.
+- Customize sound played per achievement.
+- Choose to cloak all unearned achievements details from players.
+- Choose to allow cloaked achievements to show title on a per achievement basis.
+- Choose an image to show when an achievement is cloaked.
+- Choose to hide all unearned achievements from players.
+- Show achievement earn message to all players or only receiving player.
+- Backup achievement data to clipboard as JSON.
+- Restore achievement data from clipboard JSON text.
+- Use special markup to include newlines, bold, and italic text in descriptions of achievements.
+
+### Players
+
+- Optionally play a sound when an achievement is earned.
+- Control the volume of achievement sounds if they play.
+
+### All
+
+- Sort Achievement View by achievement name (ascending or descending).
+- Sort Achievement View by owned player.
+- Filter Achievement View by name.
 
 ## Known Conflicts
+
 | Plugin | id | Conflict |
 | --- | --- | --- |
 | Argon - Combat Hud | enhancedcombathud | Opens the Achievement Window after selecting target. |
@@ -42,7 +52,7 @@ This module provides GMs with a way to award players with achievements.
 
 Feel free to file a Bug Report / Feature Request under the Issues tab of Github.
 
-Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
+Or you can join my **Discord** server here: [https://discord.gg/XuGx7zNMKZ](https://discord.gg/XuGx7zNMKZ)
 
 ## How to Use - DMs & Players
 
@@ -57,15 +67,14 @@ Or you can join my **Discord** server here: https://discord.gg/XuGx7zNMKZ
 
 <img src="./previews/achievementScreenDMInstructions2.png" title="DM Instructions for awarding achievements" />
 
-
 ### Markup
 
 The following tags are supported in the Achievement Description:
 
-* {nl} - Inserts a line break
-* {b}{/b} - Contents will be <b>bold</b>
-* {i}{/i} - Contents will be <i>italics</i>
-* {u}{/u} - Contents will be <u>underlined</u>
+- {nl} - Inserts a line break
+- {b}{/b} - Contents will be <b>bold</b>
+- {i}{/i} - Contents will be <i>italics</i>
+- {u}{/u} - Contents will be <u>underlined</u>
 
 ## How to Use - Developers
 
@@ -77,11 +86,11 @@ The module provides two hooks, "**fvtt-player-achievements.awardAchievement**" a
 
 #### Example Usage:
 
-```javascript
-// Triggered after an achievement is granted to a character
-Hooks.on("fvtt-player-achievements.awardAchievement", (achievementId, characterUUID) => {
-  console.log(`Character ${characterUUID} has gained the achievement: ${achievementId}`);
-});
+ ```javascript
+  // Triggered after an achievement is granted to a character
+  Hooks.on("fvtt-player-achievements.awardAchievement", (achievementId, characterUUID) => {
+    console.log(`Character ${characterUUID} has gained the achievement: ${achievementId}`);
+  });
 ```
 
 ### API
@@ -94,26 +103,21 @@ An API is also provided that allows direct control of this module. See [API.md](
 
   <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"></img>
 
-
 ### Achievements Options
 
   <img src="./previews/achievementsOptions.png" title="Foundry Achievements Button"></img>
-
 
 ### Achievements Screen (GM)
 
   <img src="./previews/achievementScreen.png" title="Foundry Achievements Button"></img>
 
-
 ### Achievements Screen (Player)
 
   <img src="./previews/playerAchevementScreen.png" title="Foundry Achievements Button"></img>
 
-
 ### Achievement Message
 
   <img src="./previews/achievementMessage.png" title="Foundry Achievements Button"></img>
-
 
 ### Add Achievement Screen
 
@@ -122,11 +126,12 @@ An API is also provided that allows direct control of this module. See [API.md](
 ## Credits
 
 ### Sounds
+
   notification.ogg - [https://freesound.org/people/Rob_Marion/sounds/542043/](https://freesound.org/people/Rob_Marion/sounds/542043/)
 
 ### Images
-  default.webp - [https://game-icons.net/1x1/skoll/achievement.html](https://game-icons.net/1x1/skoll/achievement.html)
 
+  default.webp - [https://game-icons.net/1x1/skoll/achievement.html](https://game-icons.net/1x1/skoll/achievement.html)
 
 ### Localization
 

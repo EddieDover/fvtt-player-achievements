@@ -106,4 +106,13 @@ export const registerSettings = () => {
     "default": false,
     "type": Boolean,
   });
+
+  game.settings.register("fvtt-player-achievements", "showTagsToPlayers", {
+    "name": "fvtt-player-achievements.settings.show-tags-to-players.name",
+    "hint": "fvtt-player-achievements.settings.show-tags-to-players.hint",
+    "scope": "world",
+    "config": true,
+    "default": true,
+    "type": Boolean,
+  });
 };
