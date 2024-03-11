@@ -1,3 +1,18 @@
+
+## [1.3.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.2.3...v1.3.0) (2024-03-11)
+
+
+### Features
+
+* added support for awarding achievements to offline players ([c151dcc](https://github.com/EddieDover/fvtt-player-achievements/commit/c151dcc4210f6e609f38ed3bee2fd106756ef378)), closes [#45](https://github.com/EddieDover/fvtt-player-achievements/issues/45)
+* achievements may now contain newlines , bold, and italics by using special markup. See documentation. ([f022ab1](https://github.com/EddieDover/fvtt-player-achievements/commit/f022ab1537e9939f7573f73be7c93c2c6c14cecd))
+* added custom tags support ([caad360](https://github.com/EddieDover/fvtt-player-achievements/commit/caad360153c9443e03c7415e8e9bffb3376f6524))
+
+
+### Bug Fixes
+
+* fixed alphabetical asc/desc sorting ([e57a59f](https://github.com/EddieDover/fvtt-player-achievements/commit/e57a59f6b23117a467d2d8791ad2753ebe81e219))
+
 #### 1.2.3 (2024-02-18)
 
 ##### Bug Fixes
