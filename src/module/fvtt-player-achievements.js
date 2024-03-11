@@ -105,6 +105,9 @@ function registerAPI() {
     doesAchievementExist: PA_API.doesAchievementExist,
     getAchievementsByCharacter: PA_API.getAchievementsByCharacter,
     removeAchievementFromCharacter: PA_API.removeAchievementFromCharacter,
+    toggleAchievementWindow: () => {
+      showWindow();
+    },
   };
   log("API Registered");
 }
@@ -126,6 +129,13 @@ function toggleAchievementScreen() {
     currentAchievementScreen = new AchievementForm(overrides);
     currentAchievementScreen.render(true);
   }
+}
+
+/**
+ * Displays the Achievement Window
+ */
+function showWindow() {
+  toggleAchievementScreen();
 }
 
 /* Hooks */
@@ -171,9 +181,7 @@ Hooks.on("renderSceneControls", () => {
     newli.setAttribute("role", "button");
     newli.dataset.tooltip = "Achievement Sheet";
     newli.innerHTML = `<i class="fas fa-trophy"></i>`;
-    newli.addEventListener("click", async () => {
-      await toggleAchievementScreen();
-    });
+    newli.addEventListener("click", showWindow);
     controls.append(newli);
   }
 });
