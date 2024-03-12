@@ -9,5 +9,9 @@
     "translation.toLanguage": "es",
     "google-translate.maxSizeOfResult": 250,
     "google-translate.firstLanguage": "es",
-    "google-translate.secondLanguage": "zh-cn"
+    "google-translate.secondLanguage": "zh-cn",
+    "coverage-gutters.coverageBaseDir": "coverage",
+    "coverage-gutters.showGutterCoverage": true,
+    "coverage-gutters.coverageReportFileName": "lcov.info",
+    "coverage-gutters.customizable.status-bar-toggler-watchCoverageAndVisibleEditors-enabled": true
 }

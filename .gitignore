@@ -10,3 +10,6 @@ copydist.bat
 .env
 foundryconfig.json
 fvtt-player-achievements.zip
+
+# Coverage
+coverage/

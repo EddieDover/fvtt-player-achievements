@@ -1,7 +1,6 @@
-// SPDX-FileCopyrightText: 2022 Johannes Loher
-//
-// SPDX-License-Identifier: MIT
-
-export default {
+// eslint-disable-next-line unicorn/prefer-module
+module.exports = {
   testEnvironment: "jsdom",
+  collectCoverageFrom: ["src/**/*.js"],
+  coverageReporters: ["text", "text-summary", "lcov"],
 };
