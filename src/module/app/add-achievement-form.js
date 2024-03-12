@@ -270,7 +270,7 @@ export class AddAchievementForm extends FormApplication {
       data.achievement_sound = DEFAULT_SOUND;
     }
 
-    data.achievement_tags = data.achievement_tags ?? "";
+    data.achievement_tags = data.achievement_tags ?? [];
 
     // eslint-disable-next-line unicorn/no-array-reduce
     const data_no_tags = Object.keys(data).reduce((object, key) => {
