@@ -1,4 +1,11 @@
 
+## [1.4.1](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.4.0...v1.4.1) (2024-03-12)
+
+
+### Bug Fixes
+
+* fixed issue where sometimes tags wouldn't save properly ([d3a1edc](https://github.com/EddieDover/fvtt-player-achievements/commit/d3a1edc4394d5bbd3af84afd699bc8389b13de06))
+
 ## [1.4.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.3.0...v1.4.0) (2024-03-12)
 
 
