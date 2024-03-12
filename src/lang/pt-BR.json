@@ -41,8 +41,7 @@
         "no-achievements-match-filter": "Nenhuma conquista encontrada com o filtro.",
         "no-achievements-added": "Nenhuma conquista foi adicionada ainda.",
         "bugreport": "Enviar Report de Bug",
-        "feedback": "Enviar Feedback",
-        "discord": "Discord"
+        "feedback": "Enviar Feedback"
       },
       "achievement-block": {
         "edit": "Editar",

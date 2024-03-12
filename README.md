@@ -52,8 +52,6 @@ This module provides GMs with a way to award players with achievements.
 
 Feel free to file a Bug Report / Feature Request under the Issues tab of Github.
 
-Or you can join my **Discord** server here: [https://discord.gg/XuGx7zNMKZ](https://discord.gg/XuGx7zNMKZ)
-
 ## How to Use - DMs & Players
 
     Note: Players will see achievements that they are allowed to see based on the DMs options.

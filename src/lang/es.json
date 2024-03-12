@@ -45,8 +45,7 @@
         "no-achievements-match-filter": "No hay logros que coincidan con su filtro.",
         "no-achievements-added": "Todavía no se han agregado logros.",
         "bugreport": "Dar retroalimentación",
-        "feedback": "Reportar un fallo",
-        "discord": "Discord"
+        "feedback": "Reportar un fallo"
       },
       "achievement-block" : {
         "edit": "Editar",

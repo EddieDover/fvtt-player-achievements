@@ -44,9 +44,8 @@
         "hide-details": "Compact View",
         "no-achievements-match-filter": "No achievements match your filter.",
         "no-achievements-added": "No achievements have been added yet.",
-        "bugreport": "File a Bug Report",
-        "feedback": "Send Feedback",
-        "discord": "Discord"
+        "bugreport": "File a Bug Report or Feature Request",
+        "feedback": "Send Feedback"
       },
       "achievement-block": {
         "edit": "Edit",
