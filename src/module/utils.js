@@ -46,7 +46,7 @@ export function localize(key) {
 /**
  * Hydrate achievements with awarded actors
  * @param {Array} awardedAchievements Array of awarded achievements
- * @returns {Array} hydratedAchievements
+ * @returns {Promise<Array>} hydratedAchievements
  */
 export async function hydrateAwardedAchievements(awardedAchievements) {
   const customAchievements = (await game.settings.get("fvtt-player-achievements", "customAchievements")) ?? [];
