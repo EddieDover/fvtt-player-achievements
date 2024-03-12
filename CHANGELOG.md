@@ -1,4 +1,11 @@
 
+## [1.4.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.3.0...v1.4.0) (2024-03-12)
+
+
+### Features
+
+* **api:** added hook for toggling visibility of achievement window. ([0b8f9a5](https://github.com/EddieDover/fvtt-player-achievements/commit/0b8f9a5970d4cc47023bc920d16d1b7b5171e9ee))
+
 ## [1.3.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.2.3...v1.3.0) (2024-03-11)
 
 
