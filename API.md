@@ -95,17 +95,19 @@ All functions return the following object:
 
   &nbsp;&nbsp;&nbsp;&nbsp;  - `description` (string): The achievement description
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `showTitleCloaked` (boolean) [**Optional**]: Show the title cloaked? (Default: false)
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `showTitleCloaked` (boolean): Show the title cloaked?
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `image` (string) [**Optional**]: The achievement image (Default: &quot;/modules/fvtt-player-achievements/images/default.webp&quot;)
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `image` (string): The achievement image
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `cloakedImage` (string) [**Optional**]: The achievement cloaked image (Default: &quot;/modules/fvtt-player-achievements/images/default.webp&quot;)
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `cloakedImage` (string): The achievement cloaked image
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `sound` (string) [**Optional**]: The achievement sound effect (Default: &quot;/modules/fvtt-player-achievements/sounds/notification.ogg&quot;)
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `sound` (string): The achievement sound effect
+
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `tags` (Array.&lt;string&gt;): The achievement tags
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Was the achievement created?
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<string>"`: The ID of the achievement
 
 <hr/>
 
@@ -121,13 +123,15 @@ All functions return the following object:
 
   &nbsp;&nbsp;&nbsp;&nbsp;  - `description` (string): The achievement description
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `showTitleCloaked` (boolean) [**Optional**]: Show the title cloaked? (Default: false)
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `showTitleCloaked` (boolean): Show the title cloaked?
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `image` (string) [**Optional**]: The achievement image (Default: &quot;/modules/fvtt-player-achievements/images/default.webp&quot;)
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `image` (string): The achievement image
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `cloakedImage` (string) [**Optional**]: The achievement cloaked image (Default: &quot;/modules/fvtt-player-achievements/images/default.webp&quot;)
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `cloakedImage` (string): The achievement cloaked image
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `sound` (string) [**Optional**]: The achievement sound effect (Default: &quot;/modules/fvtt-player-achievements/sounds/notification.ogg&quot;)
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `sound` (string): The achievement sound effect
+
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `tags` (Array.&lt;string&gt;): The achievement tags
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
@@ -157,7 +161,7 @@ All functions return the following object:
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Parameters:**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;  - `id` (string): 
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `id` (string): The achievement id
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 

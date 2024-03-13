@@ -75,7 +75,7 @@
         "add-achievement":"Agregar Logro",
         "update-achievement":"Actualizar el Logro",
         "window-title": "Agregar/Editar Logro",
-        "tags":"Etiquetas"
+        "tags":"Etiquetas (separadas por comas)"
       },
       "achievements-export": {
         "export-message": "Por favor, copia los siguientes datos en un lugar seguro, en caso de que necesites restaurarlos más tarde."
