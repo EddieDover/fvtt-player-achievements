@@ -32,8 +32,8 @@
     },
     "forms": {
       "achievements-sheet": {
-        "all-players": "All Players",
-        "online-players": "Online Players",
+        "all-actors": "All Actors",
+        "online-actors": "Online Actors",
         "add-achievement": "Add Achievement",
         "export": "Export",
         "export-achievements": "Export achievement data to clipboard",
@@ -57,10 +57,10 @@
         "unowned": "Unowned",
         "click-to-remove": "Click to remove",
         "click-to-award": "Click to award",
-        "no-players-to-award": "No players to award.",
+        "no-actors-to-award": "No actors to award.",
         "toggle-lock": "Lock",
         "toggle-unlock": "Unlock",
-        "all-players": "All Players",
+        "all-actors": "All Actors",
         "tags": "Tags"
       },
       "add-achievement-form": {

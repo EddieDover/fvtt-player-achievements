@@ -32,8 +32,8 @@
     },
     "forms": {
       "achievements-sheet" : {
-        "all-players": "Todos los jugadores",
-        "online-players": "Jugadores en línea",
+        "all-actors": "Todos los Actores",
+        "online-actors": "Actores en línea",
         "add-achievement": "Agregar logro",
         "export": "Exportar",
         "import": "Importar",
@@ -57,10 +57,10 @@
         "unowned": "Sin propietario",
         "click-to-remove": "Haga clic para eliminar",
         "click-to-award": "Haga clic para premiar",
-        "no-players-to-award": "No hay jugadores para premiar.",
+        "no-actors-to-award": "No hay actores para otorgar",
         "toggle-lock": "Alternar bloqueo",
         "toggle-unlock": "Alternar desbloqueo",
-        "all-players": "Todos los jugadores",
+        "all-actors": "Todos os Atores",
         "tags": "Etiquetas"
       },
       "add-achievement-form": {
