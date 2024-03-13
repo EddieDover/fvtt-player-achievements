@@ -33,6 +33,7 @@
     "forms": {
       "achievements-sheet": {
         "all-players": "All Players",
+        "online-players": "Online Players",
         "add-achievement": "Add Achievement",
         "export": "Export",
         "export-achievements": "Export achievement data to clipboard",
@@ -44,6 +45,7 @@
         "hide-details": "Compact View",
         "no-achievements-match-filter": "No achievements match your filter.",
         "no-achievements-added": "No achievements have been added yet.",
+        "no-achievements-online": "No online players have any awarded achievements.",
         "bugreport": "File a Bug Report or Feature Request",
         "feedback": "Send Feedback"
       },

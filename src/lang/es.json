@@ -33,6 +33,7 @@
     "forms": {
       "achievements-sheet" : {
         "all-players": "Todos los jugadores",
+        "online-players": "Jugadores en línea",
         "add-achievement": "Agregar logro",
         "export": "Exportar",
         "import": "Importar",
@@ -44,6 +45,7 @@
         "hide-details": "Vista compacta",
         "no-achievements-match-filter": "No hay logros que coincidan con su filtro.",
         "no-achievements-added": "Todavía no se han agregado logros.",
+        "no-achievements-online": "Ningún jugador en línea tiene logros premiados.",
         "bugreport": "Dar retroalimentación",
         "feedback": "Reportar un fallo"
       },

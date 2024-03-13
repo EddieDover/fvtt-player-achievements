@@ -88,9 +88,16 @@ export class AchievementForm extends FormApplication {
     }
 
     if (this.seluuid) {
-      achievements = achievements.filter((achievement) => {
-        return achievement.completedActors.includes(this.seluuid);
-      });
+      achievements =
+        this.seluuid === "online"
+          ? achievements.filter((achievement) => {
+              return currentUsers
+                .filter((user) => user.active)
+                .some((user) => achievement.completedActors.includes(user.character?.uuid));
+            })
+          : achievements.filter((achievement) => {
+              return achievement.completedActors.includes(this.seluuid);
+            });
     }
 
     return mergeObject(super.getData(options), {
