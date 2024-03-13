@@ -17,8 +17,7 @@
 
 import { DEFAULT_IMAGE } from "../constants";
 import { getDefaultSound, localize } from "../utils";
-import {createAchievement, editAchievement, generateUniqueId } from "../core";
-import { localize } from "../utils";
+import { createAchievement, editAchievement, generateUniqueId } from "../core";
 
 export class AddAchievementForm extends FormApplication {
   constructor(overrides) {
