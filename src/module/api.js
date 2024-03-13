@@ -23,6 +23,7 @@ import {
   editAchievement as prime_editAchievement,
   deleteAchievement as prime_deleteAchievement,
   doesActorExist,
+  generateUniqueId,
 } from "./core";
 import { getDefaultSound } from "./utils";
 
@@ -178,9 +179,9 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} cloakedImage The achievement cloaked image
    * @param {string} sound The achievement sound effect
    * @param {Array<string>} tags The achievement tags
-   * @returns { PlayerAchievementReturn<boolean> } Was the achievement created?
+   * @returns { PlayerAchievementReturn<string> } The ID of the achievement
    */
-  function createAchievement(
+  async function createAchievement(
     id,
     title,
     description,
@@ -188,14 +189,17 @@ const PlayerAchievementsAPI = (function () {
     image = DEFAULT_IMAGE,
     cloakedImage = DEFAULT_IMAGE,
     sound = getDefaultSound(),
-    tags,
+    tags = [],
   ) {
-    if (!id || !title || !description || !image || !cloakedImage || !sound || !tags) {
-      return createReturnPayload("Missing required field(s).", false);
+    if (!id) {
+      id = await generateUniqueId();
+    }
+    if (!title || !description || !image || !cloakedImage || !sound || !tags) {
+      return createReturnPayload("Missing required field(s).", "");
     }
 
     if (doesAchievementExist(id).payload === true) {
-      return createReturnPayload("Achievement already exists.", false);
+      return createReturnPayload("Achievement already exists.", "");
     }
 
     const achievement = {
@@ -210,7 +214,7 @@ const PlayerAchievementsAPI = (function () {
     };
 
     prime_createAchievement(achievement);
-    return createReturnPayload("", true);
+    return createReturnPayload("", id);
   }
 
   /**
@@ -241,6 +245,7 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} image The achievement image
    * @param {string} cloakedImage The achievement cloaked image
    * @param {string} sound The achievement sound effect
+   * @param {Array<string>} tags The achievement tags
    * @returns { PlayerAchievementReturn<boolean> } Was the achievement edited?
    */
   function editAchievement(
@@ -251,7 +256,7 @@ const PlayerAchievementsAPI = (function () {
     image = DEFAULT_IMAGE,
     cloakedImage = DEFAULT_IMAGE,
     sound = getDefaultSound(),
-    tags,
+    tags = [],
   ) {
     if (!id || !title || !description || !image || !cloakedImage || !sound || !tags) {
       return createReturnPayload("Missing required field(s).", false);

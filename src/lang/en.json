@@ -75,7 +75,7 @@
         "add-achievement": "Add Achievement",
         "update-achievement": "Update Achievement",
         "window-title": "Add/Edit Achievement",
-        "tags": "Tags"
+        "tags": "Tags (comma separated)"
       },
       "achievements-export": {
         "export-message": "Please copy the following data to a safe place, in case you need to restore it later."

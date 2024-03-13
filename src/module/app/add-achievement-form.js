@@ -16,8 +16,9 @@
  */
 
 import { DEFAULT_IMAGE } from "../constants";
-import { createAchievement, editAchievement } from "../core";
 import { getDefaultSound, localize } from "../utils";
+import {createAchievement, editAchievement, generateUniqueId } from "../core";
+import { localize } from "../utils";
 
 export class AddAchievementForm extends FormApplication {
   constructor(overrides) {
@@ -65,7 +66,7 @@ export class AddAchievementForm extends FormApplication {
       this.updateSelectSound();
       this.overrides.achievement.tags = this.overrides.achievement.tags?.join(", ") ?? "";
     } else {
-      this.setupDefaults();
+      await this.setupDefaults();
     }
 
     const achievementId = $("input[name='achievement_id']", html);
@@ -82,9 +83,11 @@ export class AddAchievementForm extends FormApplication {
     achievementId.on("keyup", () => this.validateFields());
   }
 
-  setupDefaults() {
+  async setupDefaults() {
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
+    const achievementId = document.getElementsByName("achievement_id")[0];
+    achievementId.value = await generateUniqueId();
     imageInput.value = DEFAULT_IMAGE;
     imagePreview.style.display = "block";
     imagePreview.src = DEFAULT_IMAGE;

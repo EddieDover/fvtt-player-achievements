@@ -75,7 +75,7 @@
         "add-achievement": "Adicionar Conquista",
         "update-achievement": "Atualizar Conquista",
         "window-title": "Adicionar/Editar Conquista",
-        "tags": "Tags"
+        "tags": "Tags (separadas por vírgula)"
       },
       "achievements-export": {
         "export-message": "Por favor copiar os seguintes dados para um local seguro, caso precise restaurar mais tarde."

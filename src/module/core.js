@@ -234,6 +234,27 @@ export async function getAchivements(overrides) {
 }
 
 /**
+ * Generates a Unique ID
+ * @returns {Promise<string>} The unique id
+ */
+export async function generateUniqueId() {
+  let achievements = await hydrateAwardedAchievements(
+    (await game.settings.get("fvtt-player-achievements", "awardedAchievements")) ?? {},
+  );
+
+  const achievementIds = achievements.map((achievement) => achievement.id);
+  const uniqueAchievementIds = new Set(achievementIds);
+
+  let newID = Math.random().toString(36).slice(2, 15);
+
+  while (uniqueAchievementIds.has(newID)) {
+    newID = Math.random().toString(36).slice(2, 15);
+  }
+
+  return newID;
+}
+
+/**
  * Display a message when awarding achievement to character who isn't logged in.
  * @param {*} achievementId The achievement id
  * @param {*} characterId The character id
