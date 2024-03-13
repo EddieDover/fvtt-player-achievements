@@ -28,6 +28,7 @@
     "type": "individual",
     "url": "https://github.com/sponsors/EddieDover"
   },
+  "type": "module",
   "scripts": {
     "package": "gulp zip-dist",
     "build": "gulp build",
@@ -36,16 +37,16 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:cli": "cypress run --headless",
-    "coverage": "jest --coverage",
     "clean": "gulp clean",
     "clean:link": "gulp link --clean",
     "devexport": "gulp devexport",
     "lint": "eslint --ext .js,.cjs,.mjs .",
     "lint:fix": "eslint --ext .js,.cjs,.mjs --fix .",
     "format": "prettier --write \"./**/*.(js|cjs|mjs|json|yml|scss)\"",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test:watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch",
+    "test:ci": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --ci --reporters=default --reporters=jest-junit",
     "postinstall": "husky install",
     "genapidoc": "npx jsdoc2md --helper ./api_doc_generation/apihelpers.js --template ./api_doc_generation/apidoctemplate.hbs ./src/module/api.js > ./API.md",
     "release": "commit-and-tag-version --sign",
@@ -93,5 +94,8 @@
       "commit": true,
       "tag": true
     }
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
   }
 }
