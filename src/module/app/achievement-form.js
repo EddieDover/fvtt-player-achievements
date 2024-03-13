@@ -153,8 +153,17 @@ export class AchievementForm extends FormApplication {
     $('button[name="import-achievements"]', html).click(await this.onImportAchievements.bind(this));
     $('button[name="export-achievements"]', html).click(this.onExportAchievements.bind(this));
 
+    $('div[class="achievement-block__title-copy"]', html).click(this.onCopyIdToClipboard.bind(this));
+
     $('button[name="feedback"]', html).click(this.onFeedback.bind(this));
     $('button[name="bugreport"]', html).click(this.onBugReport.bind(this));
+  }
+
+  onCopyIdToClipboard(event) {
+    const achievementId = event.currentTarget.dataset.achievement_id;
+    if (!achievementId) return;
+    navigator.clipboard.writeText(achievementId);
+    ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-id-copied"));
   }
 
   onFeedback(event) {

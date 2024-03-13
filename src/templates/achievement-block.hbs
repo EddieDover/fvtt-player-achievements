@@ -7,7 +7,17 @@
     {{/unless}}
     <div class="achievement-block__content">
       <div class="achievement-block-title-row">
+        <div class="achievement-block__title-wrap">
         <p class={{#iflockedachi id}}{{#if hideDetails}}"achievement-block__title-lock"{{else}}"achievement-block__title"{{/if}}{{else}}"achievement-block__title"{{/iflockedachi}}>{{title}}</p>
+        {{#unless hideDetails}}
+        <div
+            class="achievement-block__title-copy"
+            title={{id}}
+            data-achievement_id="{{id}}"
+          ><i class="fas fa-clipboard"></i>
+        </div>
+        {{/unless}}
+        </div>
         {{#if isDM}}
         <div class="achievement-block__title-buttons">
           <button

@@ -106,7 +106,8 @@
       "delete-achievement": {
         "title": "Deletar Conquista",
         "content": "Tem certeza que deseja deletar essa conquista?"
-      }
+      },
+      "achievement-id-copied": "ID da conquista copiado para a área de transferência."
     }
   }
 }

@@ -106,7 +106,8 @@
       "delete-achievement": {
         "title": "Eliminar el logro",
         "content": "¿Estás seguro de que quieres borrar este logro?"
-      }
+      },
+      "achievement-id-copied": "ID de logro copiado al portapapeles."
     }
   }
 }
