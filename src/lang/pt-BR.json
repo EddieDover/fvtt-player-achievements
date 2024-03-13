@@ -9,10 +9,6 @@
         "name": "Tocar Sons de Conquista",
         "hint": "Toca um som se você receber uma conquista"
       },
-      "self-sound-volume": {
-        "name": "Volume de Som de Conquista",
-        "hint": "O volume do som tocado quando você ganha uma conquista"
-      },
       "hide-unearned": {
         "name": "Esconder Conquistas não-alcançadas",
         "hint": "Esconde todas as conquistas não-alcançadas do Jogador. (Isso tem prioridade em cima da configuração de Ocultar)"

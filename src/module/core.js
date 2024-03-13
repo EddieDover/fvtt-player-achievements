@@ -19,7 +19,7 @@ export const MODULE_NAME = "fvtt-player-achievements";
 export const DEFAULT_IMAGE = "/modules/fvtt-player-achievements/images/default.webp";
 export const DEFAULT_SOUND = "/modules/fvtt-player-achievements/sounds/notification.ogg";
 
-import { deepCopy, enrichText, hydrateAwardedAchievements } from "./utils.js";
+import { deepCopy, enrichText, getClientInterfaceVolume, hydrateAwardedAchievements } from "./utils.js";
 let achievement_socket;
 
 /**
@@ -319,16 +319,10 @@ export async function awardAchievementMessage(achievementId, characterId, late =
  * Award an achievement to self
  * @param {{ achievement: string, characterId: string }} data Achievement and Character ID
  */
-async function awardAchievementSelf({ achievement, characterId }) {
-  let playAwardSound = false;
-
-  if (await game.settings.get("fvtt-player-achievements", "playSelfSounds")) {
-    playAwardSound = true;
-  }
-
-  if (game.user.character?.uuid === characterId && playAwardSound) {
+function awardAchievementSelf({ achievement, characterId }) {
+  if (game.user.character?.uuid === characterId) {
     const audio = new Audio(achievement.sound ?? "/modules/fvtt-player-achievements/sounds/notification.ogg");
-    audio.volume = await game.settings.get("fvtt-player-achievements", "selfSoundVolume");
+    audio.volume = getClientInterfaceVolume();
     audio.play();
   }
 }
