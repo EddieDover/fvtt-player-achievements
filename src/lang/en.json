@@ -9,9 +9,9 @@
         "name": "Play Self Achievement Sounds",
         "hint": "Play a sound if you are awarded an achievement."
       },
-      "self-sound-volume": {
-        "name": "Self Achievement Sound Volume",
-        "hint": "The volume of the sound played when you are awarded an achievement."
+      "default-sound-file": {
+        "name": "Default Sound File",
+        "hint": "The default sound file to play when an achievement is awarded."
       },
       "hide-unearned": {
         "name": "Hide Unearned Achievements",

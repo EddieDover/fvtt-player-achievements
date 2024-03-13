@@ -15,6 +15,8 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { DEFAULT_SOUND } from "../constants";
+
 export const registerSettings = () => {
   game.settings.register("fvtt-player-achievements", "awardedAchievements", {
     "data": {},
@@ -46,6 +48,16 @@ export const registerSettings = () => {
     "config": false,
     "default": [],
     "type": Array,
+  });
+
+  game.settings.register("fvtt-player-achievements", "defaultSoundFile", {
+    "name": "fvtt-player-achievements.settings.default-sound-file.name",
+    "hint": "fvtt-player-achievements.settings.default-sound-file.hint",
+    "scope": "world",
+    "config": true,
+    "default": DEFAULT_SOUND,
+    "type": String,
+    "filePicker": true,
   });
 
   game.settings.register("fvtt-player-achievements", "enablePlayerAchievements", {
@@ -82,20 +94,6 @@ export const registerSettings = () => {
     "config": true,
     "default": true,
     "type": Boolean,
-  });
-
-  game.settings.register("fvtt-player-achievements", "selfSoundVolume", {
-    "name": "fvtt-player-achievements.settings.self-sound-volume.name",
-    "hint": "fvtt-player-achievements.settings.self-sound-volume.hint",
-    "scope": "local",
-    "config": true,
-    "default": 0.5,
-    "type": Number,
-    "range": {
-      "min": 0,
-      "max": 1,
-      "step": 0.1,
-    },
   });
 
   game.settings.register("fvtt-player-achievements", "showOnlyToAwardedUser", {

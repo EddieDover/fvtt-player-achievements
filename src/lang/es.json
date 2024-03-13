@@ -9,9 +9,9 @@
         "name": "Reproducir Sonidos de Logro Personal",
         "hint": "Reproduce un sonido si recibes un logro."
       },
-      "self-sound-volume": {
-        "name": "Volumen de sonido de autocontrol",
-        "hint": "El volumen del sonido que se produce cuando se premio un logro."
+      "default-sound-file": {
+        "name": "Archivo de sonido predeterminado",
+        "hint": "El archivo de sonido predeterminado para reproducir cuando se otorga un logro."
       },
       "hide-unearned": {
         "name": "Ocultar logros no ganados",

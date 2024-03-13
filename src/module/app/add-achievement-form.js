@@ -15,7 +15,9 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { DEFAULT_IMAGE, DEFAULT_SOUND, createAchievement, editAchievement, generateUniqueId } from "../core";
+import { DEFAULT_IMAGE } from "../constants";
+import { getDefaultSound, localize } from "../utils";
+import {createAchievement, editAchievement, generateUniqueId } from "../core";
 import { localize } from "../utils";
 
 export class AddAchievementForm extends FormApplication {
@@ -98,9 +100,9 @@ export class AddAchievementForm extends FormApplication {
 
     const soundInput = document.querySelector("#achievement_sound");
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    soundInput.value = DEFAULT_SOUND;
+    soundInput.value = getDefaultSound();
     soundPreview.style.display = "none";
-    soundPreview.src = DEFAULT_SOUND;
+    soundPreview.src = getDefaultSound();
   }
 
   validateFields() {
@@ -115,7 +117,7 @@ export class AddAchievementForm extends FormApplication {
     event.preventDefault();
     const soundPreview = document.querySelector("#achievement_sound_preview");
     if (soundPreview.src === window.location.href) {
-      new Audio(DEFAULT_SOUND).play();
+      new Audio(getDefaultSound()).play();
     } else {
       soundPreview.play();
     }
@@ -124,9 +126,9 @@ export class AddAchievementForm extends FormApplication {
   handleClearSound(event) {
     event.preventDefault();
     const soundInput = document.querySelector("#achievement_sound");
-    soundInput.value = DEFAULT_SOUND;
+    soundInput.value = getDefaultSound();
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    soundPreview.src = DEFAULT_SOUND;
+    soundPreview.src = getDefaultSound();
   }
 
   updateSelectSound() {
@@ -269,7 +271,7 @@ export class AddAchievementForm extends FormApplication {
     }, {});
 
     if (!data.achievement_sound) {
-      data.achievement_sound = DEFAULT_SOUND;
+      data.achievement_sound = getDefaultSound();
     }
 
     data.achievement_tags = data.achievement_tags ?? [];
