@@ -87,7 +87,7 @@
           <div class="pcolumn">
             <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-remove"}})</span></p>
             <div class="owned">
-              <button class="unassign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-players"}}</button>
+              <button class="unassign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-actors"}}</button>
               {{#ownedCharacters completedActors characters}}
                 <button class="unassign" data-achievement_id="{{../id}}" title="{{this.name}}"  data-character_id="{{this.uuid}}">{{this.name}}</button>
               {{/ownedCharacters}}
@@ -98,7 +98,7 @@
           <div class="pcolumn">
             <p>{{localize "fvtt-player-achievements.forms.achievement-block.unowned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-award"}})</span></p>
             <div class="unowned">
-                <button class="assign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-players"}}</button>
+                <button class="assign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-actors"}}</button>
               {{#unownedCharacters completedActors characters}}
                 <button class="assign" data-achievement_id="{{../id}}" title="{{this.name}}" data-character_id="{{this.uuid}}">{{this.name}}</button>
               {{/unownedCharacters}}
@@ -107,7 +107,7 @@
         {{/unownedCharactersCount}}
       </div>
       {{else}}
-        <p style="margin-left:0.25rem">{{localize "fvtt-player-achievements.forms.achievement-block.no-players-to-award"}}</p>
+        <p style="margin-left:0.25rem">{{localize "fvtt-player-achievements.forms.achievement-block.no-actors-to-award"}}</p>
       {{/if}}
       {{/iflockedachi}}
     {{else}}
