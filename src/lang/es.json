@@ -9,6 +9,10 @@
         "name": "Reproducir Sonidos de Logro Personal",
         "hint": "Reproduce un sonido si recibes un logro."
       },
+      "default-sound-file": {
+        "name": "Archivo de sonido predeterminado",
+        "hint": "El archivo de sonido predeterminado para reproducir cuando se otorga un logro."
+      },
       "hide-unearned": {
         "name": "Ocultar logros no ganados",
         "hint": "Ocultar completamente los logros no ganados del jugador. (Esto tiene prioridad sobre la configuración de Cloak)."

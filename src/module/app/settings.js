@@ -15,6 +15,8 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { DEFAULT_SOUND } from "../constants";
+
 export const registerSettings = () => {
   game.settings.register("fvtt-player-achievements", "awardedAchievements", {
     "data": {},
@@ -46,6 +48,16 @@ export const registerSettings = () => {
     "config": false,
     "default": [],
     "type": Array,
+  });
+
+  game.settings.register("fvtt-player-achievements", "defaultSoundFile", {
+    "name": "fvtt-player-achievements.settings.default-sound-file.name",
+    "hint": "fvtt-player-achievements.settings.default-sound-file.hint",
+    "scope": "world",
+    "config": true,
+    "default": DEFAULT_SOUND,
+    "type": String,
+    "filePicker": true,
   });
 
   game.settings.register("fvtt-player-achievements", "enablePlayerAchievements", {

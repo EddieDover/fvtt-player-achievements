@@ -15,11 +15,14 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export const MODULE_NAME = "fvtt-player-achievements";
-export const DEFAULT_IMAGE = "/modules/fvtt-player-achievements/images/default.webp";
-export const DEFAULT_SOUND = "/modules/fvtt-player-achievements/sounds/notification.ogg";
-
-import { deepCopy, enrichText, getClientInterfaceVolume, hydrateAwardedAchievements } from "./utils.js";
+import { DEFAULT_IMAGE, MODULE_NAME } from "./constants.js";
+import {
+  deepCopy,
+  enrichText,
+  getClientInterfaceVolume,
+  getDefaultSound,
+  hydrateAwardedAchievements,
+} from "./utils.js";
 let achievement_socket;
 
 /**
@@ -79,7 +82,7 @@ export async function createAchievement({
     description,
     image: image ?? DEFAULT_IMAGE,
     cloakedImage: cloakedImage ?? DEFAULT_IMAGE,
-    sound: sound ?? DEFAULT_SOUND,
+    sound: sound ?? getDefaultSound(),
     tags,
   });
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);

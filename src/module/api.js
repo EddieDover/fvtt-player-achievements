@@ -15,16 +15,16 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { DEFAULT_IMAGE } from "./constants";
 import {
   awardAchievement as prime_awardAchievement,
   unAwardAchievement as prime_unAwardAchievement,
   createAchievement as prime_createAchievement,
   editAchievement as prime_editAchievement,
   deleteAchievement as prime_deleteAchievement,
-  DEFAULT_IMAGE,
-  DEFAULT_SOUND,
   doesActorExist,
 } from "./core";
+import { getDefaultSound } from "./utils";
 
 const createReturnPayload = (errorMessage, payload) => {
   return {
@@ -187,7 +187,7 @@ const PlayerAchievementsAPI = (function () {
     showTitleCloaked = false,
     image = DEFAULT_IMAGE,
     cloakedImage = DEFAULT_IMAGE,
-    sound = DEFAULT_SOUND,
+    sound = getDefaultSound(),
     tags,
   ) {
     if (!id || !title || !description || !image || !cloakedImage || !sound || !tags) {
@@ -250,7 +250,7 @@ const PlayerAchievementsAPI = (function () {
     showTitleCloaked = false,
     image = DEFAULT_IMAGE,
     cloakedImage = DEFAULT_IMAGE,
-    sound = DEFAULT_SOUND,
+    sound = getDefaultSound(),
     tags,
   ) {
     if (!id || !title || !description || !image || !cloakedImage || !sound || !tags) {

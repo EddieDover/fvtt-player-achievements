@@ -88,3 +88,11 @@ export function getClientInterfaceVolume() {
   console.log(vol);
   return vol;
 }
+
+/**
+ * Gets the default sound file location
+ * @returns {string} The default sound file location
+ */
+export function getDefaultSound() {
+  return game.settings.get("fvtt-player-achievements", "defaultSoundFile") ?? DEFAULT_SOUND;
+}

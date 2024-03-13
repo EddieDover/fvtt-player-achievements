@@ -9,6 +9,10 @@
         "name": "Tocar Sons de Conquista",
         "hint": "Toca um som se você receber uma conquista"
       },
+      "default-sound-file": {
+        "name": "Arquivo de som padrão",
+        "hint": "O arquivo de som padrão a ser reproduzido quando uma conquista é concedida."
+      },
       "hide-unearned": {
         "name": "Esconder Conquistas não-alcançadas",
         "hint": "Esconde todas as conquistas não-alcançadas do Jogador. (Isso tem prioridade em cima da configuração de Ocultar)"
@@ -20,6 +24,10 @@
       "show-only-to-awarded-user": {
         "name": "Exibir apenas para Usuário ganhador",
         "hint": "Exibir mensagem apenas para o usuário que ganhar a conquista."
+      },
+      "show-tags-to-players": {
+        "name": "Mostrar tags para os jogadores",
+        "hint": "Mostrar tags aos jogadores, permitindo que eles também filtrem."
       }
     },
     "forms": {
