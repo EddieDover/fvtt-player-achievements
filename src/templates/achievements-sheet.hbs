@@ -33,6 +33,7 @@
   <div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;">
     <select id="actor-filter" name="actor-filter">
       <option value="" {{#if (eq seluuid "")}}selected{{/if}}>{{localize "fvtt-player-achievements.forms.achievements-sheet.all-players"}}</option>
+      <option value="online" {{#if (eq seluuid "online")}}selected{{/if}}>{{localize "fvtt-player-achievements.forms.achievements-sheet.online-players"}}</option>
       {{#each currentCharacters as |character|}}
         <option value="{{character.uuid}}" {{#if (eq ../seluuid character.uuid)}}selected{{/if}}>{{character.name}}</option>
       {{/each}}
@@ -66,7 +67,11 @@
     {{#if currentFilter}}
       <p>{{localize "fvtt-player-achievements.forms.achievements-sheet.no-achievements-match-filter"}}</p>
     {{else}}
+      {{#if (eq seluuid "online")}}
+      <p>{{localize "fvtt-player-achievements.forms.achievements-sheet.no-achievements-online"}}</p>
+      {{else}}
       <p>{{localize "fvtt-player-achievements.forms.achievements-sheet.no-achievements-added"}}</p>
+      {{/if}}
     {{/if}}
   {{/if}}
 </form>

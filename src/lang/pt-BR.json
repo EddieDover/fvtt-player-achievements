@@ -33,6 +33,7 @@
     "forms": {
       "achievements-sheet": {
         "all-players": "Todos Jogadores",
+        "online-players": "Jogadores on-line",
         "add-achievement": "Adicionar Conquista",
         "export": "Exportar",
         "export-achievements": "Exportar dados de conquista para o clipboard",
@@ -44,6 +45,7 @@
         "hide-details": "Visão Compacta",
         "no-achievements-match-filter": "Nenhuma conquista encontrada com o filtro.",
         "no-achievements-added": "Nenhuma conquista foi adicionada ainda.",
+        "no-achievements-online": "Nenhum jogador on-line tem conquistas concedidas.",
         "bugreport": "Enviar Report de Bug",
         "feedback": "Enviar Feedback"
       },
