@@ -63,7 +63,7 @@ Feel free to file a Bug Report / Feature Request under the Issues tab of Github.
     Note: Players will see achievements that they are allowed to see based on the DMs options.
     Players will also not see the add-achievement/export/import/award/unaward/etc buttons.
 
-### First, click the Icon on your side panel: <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"></img>
+### First, click the Icon on your side panel: <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"/>
 
 <img src="./previews/achievementScreenDMInstructions.png" title="DM Instructions for main panel" />
 
@@ -105,27 +105,27 @@ An API is also provided that allows direct control of this module. See [API.md](
 
 ### Achievements Icon
 
-  <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"></img>
+  <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"/>
 
 ### Achievements Options
 
-  <img src="./previews/achievementsOptions.png" title="Foundry Achievements Button"></img>
+  <img src="./previews/achievementsOptions.png" title="Foundry Achievements Button"/>
 
 ### Achievements Screen (GM)
 
-  <img src="./previews/achievementScreen.png" title="Foundry Achievements Button"></img>
+  <img src="./previews/achievementScreen.png" title="Foundry Achievements Button"/>
 
 ### Achievements Screen (Player)
 
-  <img src="./previews/playerAchevementScreen.png" title="Foundry Achievements Button"></img>
+  <img src="./previews/playerAchevementScreen.png" title="Foundry Achievements Button"/>
 
 ### Achievement Message
 
-  <img src="./previews/achievementMessage.png" title="Foundry Achievements Button"></img>
+  <img src="./previews/achievementMessage.png" title="Foundry Achievements Button"/>
 
 ### Add Achievement Screen
 
-  <img src="./previews/addAchievementScreen.png" title="Foundry Achievements Button"></img>
+  <img src="./previews/addAchievementScreen.png" title="Foundry Achievements Button"/>
 
 ## Credits
 
