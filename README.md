@@ -9,6 +9,9 @@ This module provides GMs with a way to award players with achievements.
 
 ## View the [UPCOMING_CHANGELOG.md](UPCOMING_CHANGELOG.md) to see what's changing in the next release
 
+## Links
+| [Upcoming Changelog](UPCOMING_CHANGELOG.md) | [API Documentation](API.md) |
+
 ## Features
 
 ### Developers
