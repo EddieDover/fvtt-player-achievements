@@ -58,12 +58,14 @@ This module provides GMs with a way to award players with achievements.
 
 Feel free to file a Bug Report / Feature Request under the Issues tab of Github.
 
-## How to Use - DMs & Players
+## How to Use
+
+### DMs & Players
 
     Note: Players will see achievements that they are allowed to see based on the DMs options.
     Players will also not see the add-achievement/export/import/award/unaward/etc buttons.
 
-### First, click the Icon on your side panel: <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"/>
+#### First, click the Icon on your side panel: <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button"/>
 
 <img src="./previews/achievementScreenDMInstructions.png" title="DM Instructions for main panel" />
 
@@ -71,7 +73,7 @@ Feel free to file a Bug Report / Feature Request under the Issues tab of Github.
 
 <img src="./previews/achievementScreenDMInstructions2.png" title="DM Instructions for awarding achievements" />
 
-### Markup
+#### Markup
 
 The following tags are supported in the Achievement Description:
 
@@ -80,15 +82,15 @@ The following tags are supported in the Achievement Description:
 - {i}{/i} - Contents will be <i>italics</i>
 - {u}{/u} - Contents will be <u>underlined</u>
 
-## How to Use - Developers
+### Developers
 
-### Hooks for Achievement Events
+#### Hooks for Achievement Events
 
 The module provides two hooks, "**fvtt-player-achievements.awardAchievement**" and "**fvtt-player-achievements.unAwardAchievement**", allowing developers to integrate custom functionality after an achievement is granted or removed to/from a character.
 
 ***Both hooks grant two parameters, the Achievement ID and the Character UUID, in that order.***
 
-#### Example Usage:
+##### Example Usage
 
  ```javascript
   // Triggered after an achievement is granted to a character

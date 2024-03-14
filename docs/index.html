@@ -10,12 +10,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A FoundryVTT module for Player Achievements." />
 <meta property="og:description" content="A FoundryVTT module for Player Achievements." />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="fvtt-player-achievements" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Player Achievements - A FoundryVTT module" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","description":"A FoundryVTT module for Player Achievements.","headline":"Player Achievements - A FoundryVTT module","name":"fvtt-player-achievements","url":"/"}</script>
+{"@context":"https://schema.org","@type":"WebSite","description":"A FoundryVTT module for Player Achievements.","headline":"Player Achievements - A FoundryVTT module","name":"fvtt-player-achievements","url":"http://localhost:4000/"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -23,7 +25,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="/assets/css/style.css?v=14cdb16d0c92d8aad8197290f146af6d998736c4">
+    <link rel="stylesheet" href="/assets/css/style.css?v=025b154bfb959ab05005214ba4fc07f72b1cfd1e">
+    <script src="https://code.jquery.com/jquery-3.3.0.min.js" integrity="sha256-RTQy8VOmNlT6b2PIRur37p6JEBZUE7o8wPgMvu18MC4=" crossorigin="anonymous"></script>
+    <script src="/assets/js/main.js"></script>
     <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
 
 <!-- Setup Google Analytics -->
@@ -52,7 +56,12 @@
     </header>
 
     <main id="content" class="main-content" role="main">
-      <h1 id="player-achievements---a-foundryvtt-module">Player Achievements - A FoundryVTT module</h1>
+      <div style="display:flex;flex-direction:row;flex-wrap:nowrap;">
+      <nav style="width:fit-content;">
+        <ul></ul>
+      </nav>
+      <section>
+        <h1 id="player-achievements---a-foundryvtt-module">Player Achievements - A FoundryVTT module</h1>
 
 <p>This module provides GMs with a way to award players with achievements.</p>
 
@@ -144,13 +153,15 @@
 
 <p>Feel free to file a Bug Report / Feature Request under the Issues tab of Github.</p>
 
-<h2 id="how-to-use---dms--players">How to Use - DMs &amp; Players</h2>
+<h2 id="how-to-use">How to Use</h2>
+
+<h3 id="dms--players">DMs &amp; Players</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Note: Players will see achievements that they are allowed to see based on the DMs options.
 Players will also not see the add-achievement/export/import/award/unaward/etc buttons.
 </code></pre></div></div>
 
-<h3 id="first-click-the-icon-on-your-side-panel-">First, click the Icon on your side panel: <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button" /></h3>
+<h4 id="first-click-the-icon-on-your-side-panel-">First, click the Icon on your side panel: <img src="./previews/achievementsIcon.png" title="Foundry Achievements Button" /></h4>
 
 <p><img src="./previews/achievementScreenDMInstructions.png" title="DM Instructions for main panel" /></p>
 
@@ -158,7 +169,7 @@ Players will also not see the add-achievement/export/import/award/unaward/etc bu
 
 <p><img src="./previews/achievementScreenDMInstructions2.png" title="DM Instructions for awarding achievements" /></p>
 
-<h3 id="markup">Markup</h3>
+<h4 id="markup">Markup</h4>
 
 <p>The following tags are supported in the Achievement Description:</p>
 
@@ -169,15 +180,15 @@ Players will also not see the add-achievement/export/import/award/unaward/etc bu
   <li>{u}{/u} - Contents will be <u>underlined</u></li>
 </ul>
 
-<h2 id="how-to-use---developers">How to Use - Developers</h2>
+<h3 id="developers-1">Developers</h3>
 
-<h3 id="hooks-for-achievement-events">Hooks for Achievement Events</h3>
+<h4 id="hooks-for-achievement-events">Hooks for Achievement Events</h4>
 
 <p>The module provides two hooks, “<strong>fvtt-player-achievements.awardAchievement</strong>” and “<strong>fvtt-player-achievements.unAwardAchievement</strong>”, allowing developers to integrate custom functionality after an achievement is granted or removed to/from a character.</p>
 
 <p><strong><em>Both hooks grant two parameters, the Achievement ID and the Character UUID, in that order.</em></strong></p>
 
-<h4 id="example-usage">Example Usage:</h4>
+<h5 id="example-usage">Example Usage</h5>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// Triggered after an achievement is granted to a character</span>
   <span class="nx">Hooks</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">fvtt-player-achievements.awardAchievement</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">achievementId</span><span class="p">,</span> <span class="nx">characterUUID</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -231,6 +242,8 @@ Players will also not see the add-achievement/export/import/award/unaward/etc bu
 
 <p>Brazilian Portuguese - Daniel Norberto</p>
 
+      </section>
+    </div>
 
       <footer class="site-footer">
         
