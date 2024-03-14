@@ -25,7 +25,7 @@
       {% endif %}
       {% if site.show_downloads %}
       {% capture version_string %}{% project_version tag short %}{% endcapture %}
-        <a href="https://github.com/USER/PROJECT/releases/latest/download/module.zip" class="btn">Latest Release: {{ version_string | split: '-' | first }}</a>
+        <a href="https://github.com/{{site.github.owner_name}}/{{site.github.repository_name}}/releases/latest/download/module.zip" class="btn">Latest Release: {{ version_string | split: '-' | first }}</a>
       {% endif %}
     </header>
 
