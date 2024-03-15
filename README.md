@@ -7,6 +7,10 @@ This module provides GMs with a way to award players with achievements.
 [![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Ffvtt-player-achievements%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/fvtt-player-achievements/)
 [![Foundry Hub Comments](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Ffvtt-player-achievements%2Fshield%2Fcomments)](https://www.foundryvtt-hub.com/package/fvtt-player-achievements/)
 
+## Upcoming Changes
+
+{% include_relative UPCOMING_CHANGELOG.md %}
+
 ## Links
 
 | Upcoming Changes | API Documentation |
