@@ -63,7 +63,7 @@ export class AddAchievementForm extends FormApplication {
       this.updateSelectImage();
       this.updateSelectCloakedImage();
       this.updateSelectSound();
-      this.overrides.achievement.tags = this.overrides.achievement.tags?.join(", ") ?? "";
+      this.overrides.achievement.tags = this.overrides.achievement.tags?.join(", ") ?? [];
     } else {
       await this.setupDefaults();
     }
