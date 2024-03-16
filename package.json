@@ -45,7 +45,8 @@
     "postinstall": "husky install",
     "genapidoc": "npx jsdoc2md --helper ./api_doc_generation/apihelpers.js --template ./api_doc_generation/apidoctemplate.hbs ./src/module/api.js > ./API.md",
     "release": "commit-and-tag-version --sign",
-    "release:dry": "commit-and-tag-version --dry-run"
+    "release:dry": "commit-and-tag-version --dry-run",
+    "release:dry:upcoming": "commit-and-tag-version --dry-run --silent > UPCOMING_CHANGELOG.md"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.1",
