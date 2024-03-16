@@ -85,7 +85,6 @@ export function cleanString(text) {
  */
 export function getClientInterfaceVolume() {
   const vol = game.settings.storage.get("client")["core.globalInterfaceVolume"];
-  console.log(vol);
   return vol;
 }
 

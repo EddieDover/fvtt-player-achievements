@@ -63,7 +63,14 @@ export class AddAchievementForm extends FormApplication {
       this.updateSelectImage();
       this.updateSelectCloakedImage();
       this.updateSelectSound();
-      this.overrides.achievement.tags = this.overrides.achievement.tags?.join(", ") ?? [];
+      if (!this.overrides.achievement.tags) {
+        this.overrides.achievement.tags = [];
+      }
+      if (typeof this.overrides.achievement.tags === "string") {
+        this.overrides.achievement.tags = this.overrides.achievement.tags.split(",").map((tag) => tag.trim());
+      }
+
+      this.overrides.achievement.tags = this.overrides.achievement.tags?.join(", ");
     } else {
       await this.setupDefaults();
     }
@@ -273,8 +280,6 @@ export class AddAchievementForm extends FormApplication {
       data.achievement_sound = getDefaultSound();
     }
 
-    data.achievement_tags = data.achievement_tags ?? [];
-
     // eslint-disable-next-line unicorn/no-array-reduce
     const data_no_tags = Object.keys(data).reduce((object, key) => {
       if (key !== "achievement_tags") {
@@ -289,6 +294,12 @@ export class AddAchievementForm extends FormApplication {
       return;
     }
 
+    const tag_array = data.achievement_tags
+      .trim()
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag !== "");
+
     const achievement = {
       id: data.achievement_id,
       title: data.achievement_title,
@@ -297,11 +308,7 @@ export class AddAchievementForm extends FormApplication {
       image: data.achievement_image,
       cloakedImage: data.achievement_cloaked_image,
       sound: data.achievement_sound,
-      tags: data.achievement_tags
-        .trim()
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter((tag) => tag !== ""),
+      tags: tag_array,
     };
 
     const editing = this.overrides.mode === "edit";
