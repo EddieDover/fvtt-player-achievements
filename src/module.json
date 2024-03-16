@@ -57,12 +57,6 @@
       }
     ],
     "conflicts": [
-      {
-        "id": "enhancedcombathud",
-        "type": "module",
-        "manifest": "https://raw.githubusercontent.com/theripper93/enhancedcombathud/master/module.json",
-        "reason": "Clicking on a target after selecting an action from the ECH opens the achievement window through no fault of the achievement plugin."
-      }
     ]
   },
   "esmodules": [
