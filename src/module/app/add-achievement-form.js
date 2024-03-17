@@ -37,7 +37,10 @@ export class AddAchievementForm extends FormApplication {
   }
 
   getData(options) {
-    const tagarr = JSON.parse(JSON.stringify(this.overrides.achievement.tags));
+    let tagarr = this.overrides.achievement?.tags ? JSON.parse(JSON.stringify(this.overrides.achievement.tags)) : [];
+    if (typeof tagarr === "string") {
+      tagarr = tagarr.split(",");
+    }
     this.workingTags = tagarr?.join(", ") ?? "";
     return mergeObject(super.getData(options), {
       isDM: game.user.isGM,
