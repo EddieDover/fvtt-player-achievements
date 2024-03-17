@@ -34,6 +34,7 @@
       "achievements-sheet": {
         "all-actors": "All Actors",
         "online-actors": "Online Actors",
+        "only-online-actors": "Show only online Actors",
         "add-achievement": "Add Achievement",
         "export": "Export",
         "export-achievements": "Export achievement data to clipboard",
