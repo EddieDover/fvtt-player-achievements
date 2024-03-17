@@ -34,6 +34,7 @@
       "achievements-sheet": {
         "all-actors": "Todos os Atores",
         "online-actors": "Atores on-line",
+        "only-online-actors": "Mostrar apenas atores on-line",
         "add-achievement": "Adicionar Conquista",
         "export": "Exportar",
         "export-achievements": "Exportar dados de conquista para o clipboard",
