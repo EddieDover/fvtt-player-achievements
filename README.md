@@ -52,7 +52,7 @@ This module provides GMs with a way to award players with achievements.
 
 | Plugin | id | Conflict |
 | --- | --- | --- |
-| Argon - Combat Hud | enhancedcombathud | Opens the Achievement Window after selecting target. |
+| None |  |  |
 
 ## Support
 
