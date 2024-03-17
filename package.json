@@ -46,7 +46,8 @@
     "genapidoc": "npx jsdoc2md --helper ./api_doc_generation/apihelpers.js --template ./api_doc_generation/apidoctemplate.hbs ./src/module/api.js > ./API.md",
     "release": "commit-and-tag-version --sign",
     "release:dry": "commit-and-tag-version --dry-run",
-    "release:upcoming": "commit-and-tag-version --dry-run --silent > UPCOMING_CHANGELOG.md"
+    "release:upcoming": "commit-and-tag-version --dry-run --silent > UPCOMING_CHANGELOG.md",
+    "release:buildsite": "cd ghpages && bundle exec jekyll build"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.1",

@@ -52,7 +52,7 @@ This module provides GMs with a way to award players with achievements.
 
 | Plugin | id | Conflict |
 | --- | --- | --- |
-| No known conflicts | | |
+| None |  |  |
 
 ## Support
 
