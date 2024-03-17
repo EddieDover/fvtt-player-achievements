@@ -37,6 +37,7 @@ export class AchievementForm extends FormApplication {
     this.hideAwarded = false;
     this.hideUnawarded = false;
     this.hideDetails = false;
+    this.onlyOnline = false;
     this.seluuid = "";
   }
 
@@ -111,6 +112,19 @@ export class AchievementForm extends FormApplication {
       }
     }
 
+    let filteredCharacters = characters?.map((character) => {
+      return {
+        name: character?.name,
+        uuid: character?.uuid,
+      };
+    });
+
+    if (this.onlyOnline) {
+      filteredCharacters = filteredCharacters.filter((character) => {
+        return currentUsers.some((user) => user.character?.uuid === character.uuid && user.active);
+      });
+    }
+
     return mergeObject(super.getData(options), {
       isDM: game.user.isGM,
       myuuid: game.user.character?.uuid,
@@ -119,16 +133,12 @@ export class AchievementForm extends FormApplication {
       currentTagFilter: this.currentTagFilter,
       sortza: this.sortza,
       hideDetails: this.hideDetails,
+      onlyOnline: this.onlyOnline,
       hideAwarded: this.hideAwarded,
       hideUnawarded: this.hideUnawarded,
       lockedAchievements: (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [],
       seluuid: this.seluuid,
-      currentCharacters: characters?.map((character) => {
-        return {
-          name: character?.name,
-          uuid: character?.uuid,
-        };
-      }),
+      currentCharacters: filteredCharacters,
       currentUsers: game.users
         .filter((user) => !user.isGM)
         .map((user) => {
@@ -174,6 +184,7 @@ export class AchievementForm extends FormApplication {
     $('input[name="hide-awarded"]', html).on("change", this.onToggleHideAwarded.bind(this));
     $('input[name="hide-unawarded"]', html).on("change", this.onToggleHideUnawarded.bind(this));
     $('input[name="hide-details"]', html).on("change", this.onToggleHideDetails.bind(this));
+    $('input[name="only-online"]', html).on("change", this.onToggleOnlyOnline.bind(this));
     $('button[name="filter-azza"]', html).click(this.onSort.bind(this));
     $('select[name="actor-filter"]', html).on("change", this.onSelectCharacter.bind(this));
     $('button[name="import-achievements"]', html).click(await this.onImportAchievements.bind(this));
@@ -272,6 +283,12 @@ export class AchievementForm extends FormApplication {
   onToggleHideDetails(event) {
     event.preventDefault();
     this.hideDetails = event.target.checked;
+  }
+
+  onToggleOnlyOnline(event) {
+    event.preventDefault();
+    this.onlyOnline = event.target.checked;
+    this.render(true);
   }
 
   async lockAchievement(achievementId) {

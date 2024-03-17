@@ -34,6 +34,7 @@
       "achievements-sheet" : {
         "all-actors": "Todos los Actores",
         "online-actors": "Actores en línea",
+        "only-online-actors": "Mostrar solo actores en línea",
         "add-achievement": "Agregar logro",
         "export": "Exportar",
         "import": "Importar",

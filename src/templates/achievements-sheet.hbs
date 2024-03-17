@@ -59,6 +59,8 @@
   <div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;">
     <input type="checkbox" name="hide-details" id="hide-details" class="achievements-sheet__hide-details" {{#if hideDetails}}checked{{/if}}>
     <label for="hide-details">{{localize "fvtt-player-achievements.forms.achievements-sheet.hide-details"}}</label>
+    <input type="checkbox" name="only-online" id="only-online" class="achievements-sheet__only-online" {{#if onlyOnline}}checked{{/if}}>
+    <label for="only-online">{{localize "fvtt-player-achievements.forms.achievements-sheet.only-online-actors"}}</label>
   </div>
   {{#if achievements}}
     <div class="achievements-container">
