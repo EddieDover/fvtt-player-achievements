@@ -19,7 +19,11 @@ export class AchievementsExportDialog extends Application {
   constructor(overrides) {
     super();
     this.overrides = overrides;
-    this.exportData = JSON.stringify(game.settings.get("fvtt-player-achievements", "customAchievements")).trim();
+    this.exportData = JSON.stringify(
+      game.settings.get("fvtt-player-achievements", "customAchievements"),
+      undefined,
+      2,
+    ).trim();
   }
 
   getData(options) {
