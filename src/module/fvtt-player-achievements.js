@@ -18,11 +18,12 @@
 import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
 import PA_API from "./api.js";
-import { MODULE_NAME, getAchivements, getPendingAchievements, log, setupAchievementSocket } from "./core.js";
-import { cleanString, enrichText } from "./utils.js";
+import { getAchivements, getPendingAchievements, log, setupAchievementSocket } from "./core.js";
+import { enrichText } from "./utils.js";
+import { MODULE_NAME } from "./constants.js";
 
 let currentAchievementScreen;
-var registeredHandlebars = false;
+let registeredHandlebars = false;
 
 /* Handlebars */
 
@@ -44,13 +45,13 @@ function registerHandlebarHelpers() {
   });
 
   Handlebars.registerHelper("ownedCharactersCount", function (characterIds, characters, options) {
-    return characters?.filter((character) => characterIds.includes(character.uuid)).length ?? 0 > 0
+    return (characters?.filter((character) => characterIds.includes(character.uuid)).length ?? 0) > 0
       ? options.fn(this)
       : options.inverse(this);
   });
 
   Handlebars.registerHelper("unownedCharactersCount", function (characterIds, characters, options) {
-    return characters?.filter((character) => !characterIds.includes(character.uuid)).length ?? 0 > 0
+    return (characters?.filter((character) => !characterIds.includes(character.uuid)).length ?? 0) > 0
       ? options.fn(this)
       : options.inverse(this);
   });
@@ -105,6 +106,9 @@ function registerAPI() {
     doesAchievementExist: PA_API.doesAchievementExist,
     getAchievementsByCharacter: PA_API.getAchievementsByCharacter,
     removeAchievementFromCharacter: PA_API.removeAchievementFromCharacter,
+    toggleAchievementWindow: () => {
+      showWindow();
+    },
   };
   log("API Registered");
 }
@@ -126,6 +130,13 @@ function toggleAchievementScreen() {
     currentAchievementScreen = new AchievementForm(overrides);
     currentAchievementScreen.render(true);
   }
+}
+
+/**
+ * Displays the Achievement Window
+ */
+function showWindow() {
+  toggleAchievementScreen();
 }
 
 /* Hooks */
@@ -171,9 +182,7 @@ Hooks.on("renderSceneControls", () => {
     newli.setAttribute("role", "button");
     newli.dataset.tooltip = "Achievement Sheet";
     newli.innerHTML = `<i class="fas fa-trophy"></i>`;
-    newli.addEventListener("click", async () => {
-      await toggleAchievementScreen();
-    });
+    newli.addEventListener("click", showWindow);
     controls.append(newli);
   }
 });

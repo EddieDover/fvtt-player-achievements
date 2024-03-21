@@ -15,12 +15,14 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { DEFAULT_IMAGE, DEFAULT_SOUND, createAchievement, editAchievement } from "../core";
-import { localize } from "../utils";
+import { DEFAULT_IMAGE } from "../constants";
+import { getDefaultSound, localize } from "../utils";
+import { createAchievement, editAchievement, generateUniqueId } from "../core";
 
 export class AddAchievementForm extends FormApplication {
   constructor(overrides) {
     super();
+    this.workingTags = "";
     this.overrides = overrides || {
       mode: "add",
     };
@@ -35,10 +37,16 @@ export class AddAchievementForm extends FormApplication {
   }
 
   getData(options) {
+    let tagarr = this.overrides.achievement?.tags ? JSON.parse(JSON.stringify(this.overrides.achievement.tags)) : [];
+    if (typeof tagarr === "string") {
+      tagarr = tagarr.split(",");
+    }
+    this.workingTags = tagarr?.join(", ") ?? "";
     return mergeObject(super.getData(options), {
       isDM: game.user.isGM,
       overrides: this.overrides,
       validation: this.validation,
+      workingTags: this.workingTags,
     });
   }
 
@@ -62,13 +70,12 @@ export class AddAchievementForm extends FormApplication {
       this.updateSelectImage();
       this.updateSelectCloakedImage();
       this.updateSelectSound();
-      this.overrides.achievement.tags = this.overrides.achievement.tags?.join(", ") ?? "";
     } else {
-      this.setupDefaults();
+      await this.setupDefaults();
     }
 
     const achievementId = $("input[name='achievement_id']", html);
-    const achievementTags = $("input[name='achievement_tags']", html);
+    // const achievementTags = $("input[name='achievement_tags']", html);
 
     $("button[type='submit']", html).click(await this.handleSubmit.bind(this));
     $("button[name='clear_image']", html).click(this.handleClearImage.bind(this));
@@ -81,9 +88,11 @@ export class AddAchievementForm extends FormApplication {
     achievementId.on("keyup", () => this.validateFields());
   }
 
-  setupDefaults() {
+  async setupDefaults() {
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
+    const achievementId = document.getElementsByName("achievement_id")[0];
+    achievementId.value = await generateUniqueId();
     imageInput.value = DEFAULT_IMAGE;
     imagePreview.style.display = "block";
     imagePreview.src = DEFAULT_IMAGE;
@@ -96,9 +105,9 @@ export class AddAchievementForm extends FormApplication {
 
     const soundInput = document.querySelector("#achievement_sound");
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    soundInput.value = DEFAULT_SOUND;
+    soundInput.value = getDefaultSound();
     soundPreview.style.display = "none";
-    soundPreview.src = DEFAULT_SOUND;
+    soundPreview.src = getDefaultSound();
   }
 
   validateFields() {
@@ -113,7 +122,7 @@ export class AddAchievementForm extends FormApplication {
     event.preventDefault();
     const soundPreview = document.querySelector("#achievement_sound_preview");
     if (soundPreview.src === window.location.href) {
-      new Audio(DEFAULT_SOUND).play();
+      new Audio(getDefaultSound()).play();
     } else {
       soundPreview.play();
     }
@@ -122,9 +131,9 @@ export class AddAchievementForm extends FormApplication {
   handleClearSound(event) {
     event.preventDefault();
     const soundInput = document.querySelector("#achievement_sound");
-    soundInput.value = DEFAULT_SOUND;
+    soundInput.value = getDefaultSound();
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    soundPreview.src = DEFAULT_SOUND;
+    soundPreview.src = getDefaultSound();
   }
 
   updateSelectSound() {
@@ -267,10 +276,8 @@ export class AddAchievementForm extends FormApplication {
     }, {});
 
     if (!data.achievement_sound) {
-      data.achievement_sound = DEFAULT_SOUND;
+      data.achievement_sound = getDefaultSound();
     }
-
-    data.achievement_tags = data.achievement_tags ?? "";
 
     // eslint-disable-next-line unicorn/no-array-reduce
     const data_no_tags = Object.keys(data).reduce((object, key) => {
@@ -286,6 +293,12 @@ export class AddAchievementForm extends FormApplication {
       return;
     }
 
+    const tag_array = data.achievement_tags
+      .trim()
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag !== "");
+
     const achievement = {
       id: data.achievement_id,
       title: data.achievement_title,
@@ -294,11 +307,7 @@ export class AddAchievementForm extends FormApplication {
       image: data.achievement_image,
       cloakedImage: data.achievement_cloaked_image,
       sound: data.achievement_sound,
-      tags: data.achievement_tags
-        .trim()
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter((tag) => tag !== ""),
+      tags: tag_array,
     };
 
     const editing = this.overrides.mode === "edit";

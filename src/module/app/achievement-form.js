@@ -23,7 +23,6 @@ import { awardAchievement, deleteAchievement, unAwardAchievement } from "../core
 
 const FEEDBACK_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=feature_request.md";
 const BUGREPORT_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=bug_report.md";
-const DISCORD_URL = "https://discord.gg/XuGx7zNMKZ";
 
 let achievementsExportDialog;
 let achievementsImportDialog;
@@ -38,6 +37,7 @@ export class AchievementForm extends FormApplication {
     this.hideAwarded = false;
     this.hideUnawarded = false;
     this.hideDetails = false;
+    this.onlyOnline = false;
     this.seluuid = "";
   }
 
@@ -89,8 +89,39 @@ export class AchievementForm extends FormApplication {
     }
 
     if (this.seluuid) {
-      achievements = achievements.filter((achievement) => {
-        return achievement.completedActors.includes(this.seluuid);
+      if (this.seluuid === "online") {
+        achievements = achievements.filter((achievement) => {
+          return currentUsers
+            .filter((user) => user.active)
+            .some((user) => achievement.completedActors.includes(user.character?.uuid));
+        });
+      } else {
+        if (this.seluuid.startsWith("User.")) {
+          const uuid = this.seluuid.replace("User.", "");
+          const playerActors = game.actors.filter(
+            (actor) => Object.keys(actor.ownership).includes(uuid) && actor.ownership[uuid] === 3,
+          );
+          achievements = achievements.filter((achievement) => {
+            return playerActors.some((actor) => achievement.completedActors.includes(actor.uuid));
+          });
+        } else {
+          achievements = achievements.filter((achievement) => {
+            return achievement.completedActors.includes(this.seluuid);
+          });
+        }
+      }
+    }
+
+    let filteredCharacters = characters?.map((character) => {
+      return {
+        name: character?.name,
+        uuid: character?.uuid,
+      };
+    });
+
+    if (this.onlyOnline) {
+      filteredCharacters = filteredCharacters.filter((character) => {
+        return currentUsers.some((user) => user.character?.uuid === character.uuid && user.active);
       });
     }
 
@@ -102,16 +133,20 @@ export class AchievementForm extends FormApplication {
       currentTagFilter: this.currentTagFilter,
       sortza: this.sortza,
       hideDetails: this.hideDetails,
+      onlyOnline: this.onlyOnline,
       hideAwarded: this.hideAwarded,
       hideUnawarded: this.hideUnawarded,
       lockedAchievements: (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [],
       seluuid: this.seluuid,
-      currentCharacters: characters?.map((character) => {
-        return {
-          name: character?.name,
-          uuid: character?.uuid,
-        };
-      }),
+      currentCharacters: filteredCharacters,
+      currentUsers: game.users
+        .filter((user) => !user.isGM)
+        .map((user) => {
+          return {
+            name: user.name,
+            uuid: user.uuid,
+          };
+        }),
     });
   }
 
@@ -149,14 +184,23 @@ export class AchievementForm extends FormApplication {
     $('input[name="hide-awarded"]', html).on("change", this.onToggleHideAwarded.bind(this));
     $('input[name="hide-unawarded"]', html).on("change", this.onToggleHideUnawarded.bind(this));
     $('input[name="hide-details"]', html).on("change", this.onToggleHideDetails.bind(this));
+    $('input[name="only-online"]', html).on("change", this.onToggleOnlyOnline.bind(this));
     $('button[name="filter-azza"]', html).click(this.onSort.bind(this));
     $('select[name="actor-filter"]', html).on("change", this.onSelectCharacter.bind(this));
     $('button[name="import-achievements"]', html).click(await this.onImportAchievements.bind(this));
     $('button[name="export-achievements"]', html).click(this.onExportAchievements.bind(this));
 
+    $('div[class="achievement-block__title-copy"]', html).click(this.onCopyIdToClipboard.bind(this));
+
     $('button[name="feedback"]', html).click(this.onFeedback.bind(this));
     $('button[name="bugreport"]', html).click(this.onBugReport.bind(this));
-    $('button[name="discord"]', html).click(await this.onDiscord.bind(this));
+  }
+
+  onCopyIdToClipboard(event) {
+    const achievementId = event.currentTarget.dataset.achievement_id;
+    if (!achievementId) return;
+    navigator.clipboard.writeText(achievementId);
+    ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-id-copied"));
   }
 
   onFeedback(event) {
@@ -168,12 +212,6 @@ export class AchievementForm extends FormApplication {
   onBugReport(event) {
     event.preventDefault();
     const newWindow = window.open(BUGREPORT_URL, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = undefined;
-  }
-
-  onDiscord(event) {
-    event.preventDefault();
-    const newWindow = window.open(DISCORD_URL, "_blank", "noopener,noreferrer");
     if (newWindow) newWindow.opener = undefined;
   }
 
@@ -245,6 +283,12 @@ export class AchievementForm extends FormApplication {
   onToggleHideDetails(event) {
     event.preventDefault();
     this.hideDetails = event.target.checked;
+  }
+
+  onToggleOnlyOnline(event) {
+    event.preventDefault();
+    this.onlyOnline = event.target.checked;
+    this.render(true);
   }
 
   async lockAchievement(achievementId) {

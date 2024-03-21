@@ -9,9 +9,9 @@
         "name": "Play Self Achievement Sounds",
         "hint": "Play a sound if you are awarded an achievement."
       },
-      "self-sound-volume": {
-        "name": "Self Achievement Sound Volume",
-        "hint": "The volume of the sound played when you are awarded an achievement."
+      "default-sound-file": {
+        "name": "Default Sound File",
+        "hint": "The default sound file to play when an achievement is awarded."
       },
       "hide-unearned": {
         "name": "Hide Unearned Achievements",
@@ -24,11 +24,17 @@
       "show-only-to-awarded-user": {
         "name": "Show Only to Awarded User",
         "hint": "Show the achievement message only to the user who gained it."
+      },
+      "show-tags-to-players": {
+        "name": "Show tags to Players",
+        "hint": "Show tags to players, allowing them to filter as well."
       }
     },
     "forms": {
       "achievements-sheet": {
-        "all-players": "All Players",
+        "all-actors": "All Actors",
+        "online-actors": "Online Actors",
+        "only-online-actors": "Show only online Actors",
         "add-achievement": "Add Achievement",
         "export": "Export",
         "export-achievements": "Export achievement data to clipboard",
@@ -40,9 +46,9 @@
         "hide-details": "Compact View",
         "no-achievements-match-filter": "No achievements match your filter.",
         "no-achievements-added": "No achievements have been added yet.",
-        "bugreport": "File a Bug Report",
-        "feedback": "Send Feedback",
-        "discord": "Discord"
+        "no-achievements-online": "No online players have any awarded achievements.",
+        "bugreport": "File a Bug Report or Feature Request",
+        "feedback": "Send Feedback"
       },
       "achievement-block": {
         "edit": "Edit",
@@ -52,10 +58,10 @@
         "unowned": "Unowned",
         "click-to-remove": "Click to remove",
         "click-to-award": "Click to award",
-        "no-players-to-award": "No players to award.",
+        "no-actors-to-award": "No actors to award.",
         "toggle-lock": "Lock",
         "toggle-unlock": "Unlock",
-        "all-players": "All Players",
+        "all-actors": "All Actors",
         "tags": "Tags"
       },
       "add-achievement-form": {
@@ -72,7 +78,7 @@
         "add-achievement": "Add Achievement",
         "update-achievement": "Update Achievement",
         "window-title": "Add/Edit Achievement",
-        "tags": "Tags"
+        "tags": "Tags (comma separated)"
       },
       "achievements-export": {
         "export-message": "Please copy the following data to a safe place, in case you need to restore it later."
@@ -103,7 +109,8 @@
       "delete-achievement": {
         "title": "Delete Achievement",
         "content": "Are you sure you want to delete this achievement?"
-      }
+      },
+      "achievement-id-copied": "Achievement ID copied to clipboard."
     }
   }
 }

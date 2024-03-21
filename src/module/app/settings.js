@@ -15,6 +15,8 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { DEFAULT_SOUND } from "../constants";
+
 export const registerSettings = () => {
   game.settings.register("fvtt-player-achievements", "awardedAchievements", {
     "data": {},
@@ -46,6 +48,16 @@ export const registerSettings = () => {
     "config": false,
     "default": [],
     "type": Array,
+  });
+
+  game.settings.register("fvtt-player-achievements", "defaultSoundFile", {
+    "name": "fvtt-player-achievements.settings.default-sound-file.name",
+    "hint": "fvtt-player-achievements.settings.default-sound-file.hint",
+    "scope": "world",
+    "config": true,
+    "default": DEFAULT_SOUND,
+    "type": String,
+    "filePicker": true,
   });
 
   game.settings.register("fvtt-player-achievements", "enablePlayerAchievements", {
@@ -84,26 +96,21 @@ export const registerSettings = () => {
     "type": Boolean,
   });
 
-  game.settings.register("fvtt-player-achievements", "selfSoundVolume", {
-    "name": "fvtt-player-achievements.settings.self-sound-volume.name",
-    "hint": "fvtt-player-achievements.settings.self-sound-volume.hint",
-    "scope": "local",
-    "config": true,
-    "default": 0.5,
-    "type": Number,
-    "range": {
-      "min": 0,
-      "max": 1,
-      "step": 0.1,
-    },
-  });
-
   game.settings.register("fvtt-player-achievements", "showOnlyToAwardedUser", {
     "name": "fvtt-player-achievements.settings.show-only-to-awarded-user.name",
     "hint": "fvtt-player-achievements.settings.show-only-to-awarded-user.hint",
     "scope": "world",
     "config": true,
     "default": false,
+    "type": Boolean,
+  });
+
+  game.settings.register("fvtt-player-achievements", "showTagsToPlayers", {
+    "name": "fvtt-player-achievements.settings.show-tags-to-players.name",
+    "hint": "fvtt-player-achievements.settings.show-tags-to-players.hint",
+    "scope": "world",
+    "config": true,
+    "default": true,
     "type": Boolean,
   });
 };

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>API functions | fvtt-player-achievements</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="API functions" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A FoundryVTT module for Player Achievements." />
+<meta property="og:description" content="A FoundryVTT module for Player Achievements." />
+<meta property="og:site_name" content="fvtt-player-achievements" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="API functions" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"A FoundryVTT module for Player Achievements.","headline":"API functions","url":"/API.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=636a46dceed74c4f02f061030b25fa1a6e648e6d">
+    <script src="https://code.jquery.com/jquery-3.3.0.min.js" integrity="sha256-RTQy8VOmNlT6b2PIRur37p6JEBZUE7o8wPgMvu18MC4=" crossorigin="anonymous"></script>
+    <script src="/assets/js/main.js"></script>
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">API functions</h1>
+      <h2 class="project-tagline">A FoundryVTT module for Player Achievements.</h2>
+      
+        <a href="https://github.com/EddieDover/fvtt-player-achievements" class="btn">View on GitHub</a>
+      
+      
+      
+        <a href="https://github.com/EddieDover/fvtt-player-achievements/releases/latest/download/module.zip" class="btn">Latest Release: v1.6.0</a>
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <div style="display:flex;flex-direction:row;flex-wrap:nowrap;">
+      <nav style="width:fit-content;margin-right:1rem;">
+        <ul></ul>
+      </nav>
+      <section>
+        <h1 id="api-functions">API functions</h1>
+
+<p>Access functions via <code class="language-plaintext highlighter-rouge">game["fvtt-player-achievements"].api</code>.</p>
+
+<p>All functions return the following object:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">{</span>
+    <span class="nl">errorMessage</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Error message</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">payload</span><span class="p">:</span> <span class="nx">object</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="current-api-functions">Current API Functions:</h2>
+
+<h3 id="getachievements---returns-the-achievements-array">getAchievements - Returns the achievements array</h3>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;Array.&lt;Achievement&gt;&gt;"</code>: Achievements List</p>
+
+<hr />
+
+<h3 id="doesachievementexist---does-the-achievement-exist">doesAchievementExist - Does the achievement exist?</h3>
+
+<p>     <strong>Parameters:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">achievementId</code> (string): The achievement id</p>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;boolean&gt;"</code>: Does the achievement exist?</p>
+
+<hr />
+
+<h3 id="doescharacterhaveachievement---does-the-character-have-the-achievement">doesCharacterHaveAchievement - Does the character have the achievement?</h3>
+
+<p>     <strong>Parameters:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">characterUUID</code> (string): The character uuid</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">achievementId</code> (string): The achievement id</p>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;boolean&gt;"</code>: Does the character have the achievement?</p>
+
+<hr />
+
+<h3 id="awardachievementtocharacter---award-the-achievement-to-the-character">awardAchievementToCharacter - Award the achievement to the character</h3>
+
+<p>     <strong>Parameters:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">achievementId</code> (string): The achievement id</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">characterUUID</code> (string): The character uuid</p>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;boolean&gt;"</code>: Was the achievement awarded?</p>
+
+<hr />
+
+<h3 id="getachievementsbycharacter---get-the-achievements-for-the-character">getAchievementsByCharacter - Get the achievements for the character</h3>
+
+<p>     <strong>Parameters:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">characterUUID</code> (string): The character uuid</p>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;Array.&lt;Achievement&gt;&gt;"</code>: achievements for the character</p>
+
+<hr />
+
+<h3 id="createachievement---create-an-achievement">createAchievement - Create an achievement</h3>
+
+<p>     <strong>Parameters:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">id</code> (string): The achievement id</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">title</code> (string): The achievement title</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">description</code> (string): The achievement description</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">showTitleCloaked</code> (boolean): Show the title cloaked?</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">image</code> (string): The achievement image</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">cloakedImage</code> (string): The achievement cloaked image</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">sound</code> (string): The achievement sound effect</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">tags</code> (Array.&lt;string&gt;): The achievement tags</p>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;string&gt;"</code>: The ID of the achievement</p>
+
+<hr />
+
+<h3 id="editachievement---edit-an-achievement">editAchievement - Edit an achievement</h3>
+
+<p>     <strong>Parameters:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">id</code> (string): The achievement id</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">title</code> (string): The achievement title</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">description</code> (string): The achievement description</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">showTitleCloaked</code> (boolean): Show the title cloaked?</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">image</code> (string): The achievement image</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">cloakedImage</code> (string): The achievement cloaked image</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">sound</code> (string): The achievement sound effect</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">tags</code> (Array.&lt;string&gt;): The achievement tags</p>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;boolean&gt;"</code>: Was the achievement edited?</p>
+
+<hr />
+
+<h3 id="removeachievementfromcharacter---remove-an-achievement-from-the-character">removeAchievementFromCharacter - Remove an achievement from the character</h3>
+
+<p>     <strong>Parameters:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">achievementId</code> (string): The achievement id</p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">characterUUID</code> (string): The character uuid</p>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;boolean&gt;"</code>: Was the achievement removed?</p>
+
+<hr />
+
+<h3 id="deleteachievement---delete-an-achievement">deleteAchievement - Delete an achievement</h3>
+
+<p>     <strong>Parameters:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">id</code> (string): The achievement id</p>
+
+<p>     <strong>Returns:</strong></p>
+
+<p>      - <code class="language-plaintext highlighter-rouge">"PlayerAchievementReturn.&lt;boolean&gt;"</code>: Was the achievement deleted?</p>
+
+<hr />
+
+
+      </section>
+    </div>
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/EddieDover/fvtt-player-achievements">fvtt-player-achievements</a> is maintained by <a href="https://github.com/EddieDover">EddieDover</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

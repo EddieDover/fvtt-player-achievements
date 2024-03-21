@@ -44,7 +44,7 @@
       "url": "https://github.com/eddiedover/"
     }
   ],
-  "version": "1.2.3",
+  "version": "1.6.0",
   "compatibility": {
     "minimum": "11",
     "verified": "11"
@@ -56,15 +56,12 @@
         "type": "module"
       }
     ],
-    "conflicts": [
-      {
-        "id": "enhancedcombathud",
-        "type": "module",
-        "manifest": "https://raw.githubusercontent.com/theripper93/enhancedcombathud/master/module.json",
-        "reason": "Clicking on a target after selecting an action from the ECH opens the achievement window through no fault of the achievement plugin."
-      }
-    ]
+    "conflicts": []
   },
-  "esmodules": ["module/fvtt-player-achievements.js"],
-  "styles": ["styles/fvtt-player-achievements.css"]
+  "esmodules": [
+    "module/fvtt-player-achievements.js"
+  ],
+  "styles": [
+    "styles/fvtt-player-achievements.css"
+  ]
 }

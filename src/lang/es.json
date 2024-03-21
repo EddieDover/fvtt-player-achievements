@@ -9,9 +9,9 @@
         "name": "Reproducir Sonidos de Logro Personal",
         "hint": "Reproduce un sonido si recibes un logro."
       },
-      "self-sound-volume": {
-        "name": "Volumen de sonido de autocontrol",
-        "hint": "El volumen del sonido que se produce cuando se premio un logro."
+      "default-sound-file": {
+        "name": "Archivo de sonido predeterminado",
+        "hint": "El archivo de sonido predeterminado para reproducir cuando se otorga un logro."
       },
       "hide-unearned": {
         "name": "Ocultar logros no ganados",
@@ -24,11 +24,17 @@
       "show-only-to-awarded-user" : {
         "name": "Mostrar solo al usuario premiado",
         "hint": "Muestre el mensaje de logro solo al usuario que lo ganó."
+      },
+      "show-tags-to-players": {
+        "name": "Mostrar etiquetas a los jugadores",
+        "hint": "Muestre las etiquetas a los jugadores, permitiéndoles filtrar también."
       }
     },
     "forms": {
       "achievements-sheet" : {
-        "all-players": "Todos los jugadores",
+        "all-actors": "Todos los Actores",
+        "online-actors": "Actores en línea",
+        "only-online-actors": "Mostrar solo actores en línea",
         "add-achievement": "Agregar logro",
         "export": "Exportar",
         "import": "Importar",
@@ -40,9 +46,9 @@
         "hide-details": "Vista compacta",
         "no-achievements-match-filter": "No hay logros que coincidan con su filtro.",
         "no-achievements-added": "Todavía no se han agregado logros.",
+        "no-achievements-online": "Ningún jugador en línea tiene logros premiados.",
         "bugreport": "Dar retroalimentación",
-        "feedback": "Reportar un fallo",
-        "discord": "Discord"
+        "feedback": "Reportar un fallo"
       },
       "achievement-block" : {
         "edit": "Editar",
@@ -52,10 +58,10 @@
         "unowned": "Sin propietario",
         "click-to-remove": "Haga clic para eliminar",
         "click-to-award": "Haga clic para premiar",
-        "no-players-to-award": "No hay jugadores para premiar.",
+        "no-actors-to-award": "No hay actores para otorgar",
         "toggle-lock": "Alternar bloqueo",
         "toggle-unlock": "Alternar desbloqueo",
-        "all-players": "Todos los jugadores",
+        "all-actors": "Todos os Atores",
         "tags": "Etiquetas"
       },
       "add-achievement-form": {
@@ -72,7 +78,7 @@
         "add-achievement":"Agregar Logro",
         "update-achievement":"Actualizar el Logro",
         "window-title": "Agregar/Editar Logro",
-        "tags":"Etiquetas"
+        "tags":"Etiquetas (separadas por comas)"
       },
       "achievements-export": {
         "export-message": "Por favor, copia los siguientes datos en un lugar seguro, en caso de que necesites restaurarlos más tarde."
@@ -103,7 +109,8 @@
       "delete-achievement": {
         "title": "Eliminar el logro",
         "content": "¿Estás seguro de que quieres borrar este logro?"
-      }
+      },
+      "achievement-id-copied": "ID de logro copiado al portapapeles."
     }
   }
 }

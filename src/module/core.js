@@ -15,11 +15,14 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export const MODULE_NAME = "fvtt-player-achievements";
-export const DEFAULT_IMAGE = "/modules/fvtt-player-achievements/images/default.webp";
-export const DEFAULT_SOUND = "/modules/fvtt-player-achievements/sounds/notification.ogg";
-
-import { deepCopy, enrichText, hydrateAwardedAchievements } from "./utils.js";
+import { DEFAULT_IMAGE, MODULE_NAME } from "./constants.js";
+import {
+  deepCopy,
+  enrichText,
+  getClientInterfaceVolume,
+  getDefaultSound,
+  hydrateAwardedAchievements,
+} from "./utils.js";
 let achievement_socket;
 
 /**
@@ -79,7 +82,7 @@ export async function createAchievement({
     description,
     image: image ?? DEFAULT_IMAGE,
     cloakedImage: cloakedImage ?? DEFAULT_IMAGE,
-    sound: sound ?? DEFAULT_SOUND,
+    sound: sound ?? getDefaultSound(),
     tags,
   });
   game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
@@ -162,18 +165,22 @@ export async function getPendingAchievements(overrides) {
 export async function getAchivements(overrides) {
   let callingUser;
   let callingCharacterId = "";
+  let showTags;
   if (overrides?.callingUser) {
     callingUser = overrides.callingUser;
     callingCharacterId = overrides.callingCharacterId;
+    showTags = overrides.showTags;
   } else {
     callingUser = game.user;
     callingCharacterId = "";
+    showTags = true;
   }
 
   if (!game.user.isGM) {
     return achievement_socket.executeAsGM("getAchievements", {
       callingUser: game.user,
       callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
+      showTags: await game.settings.get("fvtt-player-achievements", "showTagsToPlayers"),
     });
   }
 
@@ -218,7 +225,33 @@ export async function getAchivements(overrides) {
   if (achievementIds.length !== uniqueAchievementIds.length) {
     throw new Error("Duplicate achievement ids found");
   }
+  if (!showTags) {
+    for (const achievement of retachievements) {
+      achievement.tags = [];
+    }
+  }
   return retachievements;
+}
+
+/**
+ * Generates a Unique ID
+ * @returns {Promise<string>} The unique id
+ */
+export async function generateUniqueId() {
+  let achievements = await hydrateAwardedAchievements(
+    (await game.settings.get("fvtt-player-achievements", "awardedAchievements")) ?? {},
+  );
+
+  const achievementIds = achievements.map((achievement) => achievement.id);
+  const uniqueAchievementIds = new Set(achievementIds);
+
+  let newID = Math.random().toString(36).slice(2, 15);
+
+  while (uniqueAchievementIds.has(newID)) {
+    newID = Math.random().toString(36).slice(2, 15);
+  }
+
+  return newID;
 }
 
 /**
@@ -310,16 +343,10 @@ export async function awardAchievementMessage(achievementId, characterId, late =
  * Award an achievement to self
  * @param {{ achievement: string, characterId: string }} data Achievement and Character ID
  */
-async function awardAchievementSelf({ achievement, characterId }) {
-  let playAwardSound = false;
-
-  if (await game.settings.get("fvtt-player-achievements", "playSelfSounds")) {
-    playAwardSound = true;
-  }
-
-  if (game.user.character?.uuid === characterId && playAwardSound) {
+function awardAchievementSelf({ achievement, characterId }) {
+  if (game.user.character?.uuid === characterId) {
     const audio = new Audio(achievement.sound ?? "/modules/fvtt-player-achievements/sounds/notification.ogg");
-    audio.volume = await game.settings.get("fvtt-player-achievements", "selfSoundVolume");
+    audio.volume = getClientInterfaceVolume();
     audio.play();
   }
 }

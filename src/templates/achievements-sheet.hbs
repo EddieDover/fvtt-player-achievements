@@ -20,9 +20,6 @@
     <button type="button" class="btn btn--primary" style="max-width:50px" name="bugreport" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.bugreport"}}">
       <i class="fas fa-bug"></i>
     </button>
-    <button type="button" class="btn btn--primary" style="max-width:50px" name="discord" title="{{localize "fvtt-player-achievements.forms.achievements-sheet.discord"}}">
-      <i class="fab fa-discord"></i>
-    </button>
   </div>
   {{else}}
   <div class="achievements-sheet__player-controls">
@@ -35,9 +32,13 @@
   {{/if}}
   <div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;">
     <select id="actor-filter" name="actor-filter">
-      <option value="" {{#if (eq seluuid "")}}selected{{/if}}>{{localize "fvtt-player-achievements.forms.achievements-sheet.all-players"}}</option>
+      <option value="" {{#if (eq seluuid "")}}selected{{/if}}>{{localize "fvtt-player-achievements.forms.achievements-sheet.all-actors"}}</option>
+      <option value="online" {{#if (eq seluuid "online")}}selected{{/if}}>{{localize "fvtt-player-achievements.forms.achievements-sheet.online-actors"}}</option>
       {{#each currentCharacters as |character|}}
         <option value="{{character.uuid}}" {{#if (eq ../seluuid character.uuid)}}selected{{/if}}>{{character.name}}</option>
+      {{/each}}
+      {{#each currentUsers as |user|}}
+        <option value="{{user.uuid}}" class="option-username" {{#if (eq ../seluuid user.uuid)}}selected{{/if}}>{{user.name}}</option>
       {{/each}}
     </select>
   <input
@@ -58,6 +59,10 @@
   <div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;">
     <input type="checkbox" name="hide-details" id="hide-details" class="achievements-sheet__hide-details" {{#if hideDetails}}checked{{/if}}>
     <label for="hide-details">{{localize "fvtt-player-achievements.forms.achievements-sheet.hide-details"}}</label>
+    {{#if isDM}}
+    <input type="checkbox" name="only-online" id="only-online" class="achievements-sheet__only-online" {{#if onlyOnline}}checked{{/if}}>
+    <label for="only-online">{{localize "fvtt-player-achievements.forms.achievements-sheet.only-online-actors"}}</label>
+    {{/if}}
   </div>
   {{#if achievements}}
     <div class="achievements-container">
@@ -68,8 +73,14 @@
   {{else}}
     {{#if currentFilter}}
       <p>{{localize "fvtt-player-achievements.forms.achievements-sheet.no-achievements-match-filter"}}</p>
+    {{else if seluuid}}
+      <p>{{localize "fvtt-player-achievements.forms.achievements-sheet.no-achievements-match-filter"}}</p>
     {{else}}
+      {{#if (eq seluuid "online")}}
+      <p>{{localize "fvtt-player-achievements.forms.achievements-sheet.no-achievements-online"}}</p>
+      {{else}}
       <p>{{localize "fvtt-player-achievements.forms.achievements-sheet.no-achievements-added"}}</p>
+      {{/if}}
     {{/if}}
   {{/if}}
 </form>

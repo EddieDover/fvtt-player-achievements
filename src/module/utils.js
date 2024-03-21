@@ -46,7 +46,7 @@ export function localize(key) {
 /**
  * Hydrate achievements with awarded actors
  * @param {Array} awardedAchievements Array of awarded achievements
- * @returns {Array} hydratedAchievements
+ * @returns {Promise<Array>} hydratedAchievements
  */
 export async function hydrateAwardedAchievements(awardedAchievements) {
   const customAchievements = (await game.settings.get("fvtt-player-achievements", "customAchievements")) ?? [];
@@ -77,4 +77,21 @@ export function enrichText(text) {
  */
 export function cleanString(text) {
   return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
+
+/**
+ * Gets the clients Interface volume
+ * @returns {number} The clients interface volume
+ */
+export function getClientInterfaceVolume() {
+  const vol = game.settings.storage.get("client")["core.globalInterfaceVolume"];
+  return vol;
+}
+
+/**
+ * Gets the default sound file location
+ * @returns {string} The default sound file location
+ */
+export function getDefaultSound() {
+  return game.settings.get("fvtt-player-achievements", "defaultSoundFile") ?? DEFAULT_SOUND;
 }

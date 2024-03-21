@@ -9,9 +9,9 @@
         "name": "Tocar Sons de Conquista",
         "hint": "Toca um som se você receber uma conquista"
       },
-      "self-sound-volume": {
-        "name": "Volume de Som de Conquista",
-        "hint": "O volume do som tocado quando você ganha uma conquista"
+      "default-sound-file": {
+        "name": "Arquivo de som padrão",
+        "hint": "O arquivo de som padrão a ser reproduzido quando uma conquista é concedida."
       },
       "hide-unearned": {
         "name": "Esconder Conquistas não-alcançadas",
@@ -24,11 +24,17 @@
       "show-only-to-awarded-user": {
         "name": "Exibir apenas para Usuário ganhador",
         "hint": "Exibir mensagem apenas para o usuário que ganhar a conquista."
+      },
+      "show-tags-to-players": {
+        "name": "Mostrar tags para os jogadores",
+        "hint": "Mostrar tags aos jogadores, permitindo que eles também filtrem."
       }
     },
     "forms": {
       "achievements-sheet": {
-        "all-players": "Todos Jogadores",
+        "all-actors": "Todos os Atores",
+        "online-actors": "Atores on-line",
+        "only-online-actors": "Mostrar apenas atores on-line",
         "add-achievement": "Adicionar Conquista",
         "export": "Exportar",
         "export-achievements": "Exportar dados de conquista para o clipboard",
@@ -40,9 +46,9 @@
         "hide-details": "Visão Compacta",
         "no-achievements-match-filter": "Nenhuma conquista encontrada com o filtro.",
         "no-achievements-added": "Nenhuma conquista foi adicionada ainda.",
+        "no-achievements-online": "Nenhum jogador on-line tem conquistas concedidas.",
         "bugreport": "Enviar Report de Bug",
-        "feedback": "Enviar Feedback",
-        "discord": "Discord"
+        "feedback": "Enviar Feedback"
       },
       "achievement-block": {
         "edit": "Editar",
@@ -52,10 +58,10 @@
         "unowned": "não-alcançada",
         "click-to-remove": "Click para remover",
         "click-to-award": "Click para entregar",
-        "no-players-to-award": "Nenhum jogador para entregar.",
+        "no-actors-to-award": "Nenhum ator a ser premiado",
         "toggle-lock": "Trancar",
         "toggle-unlock": "Destrancar",
-        "all-players": "Todos Jogadores",
+        "all-actors": "Todos os Atores",
         "tags": "Tags"
       },
       "add-achievement-form": {
@@ -72,7 +78,7 @@
         "add-achievement": "Adicionar Conquista",
         "update-achievement": "Atualizar Conquista",
         "window-title": "Adicionar/Editar Conquista",
-        "tags": "Tags"
+        "tags": "Tags (separadas por vírgula)"
       },
       "achievements-export": {
         "export-message": "Por favor copiar os seguintes dados para um local seguro, caso precise restaurar mais tarde."
@@ -103,7 +109,8 @@
       "delete-achievement": {
         "title": "Deletar Conquista",
         "content": "Tem certeza que deseja deletar essa conquista?"
-      }
+      },
+      "achievement-id-copied": "ID da conquista copiado para a área de transferência."
     }
   }
 }
