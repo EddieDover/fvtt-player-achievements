@@ -13,3 +13,6 @@ fvtt-player-achievements.zip
 
 # Coverage
 coverage/
+
+# Cypress
+cypress.env.json
