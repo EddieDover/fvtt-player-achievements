@@ -227,7 +227,7 @@ export async function link() {
     } else {
       console.log(`Linking dist to ${linkDirectory}.`);
       await fs.ensureDir(path.resolve(linkDirectory, ".."));
-      await fs.symlink(path.resolve(distributionDirectory), linkDirectory);
+      await fs.symlink(path.resolve(distDirectory), linkDirectory);
     }
   }
 }
