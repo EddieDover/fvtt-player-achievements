@@ -211,6 +211,7 @@ export async function getAchivements(overrides) {
         if (!achievement.completedActors.includes(callingCharacterId)) {
           if (!achievement.showTitleCloaked) {
             achievement.title = game.settings.get("fvtt-player-achievements", "cloakTitleText");
+            achievement.cloaked = true;
           }
           achievement.description = game.settings.get("fvtt-player-achievements", "cloakDescriptionText");
           achievement.image = achievement.cloakedImage ?? "modules/fvtt-player-achievements/images/default.webp";
