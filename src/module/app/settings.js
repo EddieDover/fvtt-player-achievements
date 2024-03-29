@@ -113,4 +113,22 @@ export const registerSettings = () => {
     "default": true,
     "type": Boolean,
   });
+
+  game.settings.register("fvtt-player-achievements", "cloakTitleText", {
+    "name": "fvtt-player-achievements.settings.cloak-title-text.name",
+    "hint": "fvtt-player-achievements.settings.cloak-title-text.hint",
+    "scope": "world",
+    "config": true,
+    "default": "HIDDEN",
+    "type": String,
+  });
+
+  game.settings.register("fvtt-player-achievements", "cloakDescriptionText", {
+    "name": "fvtt-player-achievements.settings.cloak-description-text.name",
+    "hint": "fvtt-player-achievements.settings.cloak-description-text.hint",
+    "scope": "world",
+    "config": true,
+    "default": "HIDDEN",
+    "type": String,
+  });
 };
