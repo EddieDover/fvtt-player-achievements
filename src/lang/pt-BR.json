@@ -28,6 +28,14 @@
       "show-tags-to-players": {
         "name": "Mostrar tags para os jogadores",
         "hint": "Mostrar tags aos jogadores, permitindo que eles também filtrem."
+      },
+      "cloak-title-text": {
+        "name": "Texto do título oculto",
+        "hint": "Texto exibido quando o título de uma conquista estiver oculto."
+      },
+      "cloak-description-text": {
+        "name": "Texto da descrição oculto",
+        "hint": "Texto exibido quando a descrição de uma conquista estiver oculta."
       }
     },
     "forms": {

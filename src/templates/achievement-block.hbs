@@ -9,7 +9,7 @@
       <div class="achievement-block-title-row">
         <div class="achievement-block__title-wrap">
         <p class={{#iflockedachi id}}{{#if hideDetails}}"achievement-block__title-lock"{{else}}"achievement-block__title"{{/if}}{{else}}"achievement-block__title"{{/iflockedachi}}>{{title}}</p>
-        {{#unless hideDetails}}
+        {{#unless cloaked}}
         <div
             class="achievement-block__title-copy"
             title={{id}}

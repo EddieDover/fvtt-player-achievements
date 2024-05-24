@@ -28,6 +28,14 @@
       "show-tags-to-players": {
         "name": "Mostrar etiquetas a los jugadores",
         "hint": "Muestre las etiquetas a los jugadores, permitiéndoles filtrar también."
+      },
+      "cloak-title-text": {
+        "name": "Texto del título oculto",
+        "hint": "Texto que se muestra cuando el título de un logro está oculto."
+      },
+      "cloak-description-text": {
+        "name": "Texto de descripción oculto",
+        "hint": "Texto que se muestra cuando la descripción de un logro está oculta."
       }
     },
     "forms": {

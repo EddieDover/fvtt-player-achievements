@@ -1,4 +1,17 @@
 
+## [1.7.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.6.0...v1.7.0) (2024-05-24)
+
+
+### Features
+
+* the text displayed when an achievement is cloaked is now configurable in the settings. ([8096016](https://github.com/EddieDover/fvtt-player-achievements/commit/8096016ab7ebbd1ec172dc736ed597501da32034))
+* verified for Foundry v12 ([4756342](https://github.com/EddieDover/fvtt-player-achievements/commit/47563426b202f5860ed077a29e7df716fd9d7850))
+
+
+### Bug Fixes
+
+* the copy-id button is now hidden if an achievement is cloaked, to prevent spoilers. ([a1fa8d1](https://github.com/EddieDover/fvtt-player-achievements/commit/a1fa8d1b4ebbf1c4f992c643b8c767455c67fc2f))
+
 ## [1.6.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.5.0...v1.6.0) (2024-03-17)
 
 
