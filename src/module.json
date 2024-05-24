@@ -12,7 +12,6 @@
   "flags": {
     "allowBugReporter": true
   },
-  "allowBugReporter": true,
   "socket": true,
   "languages": [
     {
@@ -47,7 +46,7 @@
   "version": "1.6.0",
   "compatibility": {
     "minimum": "11",
-    "verified": "11"
+    "verified": "12"
   },
   "relationships": {
     "requires": [
