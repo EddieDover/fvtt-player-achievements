@@ -1,7 +1,7 @@
-// SPDX-FileCopyrightText: 2022 Johannes Loher
-//
-// SPDX-License-Identifier: MIT
-
-export default {
+/** @type {import('jest').Config} */
+const config = {
   testEnvironment: "jsdom",
 };
+
+// eslint-disable-next-line unicorn/prefer-module
+module.exports = config;

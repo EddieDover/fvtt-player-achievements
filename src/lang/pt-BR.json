@@ -56,7 +56,8 @@
         "no-achievements-added": "Nenhuma conquista foi adicionada ainda.",
         "no-achievements-online": "Nenhum jogador on-line tem conquistas concedidas.",
         "bugreport": "Enviar Report de Bug",
-        "feedback": "Enviar Feedback"
+        "feedback": "Enviar Feedback",
+        "discord": "Discord"
       },
       "achievement-block": {
         "edit": "Editar",

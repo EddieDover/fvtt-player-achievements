@@ -56,7 +56,8 @@
         "no-achievements-added": "No achievements have been added yet.",
         "no-achievements-online": "No online players have any awarded achievements.",
         "bugreport": "File a Bug Report or Feature Request",
-        "feedback": "Send Feedback"
+        "feedback": "Send Feedback",
+        "discord": "Discord"
       },
       "achievement-block": {
         "edit": "Edit",

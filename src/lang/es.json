@@ -56,7 +56,8 @@
         "no-achievements-added": "Todavía no se han agregado logros.",
         "no-achievements-online": "Ningún jugador en línea tiene logros premiados.",
         "bugreport": "Dar retroalimentación",
-        "feedback": "Reportar un fallo"
+        "feedback": "Reportar un fallo",
+        "discord": "Discord"
       },
       "achievement-block" : {
         "edit": "Editar",

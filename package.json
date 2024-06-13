@@ -1,6 +1,6 @@
 {
   "name": "fvtt-player-achievements",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Player Achievements for Foundry VTT",
   "main": "index.js",
   "author": {
