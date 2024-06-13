@@ -1,4 +1,11 @@
 
+## [1.7.1](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.7.0...v1.7.1) (2024-06-13)
+
+
+### Features
+
+* readded discord link ([d35fc12](https://github.com/EddieDover/fvtt-player-achievements/commit/d35fc121e4b41502da52acc27fcf57310040f52e))
+
 ## [1.7.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.6.0...v1.7.0) (2024-05-24)
 
 
