@@ -84,7 +84,7 @@ export function cleanString(text) {
  * @returns {number} The clients interface volume
  */
 export function getClientInterfaceVolume() {
-  const vol = game.settings.storage.get("client")["core.globalInterfaceVolume"];
+  const vol = game.settings.get("core", "globalInterfaceVolume");
   return vol;
 }
 
