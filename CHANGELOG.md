@@ -1,4 +1,11 @@
 
+## [1.7.2](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.7.1...v1.7.2) (2024-08-26)
+
+
+### Bug Fixes
+
+* non-Chrome browsers now pull interface volume data properly. ([01cbb58](https://github.com/EddieDover/fvtt-player-achievements/commit/01cbb58b9b252b8413f24718380097b8bed2f800))
+
 ## [1.7.1](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.7.0...v1.7.1) (2024-06-13)
 
 
