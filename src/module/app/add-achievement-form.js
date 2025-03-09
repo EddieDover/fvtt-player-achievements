@@ -42,7 +42,7 @@ export class AddAchievementForm extends FormApplication {
       tagarr = tagarr.split(",");
     }
     this.workingTags = tagarr?.join(", ") ?? "";
-    return mergeObject(super.getData(options), {
+    return foundry.utils.mergeObject(super.getData(options), {
       isDM: game.user.isGM,
       overrides: this.overrides,
       validation: this.validation,
