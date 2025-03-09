@@ -38,6 +38,10 @@
         "hint": "Texto exibido quando a descrição de uma conquista estiver oculta."
       }
     },
+    "interface": {
+      "achievements-sheet": "Painel de Conquistas",
+      "show-achievements-sheet": "Mostrar Painel de Conquistas"
+    },
     "forms": {
       "achievements-sheet": {
         "all-actors": "Todos os Atores",
