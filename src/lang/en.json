@@ -38,6 +38,10 @@
         "hint": "Text to show when an achievement description is cloaked."
       }
     },
+    "interface": {
+      "achievements-sheet": "Achievements Sheet",
+      "show-achievements-sheet": "Show Achievements Sheet"
+    },
     "forms": {
       "achievements-sheet": {
         "all-actors": "All Actors",
