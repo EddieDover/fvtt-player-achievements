@@ -126,7 +126,7 @@ export class AchievementForm extends FormApplication {
       });
     }
 
-    return mergeObject(super.getData(options), {
+    return foundry.utils.mergeObject(super.getData(options), {
       isDM: game.user.isGM,
       myuuid: game.user.character?.uuid,
       achievements: achievements,
