@@ -171,19 +171,45 @@ Hooks.on("renderSceneNavigation", () => {});
 
 Hooks.on("renderSceneControls", () => {
   let button = document.querySelector("#AchievementButton");
-  const controls = $(".main-controls.app.control-tools.flexcol");
+
+  // Check if the element with the class name "scene-controls-layers" exists, if so this is v13
+  let controls;
+  let v13andUp = false;
+  if (document.querySelector("#scene-controls-layers")) {
+    controls = $("#scene-controls-layers");
+    v13andUp = true;
+  } else {
+    controls = $(".main-controls.app.control-tools.flexcol");
+  }
 
   if (controls && !button) {
-    const newli = document.createElement("li");
-    newli.classList.add("scene-control");
-    newli.id = "AchievementButton";
-    newli.dataset.tool = "AchievementSheet";
-    newli.setAttribute("aria-label", "Show Achievement Sheet");
-    newli.setAttribute("role", "button");
-    newli.dataset.tooltip = "Achievement Sheet";
-    newli.innerHTML = `<i class="fas fa-trophy"></i>`;
-    newli.addEventListener("click", showWindow);
-    controls.append(newli);
+    if (v13andUp) {
+      const newli = document.createElement("li");
+      const newButton = document.createElement("button");
+
+      for (const st of ["control", "ui-control", "layer", "icon", "fa-regular"]) newButton.classList.add(st);
+      newButton.id = "AchievementButton";
+      newButton.type = "button";
+      newButton.role = "tab";
+      newButton.dataset.tool = "AchievementSheet";
+      newButton.setAttribute("aria-label", "Show Achievement Sheet");
+      newButton.dataset.tooltip = "Achievement Sheet";
+      newButton.innerHTML = `<i class="fas fa-trophy"></i>`;
+      newButton.addEventListener("click", showWindow);
+      newli.append(newButton);
+      controls.append(newli);
+    } else {
+      const newli = document.createElement("li");
+      newli.classList.add("scene-control");
+      newli.id = "AchievementButton";
+      newli.dataset.tool = "AchievementSheet";
+      newli.setAttribute("aria-label", "Show Achievement Sheet");
+      newli.setAttribute("role", "button");
+      newli.dataset.tooltip = "Achievement Sheet";
+      newli.innerHTML = `<i class="fas fa-trophy"></i>`;
+      newli.addEventListener("click", showWindow);
+      controls.append(newli);
+    }
   }
 });
 
