@@ -162,9 +162,18 @@ export class AddAchievementForm extends FormApplication {
 
   handleSelectSound(event) {
     event.preventDefault();
-    // Show the foundry file picker
-    const fp = new FilePicker();
-    fp.options.type = "audio";
+    //TODO: Remove once we deprecate v12 and below
+    const isV13 = Number.parseInt(game.version.split(".")[0], 10) >= 13;
+    let fp;
+    if (isV13) {
+      // Show the foundry file picker
+      fp = new FilePicker({
+        type: "image",
+      });
+    } else {
+      fp = new FilePicker();
+      fp.options.type = "image";
+    }
     fp.render(true);
     fp.callback = (path, _filePicker) => {
       const soundInput = document.querySelector("#achievement_sound");
@@ -177,9 +186,19 @@ export class AddAchievementForm extends FormApplication {
 
   handleSelectImage(event) {
     event.preventDefault();
-    // Show the foundry file picker
-    const fp = new FilePicker();
-    fp.options.type = "image";
+
+    //TODO: Remove once we deprecate v12 and below
+    const isV13 = Number.parseInt(game.version.split(".")[0], 10) >= 13;
+    let fp;
+    if (isV13) {
+      // Show the foundry file picker
+      fp = new FilePicker({
+        type: "image",
+      });
+    } else {
+      fp = new FilePicker();
+      fp.options.type = "image";
+    }
     fp.render(true);
     fp.callback = (path, _filePicker) => {
       const imageInput = document.querySelector("#achievement_image");
@@ -192,9 +211,19 @@ export class AddAchievementForm extends FormApplication {
 
   handleSelectCloakedImage(event) {
     event.preventDefault();
-    // Show the foundry file picker
-    const fp = new FilePicker();
-    fp.options.type = "image";
+
+    //TODO: Remove once we deprecate v12 and below
+    const isV13 = Number.parseInt(game.version.split(".")[0], 10) >= 13;
+    let fp;
+    if (isV13) {
+      // Show the foundry file picker
+      fp = new FilePicker({
+        type: "image",
+      });
+    } else {
+      fp = new FilePicker();
+      fp.options.type = "image";
+    }
     fp.render(true);
     fp.callback = (path, _filePicker) => {
       const imageInput = document.querySelector("#achievement_cloaked_image");
