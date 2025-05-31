@@ -39,8 +39,8 @@
       }
     },
     "interface": {
-      "achievements-sheet": "Achievements Sheet",
-      "show-achievements-sheet": "Show Achievements Sheet"
+      "achievements-sheet": "Achievements Window",
+      "show-achievements-sheet": "Show Achievements Window"
     },
     "forms": {
       "achievements-sheet": {

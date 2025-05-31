@@ -1,4 +1,16 @@
 
+## [1.8.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.7.2...v1.8.0) (2025-05-31)
+
+
+### Features
+
+* added achievement button to settings sidebar ([ba34208](https://github.com/EddieDover/fvtt-player-achievements/commit/ba342084264e3156238876f686da9a343a3ab50d))
+* updated to support v13 ([09ca51b](https://github.com/EddieDover/fvtt-player-achievements/commit/09ca51baaff7c48e6255c2f138dbb17ae74d8125))
+
+### Bug Fixes
+
+* during import, blank achievement ids will be auto-generated
+
 ## [1.7.2](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.7.1...v1.7.2) (2024-08-26)
 
 

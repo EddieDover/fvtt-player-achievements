@@ -39,8 +39,8 @@
       }
     },
     "interface": {
-      "achievements-sheet": "Hoja de Logros",
-      "show-achievements-sheet": "Mostrar Hoja de Logros"
+      "achievements-sheet": "Ventana de Logros",
+      "show-achievements-sheet": "Mostrar Ventana de Logros"
     },
     "forms": {
       "achievements-sheet": {
