@@ -15,6 +15,7 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { generateUniqueId } from "../core";
 import { localize } from "../utils";
 
 export class AchievementsImportDialog extends Application {
@@ -41,6 +42,7 @@ export class AchievementsImportDialog extends Application {
     this.close();
   }
 
+  // eslint-disable-next-line require-await
   async activateListeners(html) {
     super.activateListeners(html);
 
@@ -76,9 +78,12 @@ export class AchievementsImportDialog extends Application {
     }
 
     for (const ach of importedAchievements) {
-      if (ach.id === undefined || ach.title === undefined || ach.description === undefined) {
+      if (ach.title === "" || ach.title === undefined || ach.description === "" || ach.description === undefined) {
         ui.notifications.error(localize("fvtt-player-achievements.message.invalid-achievement-format"));
         return;
+      }
+      if (ach.id === "" || ach.id === undefined) {
+        ach.id = await generateUniqueId();
       }
     }
 

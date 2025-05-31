@@ -21,7 +21,7 @@
         "name": "Logros no ganados de Cloak",
         "hint": "Los jugadores pueden ver que hay un logro, pero no lo que es. (Esto es anulado por la configuración en Ocultar)."
       },
-      "show-only-to-awarded-user" : {
+      "show-only-to-awarded-user": {
         "name": "Mostrar solo al usuario premiado",
         "hint": "Muestre el mensaje de logro solo al usuario que lo ganó."
       },
@@ -38,8 +38,12 @@
         "hint": "Texto que se muestra cuando la descripción de un logro está oculta."
       }
     },
+    "interface": {
+      "achievements-sheet": "Ventana de Logros",
+      "show-achievements-sheet": "Mostrar Ventana de Logros"
+    },
     "forms": {
-      "achievements-sheet" : {
+      "achievements-sheet": {
         "all-actors": "Todos los Actores",
         "online-actors": "Actores en línea",
         "only-online-actors": "Mostrar solo actores en línea",
@@ -59,7 +63,7 @@
         "feedback": "Reportar un fallo",
         "discord": "Discord"
       },
-      "achievement-block" : {
+      "achievement-block": {
         "edit": "Editar",
         "delete": "Borrar",
         "owned": "De propiedad",
@@ -84,10 +88,10 @@
         "sound": "Sonido",
         "preview": "Previsualiza",
         "clear": "Clara",
-        "add-achievement":"Agregar Logro",
-        "update-achievement":"Actualizar el Logro",
+        "add-achievement": "Agregar Logro",
+        "update-achievement": "Actualizar el Logro",
         "window-title": "Agregar/Editar Logro",
-        "tags":"Etiquetas (separadas por comas)"
+        "tags": "Etiquetas (separadas por comas)"
       },
       "achievements-export": {
         "export-message": "Por favor, copia los siguientes datos en un lugar seguro, en caso de que necesites restaurarlos más tarde."
@@ -101,7 +105,7 @@
       "achievements-imported": "Logros importados del portapapeles.",
       "achievements-exported": "Logros exportados al portapapeles.",
       "achievement-updated": "Logro actualizado.",
-      "achievement-added":"Logro agregado.",
+      "achievement-added": "Logro agregado.",
       "duplicate-id": "Ya existe un logro con esa identificación.",
       "id-no-spaces": "ID no puede contener espacios.",
       "invalid-achievement-format": "Formato de logro no válido.",

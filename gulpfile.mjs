@@ -71,7 +71,7 @@ function buildStyles() {
 async function copyFiles() {
   for (const file of staticFiles) {
     if (fs.existsSync(`${sourceDirectory}/${file}`)) {
-      await fs.copy(`${sourceDirectory}/${file}`, `${distDirectory}/${file}`);
+      await fs.copy(`${sourceDirectory}/${file}`, `${distDirectory}/${file}`, { encoding: false });
     }
   }
 }
@@ -90,7 +90,7 @@ async function cleanDist() {
  */
 function copyDist() {
   // Take everything inside the dist folder and zip it into a subfolder named totm.zip
-  return gulp.src(`${distDirectory}/**/*`).pipe(gulp.dest(`${distDirectory}/${packageId}`));
+  return gulp.src(`${distDirectory}/**/*`, { encoding: false }).pipe(gulp.dest(`${distDirectory}/${packageId}`));
 }
 
 /**
@@ -99,7 +99,7 @@ function copyDist() {
  */
 function zipDist() {
   return gulp
-    .src(`${distDirectory}/${packageId}/**/*`, { base: `${distDirectory}` })
+    .src(`${distDirectory}/${packageId}/**/*`, { base: `${distDirectory}`, encoding: false })
     .pipe(zip(`${packageId}.zip`))
     .pipe(gulp.dest(`${distDirectory}`));
 }
