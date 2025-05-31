@@ -27,7 +27,7 @@ export class AchievementsExportDialog extends Application {
   }
 
   getData(options) {
-    return mergeObject(super.getData(options), {
+    return foundry.utils.mergeObject(super.getData(options), {
       exportData: this.exportData,
     });
   }
