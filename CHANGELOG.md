@@ -1,4 +1,11 @@
 
+## [1.8.1](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.8.0...v1.8.1) (2025-06-03)
+
+
+### Bug Fixes
+
+* prevent settings button from duplicating after Scene change in V13 ([b0a8e57](https://github.com/EddieDover/fvtt-player-achievements/commit/b0a8e579c20f6b07bea7e75d137fc0ce79f7c0ff))
+
 ## [1.8.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.7.2...v1.8.0) (2025-05-31)
 
 

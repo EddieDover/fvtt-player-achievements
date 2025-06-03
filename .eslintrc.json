@@ -45,7 +45,12 @@
       //"unicorn/better-regex": "error"
 
     },
-
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "overrides": [
       {
         "files": ["./src/**/*.js", "./*.cjs", "./*.mjs"],

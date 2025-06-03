@@ -43,7 +43,7 @@
       "url": "https://github.com/eddiedover/"
     }
   ],
-  "version": "1.8.0",
+  "version": "1.8.1",
   "compatibility": {
     "minimum": "11",
     "verified": "13"
@@ -57,6 +57,10 @@
     ],
     "conflicts": []
   },
-  "esmodules": ["module/fvtt-player-achievements.js"],
-  "styles": ["styles/fvtt-player-achievements.css"]
+  "esmodules": [
+    "module/fvtt-player-achievements.js"
+  ],
+  "styles": [
+    "styles/fvtt-player-achievements.css"
+  ]
 }
