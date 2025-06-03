@@ -188,6 +188,7 @@ Hooks.on("renderSceneControls", () => {
   let v13andUp = false;
   if (document.querySelector("#scene-controls-layers")) {
     controls = $("#scene-controls-layers");
+    settingsArea = document.querySelector(".fvtt-player-achievement-settings");
     v13andUp = true;
   } else {
     controls = $(".main-controls.app.control-tools.flexcol");
