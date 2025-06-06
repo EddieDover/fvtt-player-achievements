@@ -168,11 +168,11 @@ export class AddAchievementForm extends FormApplication {
     if (isV13) {
       // Show the foundry file picker
       fp = new FilePicker({
-        type: "image",
+        type: "audio",
       });
     } else {
       fp = new FilePicker();
-      fp.options.type = "image";
+      fp.options.type = "audio";
     }
     fp.render(true);
     fp.callback = (path, _filePicker) => {
