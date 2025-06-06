@@ -36,6 +36,10 @@
       "cloak-description-text": {
         "name": "Cloak Description Text",
         "hint": "Text to show when an achievement description is cloaked."
+      },
+      "use-alternate-button": {
+        "name": "Use Alternate Button Position",
+        "hint": "Use an alternate button position for the achievements window. This is useful if you have a lot of icons in the primary column. The button will appear in the Token Controls sub-list You will need to refresh the window for the changes to take effect."
       }
     },
     "interface": {

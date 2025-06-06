@@ -186,15 +186,19 @@ Hooks.on("renderSceneControls", () => {
   let controls;
   let sidebarSettings;
   let v13andUp = false;
+
+  const localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
+  const useAlternateButon = game.settings.get("fvtt-player-achievements", "useAlternateButton");
+
   if (document.querySelector("#scene-controls-layers")) {
-    controls = $("#scene-controls-layers");
+    controls = useAlternateButon
+      ? document.querySelector("#scene-controls-tools")
+      : document.querySelector("#scene-controls-layers");
     settingsArea = document.querySelector(".fvtt-player-achievement-settings");
     v13andUp = true;
   } else {
-    controls = $(".main-controls.app.control-tools.flexcol");
+    controls = useAlternateButon ? $("#tools-panel-token") : $(".main-controls.app.control-tools.flexcol");
   }
-
-  const localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
 
   if (controls && !button) {
     if (v13andUp) {
@@ -229,7 +233,6 @@ Hooks.on("renderSceneControls", () => {
         settingsButton.classList.add("settings-button");
         settingsButton.dataset.action = "openApp";
         settingsButton.type = "button";
-        let localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
         settingsButton.innerHTML = `<i class='fas fa-trophy'></i> ${localizedLabel}`;
         settingsButton.addEventListener("click", () => {
           toggleAchievementScreen();
@@ -260,7 +263,6 @@ Hooks.on("renderSceneControls", () => {
         settingsAreaDiv.id = "settings-fvtt-player-achievements";
         const settingsButton = document.createElement("button");
         settingsButton.classList.add("settings-button");
-        let localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
         settingsButton.innerHTML = `<i class='fas fa-trophy'></i> ${localizedLabel}`;
         settingsButton.addEventListener("click", () => {
           toggleAchievementScreen();
