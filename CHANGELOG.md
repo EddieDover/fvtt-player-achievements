@@ -1,4 +1,10 @@
 
+## [1.8.2](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.8.1...v1.8.2) (2025-06-06)
+
+### Bug Fixes
+
+* fix audio picker button opening sound picker instead ([f005ac0](https://github.com/EddieDover/fvtt-player-achievements/commit/f005ac0df25044a72447d96d4f5be82874dbc824))
+
 ## [1.8.1](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.8.0...v1.8.1) (2025-06-03)
 
 
