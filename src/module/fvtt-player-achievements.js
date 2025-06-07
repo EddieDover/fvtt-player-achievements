@@ -19,8 +19,9 @@ import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
 import PA_API from "./api.js";
 import { getAchivements, getPendingAchievements, log, setupAchievementSocket } from "./core.js";
-import { enrichText } from "./utils.js";
+import { enrichText, isVersionAtLeast } from "./utils.js";
 import { MODULE_NAME } from "./constants.js";
+import { AchievementFormV13 } from "./app/achievement-form-13.js";
 
 let currentAchievementScreen;
 let registeredHandlebars = false;
@@ -119,6 +120,7 @@ function registerAPI() {
  * Toggle the Achievement Screen
  */
 function toggleAchievementScreen() {
+  const isV13 = isVersionAtLeast(13);
   if (currentAchievementScreen?.rendered) {
     currentAchievementScreen.close();
   } else {
@@ -127,7 +129,7 @@ function toggleAchievementScreen() {
         return getAchivements();
       },
     };
-    currentAchievementScreen = new AchievementForm(overrides);
+    currentAchievementScreen = isV13 ? new AchievementFormV13(overrides) : new AchievementForm(overrides);
     currentAchievementScreen.render(true);
   }
 }
@@ -185,17 +187,17 @@ Hooks.on("renderSceneControls", () => {
   // Check if the element with the class name "scene-controls-layers" exists, if so this is v13
   let controls;
   let sidebarSettings;
-  let v13andUp = false;
+  let v13andUp = isVersionAtLeast(13);
+  console.log(`Foundry Version: ${game.version}, v13 and up: ${v13andUp}`);
 
   const localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
   const useAlternateButon = game.settings.get("fvtt-player-achievements", "useAlternateButton");
 
-  if (document.querySelector("#scene-controls-layers")) {
+  if (v13andUp) {
     controls = useAlternateButon
       ? document.querySelector("#scene-controls-tools")
       : document.querySelector("#scene-controls-layers");
     settingsArea = document.querySelector(".fvtt-player-achievement-settings");
-    v13andUp = true;
   } else {
     controls = useAlternateButon ? $("#tools-panel-token") : $(".main-controls.app.control-tools.flexcol");
   }
