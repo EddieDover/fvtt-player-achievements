@@ -187,7 +187,7 @@ export class AchievementForm extends FormApplication {
     $('input[name="hide-details"]', html).on("change", this.onToggleHideDetails.bind(this));
     $('input[name="only-online"]', html).on("change", this.onToggleOnlyOnline.bind(this));
     $('button[name="filter-azza"]', html).click(this.onSort.bind(this));
-    $('select[name="actor-filter"]', html).on("change", this.onSelectCharacter.bind(this));
+    $('select[name="ach-actor-filter"]', html).on("change", this.onSelectCharacter.bind(this));
     $('button[name="import-achievements"]', html).click(await this.onImportAchievements.bind(this));
     $('button[name="export-achievements"]', html).click(this.onExportAchievements.bind(this));
 

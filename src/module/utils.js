@@ -95,3 +95,33 @@ export function getClientInterfaceVolume() {
 export function getDefaultSound() {
   return game.settings.get("fvtt-player-achievements", "defaultSoundFile") ?? DEFAULT_SOUND;
 }
+
+/**
+ * Get the Foundry version
+ *
+ * @export
+ * @return {{ major: number, minor: number, patch: number, full: string }} version
+ */
+export function getFoundryVersion() {
+  const version = game.version;
+  const versionInfo = version.split(".");
+  const major = Number.parseInt(versionInfo[0]);
+  const minor = Number.parseInt(versionInfo[1]);
+
+  return {
+    major,
+    minor,
+  };
+}
+
+/**
+ * Check if the Foundry version is at least a certain major version
+ *
+ * @export
+ * @param {int} major
+ * @return {boolean} true if the Foundry version is at least the specified major version
+ */
+export function isVersionAtLeast(major) {
+  const version = getFoundryVersion();
+  return version.major >= major;
+}

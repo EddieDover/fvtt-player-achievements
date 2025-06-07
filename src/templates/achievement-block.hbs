@@ -21,6 +21,7 @@
         {{#if isDM}}
         <div class="achievement-block__title-buttons">
           <button
+            data-action="onToggleLock"
             class="achievement-block__image-holder-button achievement-block__image-holder-button--toggle-lock toggle-lock"
             type="button"
             title={{#iflockedachi id}}{{localize "fvtt-player-achievements.forms.achievement-block.toggle-unlock"}}{{else}}{{localize "fvtt-player-achievements.forms.achievement-block.toggle-lock"}}{{/iflockedachi}}
@@ -35,6 +36,7 @@
           {{#iflockedachi id}}
           {{else}}
           <button
+            data-action="onDeleteAchievement"
             class="achievement-block__image-holder-button achievement-block__image-holder-button--delete delete-button"
             type="button"
             title={{ localize "fvtt-player-achievements.forms.achievement-block.delete"}}
@@ -43,6 +45,7 @@
             <i class="fas fa-trash-alt"></i>
           </button>
           <button
+            data-action="onEditAchievement"
             class="achievement-block__image-holder-button achievement-block__image-holder-button--edit edit-button"
             type="button"
             title={{localize "fvtt-player-achievements.forms.achievement-block.edit"}}
@@ -66,6 +69,7 @@
       <div class="">
         {{#each tags as |tag|}}
           <button
+            data-action="toggleTagFilter"
             data-achievement_tag="{{tag}}"
             class="achievement-block-tag{{#inStringArray ../currentTagFilter tag }} achievement-block-tag--selected{{/inStringArray}}"
             >
@@ -87,9 +91,9 @@
           <div class="pcolumn">
             <p>{{localize "fvtt-player-achievements.forms.achievement-block.owned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-remove"}})</span></p>
             <div class="owned">
-              <button class="unassign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-actors"}}</button>
+              <button data-action="unassignAchievement" class="unassign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-actors"}}</button>
               {{#ownedCharacters completedActors characters}}
-                <button class="unassign" data-achievement_id="{{../id}}" title="{{this.name}}"  data-character_id="{{this.uuid}}">{{this.name}}</button>
+                <button data-action="unassignAchievement" class="unassign" data-achievement_id="{{../id}}" title="{{this.name}}"  data-character_id="{{this.uuid}}">{{this.name}}</button>
               {{/ownedCharacters}}
             </div>
           </div>
@@ -98,9 +102,9 @@
           <div class="pcolumn">
             <p>{{localize "fvtt-player-achievements.forms.achievement-block.unowned"}} <span style="font-size:smaller;"> ({{localize "fvtt-player-achievements.forms.achievement-block.click-to-award"}})</span></p>
             <div class="unowned">
-                <button class="assign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-actors"}}</button>
+                <button data-action="assignAchievement" class="assign" data-achievement_id="{{id}}" data-character_id="ALL">{{localize "fvtt-player-achievements.forms.achievement-block.all-actors"}}</button>
               {{#unownedCharacters completedActors characters}}
-                <button class="assign" data-achievement_id="{{../id}}" title="{{this.name}}" data-character_id="{{this.uuid}}">{{this.name}}</button>
+                <button data-action="assignAchievement" class="assign" data-achievement_id="{{../id}}" title="{{this.name}}" data-character_id="{{this.uuid}}">{{this.name}}</button>
               {{/unownedCharacters}}
             </div>
           </div>
