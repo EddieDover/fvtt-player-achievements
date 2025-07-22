@@ -36,6 +36,10 @@
       "cloak-description-text": {
         "name": "Texto de descripción oculto",
         "hint": "Texto que se muestra cuando la descripción de un logro está oculta."
+      },
+      "use-alternate-button": {
+        "name": "Usar Posición Alternativa del Botón",
+        "hint": "Usa una posición de botón alternativa para la ventana de logros. Esto es útil si tienes muchos iconos en la columna principal. El botón aparecerá en la sublista de Controls de Fichas. Deberás actualizar la ventana para que los cambios surtan efecto."
       }
     },
     "interface": {

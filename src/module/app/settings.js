@@ -50,6 +50,15 @@ export const registerSettings = () => {
     "type": Array,
   });
 
+  game.settings.register("fvtt-player-achievements", "useAlternateButton", {
+    "name": "fvtt-player-achievements.settings.use-alternate-button.name",
+    "hint": "fvtt-player-achievements.settings.use-alternate-button.hint",
+    "scope": "world",
+    "config": true,
+    "default": false,
+    "type": Boolean,
+  });
+
   game.settings.register("fvtt-player-achievements", "defaultSoundFile", {
     "name": "fvtt-player-achievements.settings.default-sound-file.name",
     "hint": "fvtt-player-achievements.settings.default-sound-file.hint",
