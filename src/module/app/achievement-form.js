@@ -1,37 +1,61 @@
-/*
- Copyright (c) 2023 Eddie Dover
-
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
-
 import { AchievementsExportDialog } from "./achievement-export-dialog";
 import { AchievementsImportDialog } from "./achievement-import-dialog";
 import { AddAchievementForm } from "./add-achievement-form";
 import { localize } from "../utils";
 import { awardAchievement, deleteAchievement, unAwardAchievement } from "../core";
 
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const FEEDBACK_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=feature_request.md";
 const BUGREPORT_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=bug_report.md";
 const DISCORD_URL = "https://discord.gg/XNRxNsWy2p";
 
-let achievementsExportDialog;
-let achievementsImportDialog;
+export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    form: {
+      handler: AchievementForm.formHandler,
+      submitOnChange: true,
+      closeOnSubmit: false,
+    },
+    window: {
+      title: "Achievement Form",
+      width: 400,
+      height: "auto",
+    },
+    actions: {
+      onFilterChange: AchievementForm.onFilterChange, //done
+      onInputLoad: AchievementForm.onInputLoad, // done
+      onAddAchievement: AchievementForm.onAddAchievement, // done
+      onEditAchievement: AchievementForm.onEditAchievement, // done
+      onDeleteAchievement: AchievementForm.onDeleteAchievement, // done
+      onToggleLock: AchievementForm.onToggleLock, // done
+      assignAchievement: AchievementForm.assignAchievement, // done
+      unassignAchievement: AchievementForm.unassignAchievement, // done
+      toggleTagFilter: AchievementForm.toggleTagFilter, // done
+      onToggleHideAwarded: AchievementForm.onToggleHideAwarded, //done
+      onToggleHideUnawarded: AchievementForm.onToggleHideUnawarded, // done
+      onToggleHideDetails: AchievementForm.onToggleHideDetails, // done
+      onToggleOnlyOnline: AchievementForm.onToggleOnlyOnline, // done
+      onSort: AchievementForm.onSort, // done
+      onSelectCharacter: AchievementForm.onSelectCharacter, // needs custom
+      onImportAchievements: AchievementForm.onImportAchievements, // done
+      onExportAchievements: AchievementForm.onExportAchievements, // done
+      onCopyIdToClipboard: AchievementForm.onCopyIdToClipboard,
+      onFeedback: AchievementForm.onFeedback, // done
+      onBugReport: AchievementForm.onBugReport, // done
+      onDiscord: AchievementForm.onDiscord, // done
+    },
+  };
 
-export class AchievementForm extends FormApplication {
+  static PARTS = {
+    form: {
+      template: "modules/fvtt-player-achievements/templates/achievements-sheet.hbs",
+    },
+  };
+
   constructor(overrides) {
     super();
-    this.overrides = overrides;
+    this.overrides = overrides || {};
     this.currentFilter = "";
     this.currentTagFilter = [];
     this.sortza = false;
@@ -40,29 +64,12 @@ export class AchievementForm extends FormApplication {
     this.hideDetails = false;
     this.onlyOnline = false;
     this.seluuid = "";
+    this.achievementsImportDialog = null;
+    this.achievementsExportDialog = null;
   }
 
-  _updateObject(_event, _formData) {
-    this.render(true);
-  }
-
-  async filterAchievements() {
-    const achievements = await this.overrides.updateAchievements();
-    const filtered = achievements.filter((achi) => {
-      if (this.currentFilter) {
-        return achi.title.toLowerCase().includes(this.currentFilter.toLowerCase());
-      }
-      return true;
-    });
-    if (this.currentTagFilter.length > 0) {
-      return filtered.filter((achi) => {
-        return this.currentTagFilter.every((tag) => achi.tags?.includes(tag));
-      });
-    }
-    return filtered;
-  }
-
-  async getData(options) {
+  async _prepareContext(options, b, c) {
+    console.log("prepareContext", options, b, c);
     const currentUsers = game.users.filter((user) => user.character != undefined && !user.isGM);
 
     const characters = currentUsers.map((user) => user.character);
@@ -126,7 +133,7 @@ export class AchievementForm extends FormApplication {
       });
     }
 
-    return foundry.utils.mergeObject(super.getData(options), {
+    const payload = {
       isDM: game.user.isGM,
       myuuid: game.user.character?.uuid,
       achievements: achievements,
@@ -148,178 +155,116 @@ export class AchievementForm extends FormApplication {
             uuid: user.uuid,
           };
         }),
+    };
+    return payload;
+    //return foundry.utils.mergeObject(super._prepareContext(options), payload);
+  }
+
+  _onRender(context, options) {
+    super._onRender(context, options);
+    const achievementFilterInput = document.querySelector(".achievements-sheet__filter");
+    const achievementFilterButton = document.querySelector("#achievements-sheet__filter_button");
+    // Make the Enter key do nothing
+    achievementFilterInput.addEventListener("keydown", (event) => {
+      console.log(event.key);
+      if (event.key === "Enter") {
+        event.preventDefault();
+        event.stopPropagation();
+        this.currentFilter = event.target.value.trim().toLowerCase();
+        achievementFilterButton.click();
+      }
     });
+    achievementFilterInput.setSelectionRange(this.currentFilter.length, this.currentFilter.length);
   }
 
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "achievements-sheet",
-      classes: ["form"],
-      title: "Achievements",
-      submitOnChange: true,
-      closeOnSubmit: false,
-      template: "modules/fvtt-player-achievements/templates/achievements-sheet.hbs",
-      width: 500,
-      height: "auto",
-      maxHeight: 500,
+  static async formHandler(event, form, formData) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Handle form submission logic here
+    // For example, you can process the formData and update the application state
+    console.log("Form submitted with data:", formData);
+
+    // Optionally, you can close the form after submission
+    // this.close();
+  }
+
+  async filterAchievements() {
+    const achievements = await this.overrides.updateAchievements();
+    const filtered = achievements.filter((achi) => {
+      if (this.currentFilter) {
+        return achi.title.toLowerCase().includes(this.currentFilter.toLowerCase());
+      }
+      return true;
     });
-  }
-
-  closeWindow() {
-    this.close();
-  }
-
-  async activateListeners(html) {
-    super.activateListeners(html);
-
-    const inputElement = $('input[name="achievement_filter"]', html);
-    inputElement.keyup(this.onFilterChange.bind(this));
-    inputElement.ready(this.onInputLoad.bind(this));
-    $('button[name="add-achievement"]', html).click(this.onAddAchievement.bind(this));
-    $(".edit-button", html).click(await this.onEditAchievement.bind(this));
-    $(".delete-button", html).click(await this.onDeleteAchievement.bind(this));
-    $(".toggle-lock", html).click(this.onToggleLock.bind(this));
-    $('button[class="assign"]', html).click(await this.assignAchievement.bind(this));
-    $('button[class="unassign"]', html).click(await this.unassignAchievement.bind(this));
-    $('button[class*="achievement-block-tag"]', html).click(await this.toggleTagFilter.bind(this));
-    $('input[name="hide-awarded"]', html).on("change", this.onToggleHideAwarded.bind(this));
-    $('input[name="hide-unawarded"]', html).on("change", this.onToggleHideUnawarded.bind(this));
-    $('input[name="hide-details"]', html).on("change", this.onToggleHideDetails.bind(this));
-    $('input[name="only-online"]', html).on("change", this.onToggleOnlyOnline.bind(this));
-    $('button[name="filter-azza"]', html).click(this.onSort.bind(this));
-    $('select[name="ach-actor-filter"]', html).on("change", this.onSelectCharacter.bind(this));
-    $('button[name="import-achievements"]', html).click(await this.onImportAchievements.bind(this));
-    $('button[name="export-achievements"]', html).click(this.onExportAchievements.bind(this));
-
-    $('div[class="achievement-block__title-copy"]', html).click(this.onCopyIdToClipboard.bind(this));
-
-    $('button[name="feedback"]', html).click(this.onFeedback.bind(this));
-    $('button[name="bugreport"]', html).click(this.onBugReport.bind(this));
-    $('button[name="discord"]', html).click(this.onDiscord.bind(this));
-  }
-
-  onCopyIdToClipboard(event) {
-    const achievementId = event.currentTarget.dataset.achievement_id;
-    if (!achievementId) return;
-    navigator.clipboard.writeText(achievementId);
-    ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-id-copied"));
-  }
-
-  onFeedback(event) {
-    event.preventDefault();
-    const newWindow = window.open(FEEDBACK_URL, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = undefined;
-  }
-
-  onBugReport(event) {
-    event.preventDefault();
-    const newWindow = window.open(BUGREPORT_URL, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = undefined;
-  }
-
-  onDiscord(event) {
-    event.preventDefault();
-    const newWindow = window.open(DISCORD_URL, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = undefined;
-  }
-
-  toggleTagFilter(event) {
-    event.preventDefault();
-    const tag = event.currentTarget.dataset.achievement_tag;
-    if (this.currentTagFilter.includes(tag)) {
-      this.currentTagFilter = this.currentTagFilter.filter((t) => t !== tag);
-    } else {
-      this.currentTagFilter.push(tag);
+    if (this.currentTagFilter.length > 0) {
+      return filtered.filter((achi) => {
+        return this.currentTagFilter.every((tag) => achi.tags?.includes(tag));
+      });
     }
+    return filtered;
+  }
+
+  static onFilterChange(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const achievementFilterInput = document.querySelector("#achievement_filter_input");
+
+    this.currentFilter = achievementFilterInput.value.trim().toLowerCase();
     this.render(true);
   }
 
-  toggleImportDialog() {
-    if (achievementsImportDialog?.rendered) {
-      achievementsImportDialog.close();
-    } else {
-      achievementsImportDialog = new AchievementsImportDialog({ onFinished: this.onFinishedImport.bind(this) });
-      achievementsImportDialog.render(true);
+  static onAddAchievement(_event) {
+    const overrides = {
+      onend: () => {
+        setTimeout(() => {
+          this.render(true);
+        }, 350);
+      },
+    };
+    const addAchievementForm = new AddAchievementForm(overrides);
+    addAchievementForm.render(true);
+  }
+
+  static async onEditAchievement(event) {
+    const id = event.currentTarget.dataset.achievement_id;
+    const overrides = {
+      onend: () => {
+        setTimeout(() => {
+          this.render(true);
+        }, 350);
+      },
+      mode: "edit",
+      achievement: await game.settings.get("fvtt-player-achievements", "customAchievements").find((a) => a.id === id),
+    };
+    const addAchievementForm = new AddAchievementForm(overrides);
+    addAchievementForm.render(true);
+  }
+
+  static async onDeleteAchievement(event) {
+    const destructiveyesno = await Dialog.confirm({
+      title: localize("fvtt-player-achievements.messages.delete-achievement.title"),
+      content: localize("fvtt-player-achievements.messages.delete-achievement.content"),
+      yes: () => {
+        return true;
+      },
+      no: () => {
+        return false;
+      },
+    });
+
+    if (!destructiveyesno) {
+      return;
     }
-  }
 
-  onImportAchievements(event) {
-    event.preventDefault();
-    this.toggleImportDialog();
-  }
-
-  async onFinishedImport() {
-    this.achievements = await this.filterAchievements();
-    setTimeout(() => {
-      this.render(true);
-    }, 100);
-  }
-
-  onExportAchievements(event) {
-    event.preventDefault();
-
-    if (achievementsExportDialog?.rendered) {
-      achievementsExportDialog.close();
-    } else {
-      achievementsExportDialog = new AchievementsExportDialog();
-      achievementsExportDialog.render(true);
-    }
-  }
-
-  onSelectCharacter(event) {
-    event.preventDefault();
-    this.seluuid = event.target.value;
+    const id = event.currentTarget.dataset.achievement_id;
+    this.unlockAchievement(id);
+    deleteAchievement(id);
     this.render(true);
   }
 
-  onSort(event) {
-    event.preventDefault();
-    this.sortza = !this.sortza;
-    this.render(true);
-  }
-
-  onToggleHideAwarded(event) {
-    event.preventDefault();
-    this.hideAwarded = event.target.checked;
-  }
-
-  onToggleHideUnawarded(event) {
-    event.preventDefault();
-    this.hideUnawarded = event.target.checked;
-  }
-
-  onToggleHideDetails(event) {
-    event.preventDefault();
-    this.hideDetails = event.target.checked;
-  }
-
-  onToggleOnlyOnline(event) {
-    event.preventDefault();
-    this.onlyOnline = event.target.checked;
-    this.render(true);
-  }
-
-  async lockAchievement(achievementId) {
-    const lockedAchievements = (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [];
-    const index = lockedAchievements.indexOf(achievementId);
-    if (index === -1) {
-      lockedAchievements.push(achievementId);
-    } else {
-      lockedAchievements.splice(index, 1);
-    }
-    game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
-  }
-
-  async unlockAchievement(achievementId) {
-    const lockedAchievements = (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [];
-    const index = lockedAchievements.indexOf(achievementId);
-    if (index !== -1) {
-      lockedAchievements.splice(index, 1);
-    }
-    game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
-  }
-
-  onToggleLock(event) {
+  static onToggleLock(event) {
     event.preventDefault();
     event.stopPropagation();
     const achievementId = event.currentTarget.dataset.achievement_id;
@@ -335,7 +280,7 @@ export class AchievementForm extends FormApplication {
     this.render(true);
   }
 
-  async assignAchievement(event) {
+  static async assignAchievement(event) {
     event.preventDefault();
     const achievementId = event.currentTarget.dataset.achievement_id;
     const characterId = event.currentTarget.dataset.character_id;
@@ -358,7 +303,7 @@ export class AchievementForm extends FormApplication {
     this.render(true);
   }
 
-  async unassignAchievement(event) {
+  static async unassignAchievement(event) {
     event.preventDefault();
     const achievementId = event.currentTarget.dataset.achievement_id;
     const characterId = event.currentTarget.dataset.character_id;
@@ -375,69 +320,105 @@ export class AchievementForm extends FormApplication {
     }, 100);
   }
 
-  onAddAchievement(_event) {
-    const overrides = {
-      onend: () => {
-        setTimeout(() => {
-          this.render(true);
-        }, 350);
-      },
-    };
-    const addAchievementForm = new AddAchievementForm(overrides);
-    addAchievementForm.render(true);
-  }
-
-  async onDeleteAchievement(event) {
-    const destructiveyesno = await Dialog.confirm({
-      title: localize("fvtt-player-achievements.messages.delete-achievement.title"),
-      content: localize("fvtt-player-achievements.messages.delete-achievement.content"),
-      yes: () => {
-        return true;
-      },
-      no: () => {
-        return false;
-      },
-    });
-
-    if (!destructiveyesno) {
-      return;
+  static toggleTagFilter(event) {
+    event.preventDefault();
+    const tag = event.currentTarget.dataset.achievement_tag;
+    if (this.currentTagFilter.includes(tag)) {
+      this.currentTagFilter = this.currentTagFilter.filter((t) => t !== tag);
+    } else {
+      this.currentTagFilter.push(tag);
     }
-
-    const id = event.currentTarget.dataset.achievement_id;
-    this.unlockAchievement(id);
-    deleteAchievement(id);
     this.render(true);
   }
 
-  async onEditAchievement(event) {
-    const id = event.currentTarget.dataset.achievement_id;
-    const overrides = {
-      onend: () => {
-        setTimeout(() => {
-          this.render(true);
-        }, 350);
-      },
-      mode: "edit",
-      achievement: await game.settings.get("fvtt-player-achievements", "customAchievements").find((a) => a.id === id),
-    };
-    const addAchievementForm = new AddAchievementForm(overrides);
-    addAchievementForm.render(true);
-  }
-
-  onInputLoad(_event) {
-    const inputElement = $('input[name="achievement_filter"]')[0];
-
-    if (inputElement) {
-      inputElement.setSelectionRange(this.currentFilter.length, this.currentFilter.length);
-    }
-  }
-
-  onFilterChange(event) {
+  static onToggleHideAwarded(event) {
     event.preventDefault();
-    const key = event.key;
-    this.currentFilter = event.target.value.toLowerCase();
-    if (key == "Enter") {
-      this.render(true);
+    this.hideAwarded = event.target.checked;
+  }
+
+  static onToggleHideUnawarded(event) {
+    event.preventDefault();
+    this.hideUnawarded = event.target.checked;
+  }
+
+  static onToggleHideDetails(event) {
+    event.preventDefault();
+    this.hideDetails = event.target.checked;
+    this.render(true);
+  }
+
+  static onToggleOnlyOnline(event) {
+    event.preventDefault();
+    this.onlyOnline = event.target.checked;
+    this.render(true);
+  }
+
+  static onSort(event) {
+    event.preventDefault();
+    this.sortza = !this.sortza;
+    this.render(true);
+  }
+
+  static onSelectCharacter(event) {
+    event.preventDefault();
+    this.seluuid = event.target.value;
+    this.render(true);
+  }
+
+  toggleImportDialog() {
+    if (this.achievementsImportDialog?.rendered) {
+      this.achievementsImportDialog.close();
+    } else {
+      this.achievementsImportDialog = new AchievementsImportDialog({ onFinished: this.onFinishedImport.bind(this) });
+      this.achievementsImportDialog.render(true);
     }
+  }
+
+  static onImportAchievements(event) {
+    event.preventDefault();
+    this.toggleImportDialog();
+  }
+
+  async onFinishedImport() {
+    this.achievements = await this.filterAchievements();
+    setTimeout(() => {
+      this.render(true);
+    }, 100);
+  }
+
+  static onExportAchievements(event) {
+    event.preventDefault();
+
+    if (this.achievementsExportDialog?.rendered) {
+      this.achievementsExportDialog.close();
+    } else {
+      this.achievementsExportDialog = new AchievementsExportDialog();
+      this.achievementsExportDialog.render(true);
+    }
+  }
+
+  static onCopyIdToClipboard(event) {
+    const achievementId = event.currentTarget.dataset.achievement_id;
+    if (!achievementId) return;
+    navigator.clipboard.writeText(achievementId);
+    ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-id-copied"));
+  }
+
+  static onFeedback(event) {
+    event.preventDefault();
+    const newWindow = window.open(FEEDBACK_URL, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = undefined;
+  }
+
+  static onBugReport(event) {
+    event.preventDefault();
+    const newWindow = window.open(BUGREPORT_URL, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = undefined;
+  }
+
+  static onDiscord(event) {
+    event.preventDefault();
+    const newWindow = window.open(DISCORD_URL, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = undefined;
   }
 }
