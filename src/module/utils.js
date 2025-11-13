@@ -113,15 +113,3 @@ export function getFoundryVersion() {
     minor,
   };
 }
-
-/**
- * Check if the Foundry version is at least a certain major version
- *
- * @export
- * @param {int} major
- * @return {boolean} true if the Foundry version is at least the specified major version
- */
-export function isVersionAtLeast(major) {
-  const version = getFoundryVersion();
-  return version.major >= major;
-}
