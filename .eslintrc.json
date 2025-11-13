@@ -39,18 +39,13 @@
       // "brace-style": ["error", "1tbs"],
       "require-jsdoc": 2,
       "require-await": "error",
-      "no-return-await": "error"
+      "no-return-await": "error",
+      "no-undef": "error",
+      "no-unused-vars": ["error", {"args": "all", "argsIgnorePattern": "^_"}]
       // "quotes": ["error", "double", { "avoidEscape": true }],
-      // "no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
       //"unicorn/better-regex": "error"
 
     },
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ],
     "overrides": [
       {
         "files": ["./src/**/*.js", "./*.cjs", "./*.mjs"],
