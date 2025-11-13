@@ -28,7 +28,7 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
       closeOnSubmit: false,
     },
     window: {
-      title: localize("fvtt-player-achievements.forms.add-achievement-form.window-title"),
+      title: "fvtt-player-achievements.forms.add-achievement-form.window-title",
       width: 400,
       height: "auto",
     },
@@ -45,7 +45,9 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
   };
 
   static PARTS = {
-    template: "modules/fvtt-player-achievements/templates/add-achievement-sheet.hbs",
+    form: {
+      template: "modules/fvtt-player-achievements/templates/add-achievement-sheet.hbs",
+    },
   };
 
   constructor(overrides) {
@@ -59,9 +61,7 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
     };
   }
 
-  async activateListeners(html) {
-    super.activateListeners(html);
-
+  async _onRender(html) {
     if (this.overrides.mode === "edit") {
       this.updateSelectImage();
       this.updateSelectCloakedImage();
@@ -94,9 +94,11 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
   }
 
   async setupDefaults() {
+    console.log("SETUP DEFAULTS");
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
     const achievementId = document.getElementsByName("achievement_id")[0];
+
     achievementId.value = await generateUniqueId();
     imageInput.value = DEFAULT_IMAGE;
     imagePreview.style.display = "block";
@@ -141,7 +143,7 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
     soundPreview.src = getDefaultSound();
   }
 
-  static updateSelectSound() {
+  updateSelectSound() {
     const soundInput = document.querySelector("#achievement_sound");
     const soundPreview = document.querySelector("#achievement_sound_preview");
     soundInput.value = this.overrides.achievement.sound ?? "";
@@ -149,7 +151,7 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
     soundPreview.src = this.overrides.achievement.sound ?? "";
   }
 
-  static updateSelectImage() {
+  updateSelectImage() {
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
     imageInput.value = this.overrides.achievement.image;
@@ -157,7 +159,7 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
     imagePreview.src = this.overrides.achievement.image;
   }
 
-  static updateSelectCloakedImage() {
+  updateSelectCloakedImage() {
     const imageInput = document.querySelector("#achievement_cloaked_image");
     const imagePreview = document.querySelector("#achievement_cloaked_image_preview");
     imageInput.value = this.overrides.achievement.cloakedImage ?? this.overrides.achievement.image;
@@ -349,6 +351,6 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
     if (onendfunc) {
       onendfunc();
     }
-    super.close();
+    this.close();
   }
 }

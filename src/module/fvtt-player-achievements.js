@@ -141,11 +141,8 @@ function showWindow() {
 
 /* Hooks */
 
-Hooks.once("socketlib.ready", () => {
-  setupAchievementSocket();
-});
-
 Hooks.on("init", async () => {
+  setupAchievementSocket();
   log("Initializing");
 
   registerSettings();

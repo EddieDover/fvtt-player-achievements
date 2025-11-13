@@ -4,7 +4,7 @@ import { AddAchievementForm } from "./add-achievement-form";
 import { localize } from "../utils";
 import { awardAchievement, deleteAchievement, unAwardAchievement } from "../core";
 
-const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+const { DialogV2, ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const FEEDBACK_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=feature_request.md";
 const BUGREPORT_URL = "https://github.com/eddiedover/fvtt-player-achievements/issues/new?template=bug_report.md";
 const DISCORD_URL = "https://discord.gg/XNRxNsWy2p";
@@ -69,7 +69,6 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _prepareContext(options, b, c) {
-    console.log("prepareContext", options, b, c);
     const currentUsers = game.users.filter((user) => user.character != undefined && !user.isGM);
 
     const characters = currentUsers.map((user) => user.character);
@@ -166,7 +165,6 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
     const achievementFilterButton = document.querySelector("#achievements-sheet__filter_button");
     // Make the Enter key do nothing
     achievementFilterInput.addEventListener("keydown", (event) => {
-      console.log(event.key);
       if (event.key === "Enter") {
         event.preventDefault();
         event.stopPropagation();
@@ -183,7 +181,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
 
     // Handle form submission logic here
     // For example, you can process the formData and update the application state
-    console.log("Form submitted with data:", formData);
+    // console.log("Form submitted with data:", formData);
 
     // Optionally, you can close the form after submission
     // this.close();
@@ -228,7 +226,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static async onEditAchievement(event) {
-    const id = event.currentTarget.dataset.achievement_id;
+    const id = event.target.dataset.achievement_id;
     const overrides = {
       onend: () => {
         setTimeout(() => {
@@ -243,7 +241,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static async onDeleteAchievement(event) {
-    const destructiveyesno = await Dialog.confirm({
+    const destructiveyesno = await DialogV2.confirm({
       title: localize("fvtt-player-achievements.messages.delete-achievement.title"),
       content: localize("fvtt-player-achievements.messages.delete-achievement.content"),
       yes: () => {
@@ -258,16 +256,37 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
       return;
     }
 
-    const id = event.currentTarget.dataset.achievement_id;
+    const id = event.target.dataset.achievement_id;
+    console.log(destructiveyesno, id);
     this.unlockAchievement(id);
     deleteAchievement(id);
     this.render(true);
   }
 
+  async lockAchievement(achievementId) {
+    const lockedAchievements = (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [];
+    const index = lockedAchievements.indexOf(achievementId);
+    if (index === -1) {
+      lockedAchievements.push(achievementId);
+    } else {
+      lockedAchievements.splice(index, 1);
+    }
+    game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
+  }
+
+  async unlockAchievement(achievementId) {
+    const lockedAchievements = (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [];
+    const index = lockedAchievements.indexOf(achievementId);
+    if (index !== -1) {
+      lockedAchievements.splice(index, 1);
+    }
+    game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
+  }
+
   static onToggleLock(event) {
     event.preventDefault();
     event.stopPropagation();
-    const achievementId = event.currentTarget.dataset.achievement_id;
+    const achievementId = event.target.dataset.achievement_id;
     if (!achievementId) return;
     const isLockedAchievement = game.settings
       .get("fvtt-player-achievements", "lockedAchievements")
@@ -282,8 +301,8 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async assignAchievement(event) {
     event.preventDefault();
-    const achievementId = event.currentTarget.dataset.achievement_id;
-    const characterId = event.currentTarget.dataset.character_id;
+    const achievementId = event.target.dataset.achievement_id;
+    const characterId = event.target.dataset.character_id;
     // get the player name for debug purposes
     if (characterId === "ALL") {
       const currentUsers = game.users.filter((user) => !user.isGM);
@@ -305,8 +324,8 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async unassignAchievement(event) {
     event.preventDefault();
-    const achievementId = event.currentTarget.dataset.achievement_id;
-    const characterId = event.currentTarget.dataset.character_id;
+    const achievementId = event.target.dataset.achievement_id;
+    const characterId = event.target.dataset.character_id;
     // get the player name for debug purposes
     if (characterId === "ALL") {
       const currentUserUUIDs = game.users.filter((user) => !user.isGM).map((user) => user.character?.uuid);
@@ -322,7 +341,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static toggleTagFilter(event) {
     event.preventDefault();
-    const tag = event.currentTarget.dataset.achievement_tag;
+    const tag = event.target.dataset.achievement_tag;
     if (this.currentTagFilter.includes(tag)) {
       this.currentTagFilter = this.currentTagFilter.filter((t) => t !== tag);
     } else {
@@ -398,7 +417,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static onCopyIdToClipboard(event) {
-    const achievementId = event.currentTarget.dataset.achievement_id;
+    const achievementId = event.target.dataset.achievement_id;
     if (!achievementId) return;
     navigator.clipboard.writeText(achievementId);
     ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-id-copied"));
