@@ -14,8 +14,29 @@
  You should have received a copy of the GNU General Public License
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
-export class AchievementsExportDialog extends Application {
+export class AchievementsExportDialog extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    id: "achievements-export-dialog",
+    classes: ["form"],
+    title: "Achievements Export",
+    window: {
+      width: "auto",
+      zIndex: 1000,
+      height: "auto",
+    },
+    actions: {
+      onClose: AchievementsExportDialog.closeWindow,
+    },
+  };
+
+  static PARTS = {
+    form: {
+      template: "modules/fvtt-player-achievements/templates/achievements-export-dialog.hbs",
+    },
+  };
+
   constructor(overrides) {
     super();
     this.overrides = overrides;
@@ -26,30 +47,13 @@ export class AchievementsExportDialog extends Application {
     ).trim();
   }
 
-  getData(options) {
-    return foundry.utils.mergeObject(super.getData(options), {
+  _prepareContext(options, b, c) {
+    return {
       exportData: this.exportData,
-    });
+    };
   }
 
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "achievements-export-dialog",
-      classes: ["form"],
-      title: "Achievements Export",
-      template: "modules/fvtt-player-achievements/templates/achievements-export-dialog.hbs",
-      width: 500,
-      zIndex: 1000,
-      height: 500,
-      maxHeight: 500,
-    });
-  }
-
-  closeWindow() {
+  static closeWindow() {
     this.close();
-  }
-
-  activateListeners(html) {
-    super.activateListeners(html);
   }
 }
