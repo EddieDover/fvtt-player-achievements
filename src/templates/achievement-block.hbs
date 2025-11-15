@@ -64,9 +64,8 @@
   </div>
   <div class="achievement-block-tags-container-area">
     {{#ifgte tags.length 1 }}
+    <p>{{localize "fvtt-player-achievements.forms.achievement-block.tags"}}: </p>
     <div class="achievement-block-tags-container">
-      <p>{{localize "fvtt-player-achievements.forms.achievement-block.tags"}}: </p>
-      <div class="">
         {{#each tags as |tag|}}
           <button
             data-action="toggleTagFilter"
@@ -76,7 +75,6 @@
               {{tag}}
           </button>
         {{/each}}
-      </div>
     </div>
     {{/ifgte}}
   </div>
