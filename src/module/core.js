@@ -296,7 +296,9 @@ export async function awardPendingAchievementMessage(achievementId, characterId)
     achievement_title: achievement.title,
   });
   const chatData = {
-    speaker: ChatMessage.getSpeaker(),
+    speaker: ChatMessage.getSpeaker({
+      alias: "Achievement Award Pending",
+    }),
     content: message,
     whisper: [],
   };
@@ -349,7 +351,9 @@ export async function awardAchievementMessage(achievementId, characterId, late =
   const whisper = showOnlyToAwardedUser ? [playerOwner.id] : [];
   const chatData = {
     // user: game.user.id,
-    speaker: ChatMessage.getSpeaker(),
+    speaker: ChatMessage.getSpeaker({
+      alias: "Achievement Awarded",
+    }),
     content: message,
     whisper: whisper,
   };
