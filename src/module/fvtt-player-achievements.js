@@ -21,6 +21,7 @@ import { getAchivements, getPendingAchievements, log, setupAchievementSocket } f
 import { enrichText } from "./utils.js";
 import { MODULE_NAME } from "./constants.js";
 import { AchievementForm } from "./app/achievement-form.js";
+import { AchievementForm } from "./app/achievement-form.js";
 
 let currentAchievementScreen;
 let registeredHandlebars = false;
@@ -143,6 +144,7 @@ function showWindow() {
 
 Hooks.on("init", async () => {
   setupAchievementSocket();
+  setupAchievementSocket();
   log("Initializing");
 
   registerSettings();
@@ -180,23 +182,16 @@ Hooks.on("renderSceneControls", () => {
   let settingsArea = document.querySelector("#settings-fvtt-player-achievements");
   let controls;
   let sidebarSettings;
-  let v13andUp = isVersionAtLeast(13);
-  console.log(`Foundry Version: ${game.version}, v13 and up: ${v13andUp}`);
-
   controls = $("#scene-controls-layers");
   settingsArea = document.querySelector(".fvtt-player-achievement-settings");
 
   const localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
   const useAlternateButon = game.settings.get("fvtt-player-achievements", "useAlternateButton");
 
-  if (v13andUp) {
-    controls = useAlternateButon
-      ? document.querySelector("#scene-controls-tools")
-      : document.querySelector("#scene-controls-layers");
-    settingsArea = document.querySelector(".fvtt-player-achievement-settings");
-  } else {
-    controls = useAlternateButon ? $("#tools-panel-token") : $(".main-controls.app.control-tools.flexcol");
-  }
+  controls = useAlternateButon
+    ? document.querySelector("#scene-controls-tools")
+    : document.querySelector("#scene-controls-layers");
+  settingsArea = document.querySelector(".fvtt-player-achievement-settings");
 
   if (controls && !button) {
     const newli = document.createElement("li");
