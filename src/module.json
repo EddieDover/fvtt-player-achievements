@@ -49,12 +49,7 @@
     "verified": "13"
   },
   "relationships": {
-    "requires": [
-      {
-        "id": "socketlib",
-        "type": "module"
-      }
-    ],
+    "requires": [],
     "conflicts": []
   },
   "esmodules": [

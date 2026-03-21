@@ -15,11 +15,41 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 import { DEFAULT_IMAGE } from "../constants";
 import { getDefaultSound, localize } from "../utils";
 import { createAchievement, editAchievement, generateUniqueId } from "../core";
 
-export class AddAchievementForm extends FormApplication {
+export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    form: {
+      submitOnChange: false,
+      closeOnSubmit: false,
+    },
+    window: {
+      title: "fvtt-player-achievements.forms.add-achievement-form.window-title",
+      width: 400,
+      height: "auto",
+    },
+    actions: {
+      onSubmit: AddAchievementForm.handleSubmit,
+      onClearImage: AddAchievementForm.handleClearImage,
+      onClearCloakedImage: AddAchievementForm.handleClearCloakedImage,
+      onPreviewSound: AddAchievementForm.handlePreviewSound,
+      onClearSound: AddAchievementForm.handleClearSound,
+      onSelectImage: AddAchievementForm.handleSelectImage,
+      onSelectCloakedImage: AddAchievementForm.handleSelectCloakedImage,
+      onSelectSound: AddAchievementForm.handleSelectSound,
+    },
+  };
+
+  static PARTS = {
+    form: {
+      template: "modules/fvtt-player-achievements/templates/add-achievement-sheet.hbs",
+    },
+  };
+
   constructor(overrides) {
     super();
     this.workingTags = "";
@@ -31,41 +61,7 @@ export class AddAchievementForm extends FormApplication {
     };
   }
 
-  // eslint-disable-next-line no-unused-vars
-  _updateObject(event, formData) {
-    this.render(true);
-  }
-
-  getData(options) {
-    let tagarr = this.overrides.achievement?.tags ? JSON.parse(JSON.stringify(this.overrides.achievement.tags)) : [];
-    if (typeof tagarr === "string") {
-      tagarr = tagarr.split(",");
-    }
-    this.workingTags = tagarr?.join(", ") ?? "";
-    return foundry.utils.mergeObject(super.getData(options), {
-      isDM: game.user.isGM,
-      overrides: this.overrides,
-      validation: this.validation,
-      workingTags: this.workingTags,
-    });
-  }
-
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "add-achievement-sheet",
-      classes: ["form"],
-      title: "fvtt-player-achievements.forms.add-achievement-form.window-title",
-      submitOnChange: false,
-      closeOnSubmit: false,
-      template: "modules/fvtt-player-achievements/templates/add-achievement-sheet.hbs",
-      width: 400,
-      height: "auto",
-    });
-  }
-
-  async activateListeners(html) {
-    super.activateListeners(html);
-
+  async _onRender(html) {
     if (this.overrides.mode === "edit") {
       this.updateSelectImage();
       this.updateSelectCloakedImage();
@@ -75,23 +71,34 @@ export class AddAchievementForm extends FormApplication {
     }
 
     const achievementId = $("input[name='achievement_id']", html);
-    // const achievementTags = $("input[name='achievement_tags']", html);
-
-    $("button[type='submit']", html).click(await this.handleSubmit.bind(this));
-    $("button[name='clear_image']", html).click(this.handleClearImage.bind(this));
-    $("button[name='clear_cloaked_image']", html).click(this.handleClearCloakedImage.bind(this));
-    $("button[name='preview_sound']", html).click(this.handlePreviewSound.bind(this));
-    $("button[name='clear_sound']", html).click(this.handleClearSound.bind(this));
-    $("button[name='achievement_image-button']", html).click(this.handleSelectImage.bind(this));
-    $("button[name='achievement_cloaked_image-button']", html).click(this.handleSelectCloakedImage.bind(this));
-    $("button[name='achievement_sound-button']", html).click(this.handleSelectSound.bind(this));
     achievementId.on("keyup", () => this.validateFields());
   }
 
+  // eslint-disable-next-line no-unused-vars
+  _updateObject(event, formData) {
+    this.render(true);
+  }
+
+  async _prepareContext(options, b, c) {
+    let tagarr = this.overrides.achievement?.tags ? JSON.parse(JSON.stringify(this.overrides.achievement.tags)) : [];
+    if (typeof tagarr === "string") {
+      tagarr = tagarr.split(",");
+    }
+    this.workingTags = tagarr?.join(", ") ?? "";
+    return {
+      isDM: game.user.isGM,
+      overrides: this.overrides,
+      validation: this.validation,
+      workingTags: this.workingTags,
+    };
+  }
+
   async setupDefaults() {
+    console.log("SETUP DEFAULTS");
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
     const achievementId = document.getElementsByName("achievement_id")[0];
+
     achievementId.value = await generateUniqueId();
     imageInput.value = DEFAULT_IMAGE;
     imagePreview.style.display = "block";
@@ -118,7 +125,7 @@ export class AddAchievementForm extends FormApplication {
       : "";
   }
 
-  handlePreviewSound(event) {
+  static handlePreviewSound(event) {
     event.preventDefault();
     const soundPreview = document.querySelector("#achievement_sound_preview");
     if (soundPreview.src === window.location.href) {
@@ -128,7 +135,7 @@ export class AddAchievementForm extends FormApplication {
     }
   }
 
-  handleClearSound(event) {
+  static handleClearSound(event) {
     event.preventDefault();
     const soundInput = document.querySelector("#achievement_sound");
     soundInput.value = getDefaultSound();
@@ -160,20 +167,13 @@ export class AddAchievementForm extends FormApplication {
     imagePreview.src = this.overrides.achievement.cloakedImage ?? this.overrides.achievement.image;
   }
 
-  handleSelectSound(event) {
+  static handleSelectSound(event) {
     event.preventDefault();
-    //TODO: Remove once we deprecate v12 and below
-    const isV13 = Number.parseInt(game.version.split(".")[0], 10) >= 13;
-    let fp;
-    if (isV13) {
-      // Show the foundry file picker
-      fp = new FilePicker({
-        type: "audio",
-      });
-    } else {
-      fp = new FilePicker();
-      fp.options.type = "audio";
-    }
+    // Show the foundry file picker
+    const fp = new FilePicker({
+      type: "audio",
+    });
+
     fp.render(true);
     fp.callback = (path, _filePicker) => {
       const soundInput = document.querySelector("#achievement_sound");
@@ -184,21 +184,13 @@ export class AddAchievementForm extends FormApplication {
     };
   }
 
-  handleSelectImage(event) {
+  static handleSelectImage(event) {
     event.preventDefault();
 
-    //TODO: Remove once we deprecate v12 and below
-    const isV13 = Number.parseInt(game.version.split(".")[0], 10) >= 13;
-    let fp;
-    if (isV13) {
-      // Show the foundry file picker
-      fp = new FilePicker({
-        type: "image",
-      });
-    } else {
-      fp = new FilePicker();
-      fp.options.type = "image";
-    }
+    // Show the foundry file picker
+    const fp = new FilePicker({
+      type: "image",
+    });
     fp.render(true);
     fp.callback = (path, _filePicker) => {
       const imageInput = document.querySelector("#achievement_image");
@@ -209,21 +201,14 @@ export class AddAchievementForm extends FormApplication {
     };
   }
 
-  handleSelectCloakedImage(event) {
+  static handleSelectCloakedImage(event) {
     event.preventDefault();
 
-    //TODO: Remove once we deprecate v12 and below
-    const isV13 = Number.parseInt(game.version.split(".")[0], 10) >= 13;
-    let fp;
-    if (isV13) {
-      // Show the foundry file picker
-      fp = new FilePicker({
-        type: "image",
-      });
-    } else {
-      fp = new FilePicker();
-      fp.options.type = "image";
-    }
+    // Show the foundry file picker
+    const fp = new FilePicker({
+      type: "image",
+    });
+
     fp.render(true);
     fp.callback = (path, _filePicker) => {
       const imageInput = document.querySelector("#achievement_cloaked_image");
@@ -234,7 +219,7 @@ export class AddAchievementForm extends FormApplication {
     };
   }
 
-  handleImageChange(event) {
+  static handleImageChange(event) {
     event?.preventDefault();
 
     const imageInput = document.querySelector("#achievement_image");
@@ -253,7 +238,7 @@ export class AddAchievementForm extends FormApplication {
     }
   }
 
-  handleCloakedImageChange(event) {
+  static handleCloakedImageChange(event) {
     event?.preventDefault();
 
     const imageInput = document.querySelector("#achievement_cloaked_image");
@@ -272,7 +257,7 @@ export class AddAchievementForm extends FormApplication {
     }
   }
 
-  handleClearImage(event) {
+  static handleClearImage(event) {
     event.preventDefault();
     const imageInput = document.querySelector("#achievement_image");
     imageInput.value = "modules/fvtt-player-achievements/images/default.webp";
@@ -280,7 +265,7 @@ export class AddAchievementForm extends FormApplication {
     imagePreview.src = "modules/fvtt-player-achievements/images/default.webp";
   }
 
-  handleClearCloakedImage(event) {
+  static handleClearCloakedImage(event) {
     event.preventDefault();
     const uncloakedImageInput = document.querySelector("#achievement_image");
     const unlcoakedImagePreview = document.querySelector("#achievement_image_preview");
@@ -290,7 +275,7 @@ export class AddAchievementForm extends FormApplication {
     imagePreview.src = unlcoakedImagePreview.src;
   }
 
-  async handleSubmit(event) {
+  static async handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target.form);
     // eslint-disable-next-line unicorn/no-array-reduce
@@ -366,6 +351,6 @@ export class AddAchievementForm extends FormApplication {
     if (onendfunc) {
       onendfunc();
     }
-    super.close();
+    this.close();
   }
 }

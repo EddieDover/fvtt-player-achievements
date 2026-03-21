@@ -62,6 +62,7 @@
     <div style="display:flex;flex-direction:row;flex-wrap:nowrap;flex: 1 0 auto;">
       <button
         id="achievement_image-button"
+        data-action="onSelectImage"
         type="button"
         name="achievement_image-button"
         class="btn btn--primary add-achievement-form__image"
@@ -70,7 +71,7 @@
         <i class="fas fa-upload"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.select"}}
       </button>
-      <button type="button" name="clear_image" class="btn btn--primary add-achievement-form__clear-image" style="flex: 1 1 auto;">
+      <button data-action="onClearImage" type="button" name="clear_image" class="btn btn--primary add-achievement-form__clear-image" style="flex: 1 1 auto;">
         <i class="fas fa-times"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.clear"}}
       </button>
@@ -94,6 +95,7 @@
     <div style="display:flex;flex-direction:row;flex-wrap:nowrap;flex: 1 0 auto;">
       <button
         id="achievement_cloaked_image-button"
+        data-action="onSelectCloakedImage"
         type="button"
         name="achievement_cloaked_image-button"
         class="btn btn--primary add-achievement-form__cloaked_image"
@@ -102,7 +104,7 @@
         <i class="fas fa-upload"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.select"}}
       </button>
-      <button type="button" name="clear_cloaked_image" class="btn btn--primary add-achievement-form__clear-cloaked_image" style="flex: 1 1 auto;">
+      <button data-action="onClearCloakedImage" type="button" name="clear_cloaked_image" class="btn btn--primary add-achievement-form__clear-cloaked_image" style="flex: 1 1 auto;">
         <i class="fas fa-times"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.clear"}}
       </button>
@@ -122,6 +124,7 @@
     <div style="display:flex;flex-direction:row;flex-wrap:nowrap;flex: 1 0 auto;">
       <button
         id="achievement_sound-button"
+        data-action="onSelectSound"
         type="button"
         name="achievement_sound-button"
         class="btn btn--primary add-achievement-form__sound"
@@ -130,11 +133,11 @@
         <i class="fas fa-upload"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.select"}}
       </button>
-      <button type="button" name="preview_sound" class="btn btn--primary add-achievement-form__preview-sound" style="flex: 1 1 auto;">
+      <button data-action="onPreviewSound" type="button" name="preview_sound" class="btn btn--primary add-achievement-form__preview-sound" style="flex: 1 1 auto;">
         <i class="fas fa-play"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.preview"}}
       </button>
-      <button type="button" name="clear_sound" class="btn btn--primary add-achievement-form__clear-sound" style="flex: 1 1 auto;">
+      <button data-action="onClearSound" type="button" name="clear_sound" class="btn btn--primary add-achievement-form__clear-sound" style="flex: 1 1 auto;">
         <i class="fas fa-times"></i>
         {{localize "fvtt-player-achievements.forms.add-achievement-form.clear"}}
       </button>
@@ -143,7 +146,7 @@
   <label for="achievement_tags" class="add-achievement-form__label">{{localize "fvtt-player-achievements.forms.add-achievement-form.tags"}}</label>
   <input type="text" name="achievement_tags" id="achievement_tags" class="add-achievement-form__tags" value="{{workingTags}}"/>
 
-  <button type="submit" class="btn btn--primary add-achievement-form__submit">
+  <button data-action="onSubmit" type="button" class="btn btn--primary add-achievement-form__submit">
     <i class="fas fa-plus"></i>
     {{#if (eq overrides.mode "edit")}}
       {{localize "fvtt-player-achievements.forms.add-achievement-form.update-achievement"}}
