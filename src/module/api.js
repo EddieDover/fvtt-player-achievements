@@ -22,6 +22,7 @@ import {
   createAchievement as prime_createAchievement,
   editAchievement as prime_editAchievement,
   deleteAchievement as prime_deleteAchievement,
+  getAchievements as prime_getAchievements,
   doesActorExist,
   generateUniqueId,
 } from "./core";
@@ -63,10 +64,16 @@ const PlayerAchievementsAPI = (function () {
   /**
    * Returns the achievements array
    * @memberof PlayerAchievementsAPI
-   * @returns { PlayerAchievementReturn<Array<Achievement>> } Achievements List
+   * @param {object} overrides Overrides
+   * @returns { Promise<PlayerAchievementReturn<Array<Achievement>>> } Achievements List
    */
-  function getAchievements() {
-    return createReturnPayload("", game.settings.get("fvtt-player-achievements", "customAchievements"));
+  async function getAchievements(overrides) {
+    try {
+      const achievements = await prime_getAchievements(overrides);
+      return createReturnPayload("", achievements);
+    } catch (e) {
+      return createReturnPayload(e.message, []);
+    }
   }
 
   /**

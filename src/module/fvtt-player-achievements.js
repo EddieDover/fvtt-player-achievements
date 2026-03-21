@@ -95,8 +95,7 @@ function registerHandlebarHelpers() {
  * Register the API
  */
 function registerAPI() {
-  game[MODULE_NAME] = {};
-  game[MODULE_NAME].api = {
+  const api = {
     getAchievements: PA_API.getAchievements,
     awardAchievementToCharacter: PA_API.awardAchievementToCharacter,
     createAchievement: PA_API.createAchievement,
@@ -110,6 +109,14 @@ function registerAPI() {
       showWindow();
     },
   };
+
+  game[MODULE_NAME] = {};
+  game[MODULE_NAME].api = api;
+
+  if (game.modules.get(MODULE_NAME)) {
+    game.modules.get(MODULE_NAME).api = api;
+  }
+
   log("API Registered");
 }
 
@@ -145,6 +152,7 @@ Hooks.on("init", async () => {
   log("Initializing");
 
   registerSettings();
+  registerAPI();
 
   const achievementblock = await fetch("modules/fvtt-player-achievements/templates/achievement-block.hbs").then((r) =>
     r.text(),
@@ -157,7 +165,6 @@ Hooks.on("ready", () => {
   setupAchievementSocket();
   log("Ready");
   registerHandlebarHelpers();
-  registerAPI();
 
   if (!game.user.isGM) {
     getPendingAchievements();
