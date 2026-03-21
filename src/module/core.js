@@ -36,30 +36,45 @@ export function log(...message) {
  * Setup the Achievement Data Socket using Socket.IO
  */
 export function setupAchievementSocket() {
-  // Listen for getAchievements requests from clients
-  game.socket.on(`module.${MODULE_NAME}:getAchievements`, async (data, callback) => {
-    if (game.user.isGM) {
-      const result = await getAchivements(data);
-      callback(result);
-    }
-  });
+  if (!game.socket) {
+    console.error("game.socket is not defined!");
+    return;
+  }
 
-  // Listen for awardAchievement broadcasts from GM
-  game.socket.on(`module.${MODULE_NAME}:awardAchievement`, (data) => {
-    if (game.user.isGM) {
-      awardAchievementMessage(data.achievementId, data.characterId);
-    }
-  });
+  game.socket.on(`module.${MODULE_NAME}`, async (data) => {
+    switch (data.type) {
+      case "getAchievements":
+        if (game.user.isGM) {
+          try {
+            const result = await getAchievements(data.payload);
+            game.socket.emit(`module.${MODULE_NAME}`, {
+              type: "getAchievementsResponse",
+              payload: {
+                requestId: data.payload.requestId,
+                result: result,
+              },
+            });
+          } catch (err) {
+            console.error(`${MODULE_NAME} | Error handling getAchievements request:`, err);
+          }
+        }
+        break;
 
-  // Listen for awardAchievementSelf broadcasts to all clients
-  game.socket.on(`module.${MODULE_NAME}:awardAchievementSelf`, (data) => {
-    awardAchievementSelf(data);
-  });
+      case "awardAchievement":
+        if (game.user.isGM) {
+          awardAchievementMessage(data.payload.achievementId, data.payload.characterId);
+        }
+        break;
 
-  // Listen for getPendingAchievements requests from clients
-  game.socket.on(`module.${MODULE_NAME}:getPendingAchievements`, async (data) => {
-    if (game.user.isGM) {
-      await getPendingAchievements(data);
+      case "awardAchievementSelf":
+        awardAchievementSelf(data.payload);
+        break;
+
+      case "getPendingAchievements":
+        if (game.user.isGM) {
+          await getPendingAchievements(data.payload);
+        }
+        break;
     }
   });
 }
@@ -150,9 +165,12 @@ export async function getPendingAchievements(overrides) {
   callingCharacterId = overrides?.callingCharacterId ?? "";
 
   if (!game.user.isGM) {
-    return game.socket.emit(`module.${MODULE_NAME}:getPendingAchievements`, {
-      callingUser: game.user,
-      callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
+    return game.socket.emit(`module.${MODULE_NAME}`, {
+      type: "getPendingAchievements",
+      payload: {
+        callingUser: game.user,
+        callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
+      },
     });
   }
 
@@ -173,7 +191,7 @@ export async function getPendingAchievements(overrides) {
  * @param {{}} overrides Overrides
  * @returns {Array<Achievement>} The array of Achievements
  */
-export async function getAchivements(overrides) {
+export async function getAchievements(overrides) {
   let callingCharacterId = "";
   let showTags = true;
   if (overrides?.callingCharacterId) {
@@ -184,20 +202,34 @@ export async function getAchivements(overrides) {
     showTags = true;
   }
 
-  const callingUser = overrides?.callingUser ?? game.user;
+  const callingUser =
+    game.users.get(overrides?.callingUser?.id || overrides?.callingUser?._id) ?? overrides?.callingUser ?? game.user;
 
   if (!game.user.isGM) {
     const showTagsToPlayers = await game.settings.get("fvtt-player-achievements", "showTagsToPlayers");
+
     return new Promise((resolve) => {
-      game.socket.emit(
-        `module.${MODULE_NAME}:getAchievements`,
-        {
-          callingUser: game.user,
+      const requestId = `${game.user.id}-${Date.now()}`;
+
+      const responseHandler = (data) => {
+        if (data.type === "getAchievementsResponse" && data.payload.requestId === requestId) {
+          game.socket.off(`module.${MODULE_NAME}`, responseHandler);
+          resolve(data.payload.result);
+        }
+      };
+
+      game.socket.on(`module.${MODULE_NAME}`, responseHandler);
+
+      // Emit request to GM
+      game.socket.emit(`module.${MODULE_NAME}`, {
+        type: "getAchievements",
+        payload: {
+          requestId: requestId,
+          callingUser: { id: game.user.id },
           callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
           showTags: showTagsToPlayers,
         },
-        (result) => resolve(result),
-      );
+      });
     });
   }
 
@@ -355,9 +387,12 @@ export function awardAchievementMessage(achievementId, characterId, late = false
   };
   ChatMessage.create(chatData, {});
 
-  game.socket.emit(`module.${MODULE_NAME}:awardAchievementSelf`, {
-    achievement,
-    characterId,
+  game.socket.emit(`module.${MODULE_NAME}`, {
+    type: "awardAchievementSelf",
+    payload: {
+      achievement,
+      characterId,
+    },
   });
 }
 

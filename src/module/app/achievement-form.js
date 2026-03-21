@@ -1,6 +1,6 @@
-import { AchievementsExportDialog } from "./achievement-export-dialog";
-import { AchievementsImportDialog } from "./achievement-import-dialog";
-import { AddAchievementForm } from "./add-achievement-form";
+import { AchievementsExportDialog } from "./achievement-export-dialog.js";
+import { AchievementsImportDialog } from "./achievement-import-dialog.js";
+import { AddAchievementForm } from "./add-achievement-form.js";
 import { localize } from "../utils";
 import { awardAchievement, deleteAchievement, unAwardAchievement } from "../core";
 
@@ -257,7 +257,6 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
     }
 
     const id = event.target.dataset.achievement_id;
-    console.log(destructiveyesno, id);
     this.unlockAchievement(id);
     deleteAchievement(id);
     this.render(true);

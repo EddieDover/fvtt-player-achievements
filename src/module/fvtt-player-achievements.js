@@ -17,10 +17,9 @@
 
 import { registerSettings } from "./app/settings.js";
 import PA_API from "./api.js";
-import { getAchivements, getPendingAchievements, log, setupAchievementSocket } from "./core.js";
+import { getAchievements, getPendingAchievements, log, setupAchievementSocket } from "./core.js";
 import { enrichText } from "./utils.js";
 import { MODULE_NAME } from "./constants.js";
-import { AchievementForm } from "./app/achievement-form.js";
 import { AchievementForm } from "./app/achievement-form.js";
 
 let currentAchievementScreen;
@@ -125,7 +124,7 @@ function toggleAchievementScreen() {
   } else {
     const overrides = {
       updateAchievements: () => {
-        return getAchivements();
+        return getAchievements();
       },
     };
     currentAchievementScreen = new AchievementForm(overrides);
@@ -143,8 +142,6 @@ function showWindow() {
 /* Hooks */
 
 Hooks.on("init", async () => {
-  setupAchievementSocket();
-  setupAchievementSocket();
   log("Initializing");
 
   registerSettings();
@@ -157,6 +154,7 @@ Hooks.on("init", async () => {
 });
 
 Hooks.on("ready", () => {
+  setupAchievementSocket();
   log("Ready");
   registerHandlebarHelpers();
   registerAPI();
