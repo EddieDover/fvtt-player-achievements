@@ -132,7 +132,7 @@ export async function deleteAchievement(achievementId) {
 
   const awardedAchievements = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
 
-  for (const [aid, _character] of Object.entries(awardedAchievements)) {
+  for (const [aid] of Object.entries(awardedAchievements)) {
     if (aid === achievementId) {
       delete awardedAchievements[achievementId];
     }
@@ -147,11 +147,7 @@ export async function deleteAchievement(achievementId) {
  */
 export async function getPendingAchievements(overrides) {
   let callingCharacterId = "";
-  if (overrides?.callingCharacterId) {
-    callingCharacterId = overrides.callingCharacterId;
-  } else {
-    callingCharacterId = "";
-  }
+  callingCharacterId = overrides?.callingCharacterId ?? "";
 
   if (!game.user.isGM) {
     return game.socket.emit(`module.${MODULE_NAME}:getPendingAchievements`, {
@@ -312,7 +308,7 @@ export async function awardPendingAchievementMessage(achievementId, characterId)
  * @param {string} characterId The chacter id
  * @param {boolean} late Is this a late award?
  */
-export async function awardAchievementMessage(achievementId, characterId, late = false) {
+export function awardAchievementMessage(achievementId, characterId, late = false) {
   const achievement = game.settings
     .get("fvtt-player-achievements", "customAchievements")
     .find((a) => a.id === achievementId);
