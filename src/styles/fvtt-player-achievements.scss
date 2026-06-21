@@ -24,6 +24,7 @@
 .achievements-container {
   display: flex;
   flex-flow: column nowrap;
+  overflow-y: auto;
 }
 
 .add-achievement-form {
@@ -207,6 +208,7 @@
         text-overflow: ellipsis;
         line-height: 24px;
         width: fit-content;
+        white-space:nowrap;
       }
     }
   }
@@ -232,7 +234,7 @@
 
     .pcolumn {
       display: flex;
-      flex-flow: row nowrap;
+      flex-flow: column nowrap;
       width: 100%;
       padding: 5px;
     }
@@ -244,7 +246,7 @@
     .owned,
     .unowned {
       display: flex;
-      flex-flow: column nowrap;
+      flex-flow: row nowrap;
       margin: 5px 0;
       align-items: center;
 

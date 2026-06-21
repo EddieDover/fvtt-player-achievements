@@ -23,27 +23,26 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
       height: "auto",
     },
     actions: {
-      onFilterChange: AchievementForm.onFilterChange, //done
-      onInputLoad: AchievementForm.onInputLoad, // done
-      onAddAchievement: AchievementForm.onAddAchievement, // done
-      onEditAchievement: AchievementForm.onEditAchievement, // done
-      onDeleteAchievement: AchievementForm.onDeleteAchievement, // done
-      onToggleLock: AchievementForm.onToggleLock, // done
-      assignAchievement: AchievementForm.assignAchievement, // done
-      unassignAchievement: AchievementForm.unassignAchievement, // done
-      toggleTagFilter: AchievementForm.toggleTagFilter, // done
-      onToggleHideAwarded: AchievementForm.onToggleHideAwarded, //done
-      onToggleHideUnawarded: AchievementForm.onToggleHideUnawarded, // done
-      onToggleHideDetails: AchievementForm.onToggleHideDetails, // done
-      onToggleOnlyOnline: AchievementForm.onToggleOnlyOnline, // done
-      onSort: AchievementForm.onSort, // done
-      onSelectCharacter: AchievementForm.onSelectCharacter, // needs custom
-      onImportAchievements: AchievementForm.onImportAchievements, // done
-      onExportAchievements: AchievementForm.onExportAchievements, // done
+      onFilterChange: AchievementForm.onFilterChange,
+      onInputLoad: AchievementForm.onInputLoad,
+      onAddAchievement: AchievementForm.onAddAchievement,
+      onEditAchievement: AchievementForm.onEditAchievement,
+      onDeleteAchievement: AchievementForm.onDeleteAchievement,
+      onToggleLock: AchievementForm.onToggleLock,
+      assignAchievement: AchievementForm.assignAchievement,
+      unassignAchievement: AchievementForm.unassignAchievement,
+      toggleTagFilter: AchievementForm.toggleTagFilter,
+      onToggleHideAwarded: AchievementForm.onToggleHideAwarded,
+      onToggleHideUnawarded: AchievementForm.onToggleHideUnawarded,
+      onToggleHideDetails: AchievementForm.onToggleHideDetails,
+      onToggleOnlyOnline: AchievementForm.onToggleOnlyOnline,
+      onSort: AchievementForm.onSort,
+      onImportAchievements: AchievementForm.onImportAchievements,
+      onExportAchievements: AchievementForm.onExportAchievements,
       onCopyIdToClipboard: AchievementForm.onCopyIdToClipboard,
-      onFeedback: AchievementForm.onFeedback, // done
-      onBugReport: AchievementForm.onBugReport, // done
-      onDiscord: AchievementForm.onDiscord, // done
+      onFeedback: AchievementForm.onFeedback,
+      onBugReport: AchievementForm.onBugReport,
+      onDiscord: AchievementForm.onDiscord,
     },
   };
 
@@ -172,6 +171,9 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
         achievementFilterButton.click();
       }
     });
+
+    const achievementActorFilter = document.querySelector("#ach-actor-filter");
+    achievementActorFilter.addEventListener("change", AchievementForm.onSelectCharacter.bind(this));
     achievementFilterInput.setSelectionRange(this.currentFilter.length, this.currentFilter.length);
   }
 
