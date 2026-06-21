@@ -1,10 +1,6 @@
 {
   "fvtt-player-achievements": {
     "settings": {
-      "enable-player-achievements": {
-        "name": "Habilitar Conquistas de Jogadores",
-        "hint": "Habilitar Conquistas de Jogadores"
-      },
       "play-self-sounds": {
         "name": "Tocar Sons de Conquista",
         "hint": "Toca um som se você receber uma conquista"

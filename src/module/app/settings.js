@@ -69,15 +69,6 @@ export const registerSettings = () => {
     "filePicker": true,
   });
 
-  game.settings.register("fvtt-player-achievements", "enablePlayerAchievements", {
-    "name": "fvtt-player-achievements.settings.enable-player-achievements.name",
-    "hint": "fvtt-player-achievements.settings.enable-player-achievements.hint",
-    "scope": "world",
-    "config": true,
-    "default": true,
-    "type": Boolean,
-  });
-
   game.settings.register("fvtt-player-achievements", "hideUnearnedAchievements", {
     "name": "fvtt-player-achievements.settings.hide-unearned.name",
     "hint": "fvtt-player-achievements.settings.hide-unearned.hint",

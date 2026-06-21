@@ -1,10 +1,6 @@
 {
   "fvtt-player-achievements": {
     "settings": {
-      "enable-player-achievements": {
-        "name": "Enable Player Achievements",
-        "hint": "Enable Player Achievements"
-      },
       "play-self-sounds": {
         "name": "Play Self Achievement Sounds",
         "hint": "Play a sound if you are awarded an achievement."
