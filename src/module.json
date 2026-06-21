@@ -45,17 +45,13 @@
   ],
   "version": "1.8.2",
   "compatibility": {
-    "minimum": "11",
-    "verified": "13"
+    "minimum": "13",
+    "verified": "14"
   },
   "relationships": {
     "requires": [],
     "conflicts": []
   },
-  "esmodules": [
-    "module/fvtt-player-achievements.js"
-  ],
-  "styles": [
-    "styles/fvtt-player-achievements.css"
-  ]
+  "esmodules": ["module/fvtt-player-achievements.js"],
+  "styles": ["styles/fvtt-player-achievements.css"]
 }
