@@ -1,4 +1,15 @@
 
+## [2.0.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.8.2...v2.0.0) (2026-06-21)
+
+
+### Features
+
+* updated module to v14 ([56e2984](https://github.com/EddieDover/fvtt-player-achievements/commit/56e2984492a204191cb11510a36ed9758633ccb9))
+* migrated forms to ApplicationV2 (Foundry V13 layout) ([5a998fe](https://github.com/EddieDover/fvtt-player-achievements/commit/5a998fefa7efb0d06fa1313a1bf2a02b5e4f5072))
+* add getAchievements to API ([3f32ae6](https://github.com/EddieDover/fvtt-player-achievements/commit/3f32ae66cd5a052abf26e21b24c4199985cb858f))
+* added option to show achievement window icon in token control sub list. ([6c8b71c](https://github.com/EddieDover/fvtt-player-achievements/commit/6c8b71cf1a522e5545f5d46d030b3888fef44960))
+* update chat message speaker alias for achievement notifications ([b52f4b2](https://github.com/EddieDover/fvtt-player-achievements/commit/b52f4b2a891bce3d38846890bac08fb48658ae71))
+
 ## [1.8.2](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.8.1...v1.8.2) (2025-06-06)
 
 ### Bug Fixes
