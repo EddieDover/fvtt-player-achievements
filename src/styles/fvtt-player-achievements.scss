@@ -20,6 +20,14 @@
     justify-content: center;
     align-items: center;
   }
+
+  .achievements-sheet__filter-controls {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:5px;
+  }
 }
 .achievements-container {
   display: flex;

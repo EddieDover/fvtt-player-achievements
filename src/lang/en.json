@@ -52,7 +52,7 @@
         "export-achievements": "Export achievement data to clipboard",
         "import-achievements": "Overwrite current achievements with export data from clipboard",
         "import": "Import",
-        "filter": "Filter by achievement name",
+        "filter": "Filter by achievement name, description, or tags",
         "hide-awarded": "Hide Awarded",
         "hide-unawarded": "Hide Unawarded",
         "hide-details": "Compact View",

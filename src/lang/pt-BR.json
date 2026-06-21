@@ -48,7 +48,7 @@
         "export-achievements": "Exportar dados de conquista para o clipboard",
         "import-achievements": "Sobrescrever atuais conquistar com exportação de dados do clipboard",
         "import": "Importar",
-        "filter": "Filtrar por nome de conquista",
+        "filter": "Filtrar por nome, descrição ou tags da conquista",
         "hide-awarded": "Esconder entregues",
         "hide-unawarded": "Esconder não-entregues",
         "hide-details": "Visão Compacta",

@@ -193,10 +193,14 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
     const achievements = await this.overrides.updateAchievements();
     const filtered = achievements.filter((achi) => {
       if (this.currentFilter) {
-        return achi.title.toLowerCase().includes(this.currentFilter.toLowerCase());
+        const titleMatches = achi.title.toLowerCase().includes(this.currentFilter.toLowerCase());
+        const descriptionMatches = achi.description.toLowerCase().includes(this.currentFilter.toLowerCase());
+        const tagsMatches = achi.tags?.some((tag) => tag.toLowerCase().includes(this.currentFilter.toLowerCase()));
+        return titleMatches || descriptionMatches || tagsMatches;
       }
       return true;
     });
+
     if (this.currentTagFilter.length > 0) {
       return filtered.filter((achi) => {
         return this.currentTagFilter.every((tag) => achi.tags?.includes(tag));
@@ -272,7 +276,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
     } else {
       lockedAchievements.splice(index, 1);
     }
-    game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
+    return game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
   }
 
   async unlockAchievement(achievementId) {
@@ -281,23 +285,54 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
     if (index !== -1) {
       lockedAchievements.splice(index, 1);
     }
-    game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
+    return game.settings.set("fvtt-player-achievements", "lockedAchievements", lockedAchievements);
   }
 
-  static onToggleLock(event) {
+  async refreshAchievementBlock(achievementId, sourceElement) {
+    const context = await this._prepareContext();
+    const achievement = context?.achievements?.find((item) => item.id === achievementId);
+    const currentBlock = sourceElement?.closest(".achievement-block");
+
+    if (!achievement || !currentBlock) return;
+
+    const html = await foundry.applications.handlebars.renderTemplate(
+      "modules/fvtt-player-achievements/templates/achievement-block.hbs",
+      {
+        ...achievement,
+        isDM: context.isDM,
+        myuuid: context.myuuid,
+        characters: context.currentCharacters,
+        hideDetails: context.hideDetails,
+        lockedAchievements: context.lockedAchievements,
+        currentTagFilter: context.currentTagFilter,
+      },
+    );
+
+    const fragment = document.createRange().createContextualFragment(html.trim());
+    const nextBlock = fragment.firstElementChild;
+
+    if (!nextBlock) return;
+
+    currentBlock.replaceWith(nextBlock);
+  }
+
+  static async onToggleLock(event) {
     event.preventDefault();
     event.stopPropagation();
-    const achievementId = event.target.dataset.achievement_id;
+    const toggleButton = event.target?.closest('[data-action="onToggleLock"]');
+    const achievementId = toggleButton?.dataset.achievement_id;
     if (!achievementId) return;
-    const isLockedAchievement = game.settings
-      .get("fvtt-player-achievements", "lockedAchievements")
-      ?.includes(achievementId);
+
+    const lockedAchievements = (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [];
+    const isLockedAchievement = lockedAchievements.includes(achievementId);
+
     if (isLockedAchievement) {
-      this.unlockAchievement(achievementId);
+      await this.unlockAchievement(achievementId);
     } else {
-      this.lockAchievement(achievementId);
+      await this.lockAchievement(achievementId);
     }
-    this.render(true);
+
+    await this.refreshAchievementBlock(achievementId, toggleButton);
   }
 
   static async assignAchievement(event) {
