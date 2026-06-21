@@ -170,53 +170,53 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
   static handleSelectSound(event) {
     event.preventDefault();
     // Show the foundry file picker
-    const fp = new FilePicker({
+    const fp = new foundry.applications.apps.FilePicker.implementation({
       type: "audio",
+      callback: (path, _filePicker) => {
+        const soundInput = document.querySelector("#achievement_sound");
+        soundInput.value = path;
+        const soundPreview = document.querySelector("#achievement_sound_preview");
+        soundPreview.style.display = "block";
+        soundPreview.src = path;
+      },
     });
 
     fp.render(true);
-    fp.callback = (path, _filePicker) => {
-      const soundInput = document.querySelector("#achievement_sound");
-      soundInput.value = path;
-      const soundPreview = document.querySelector("#achievement_sound_preview");
-      soundPreview.style.display = "block";
-      soundPreview.src = path;
-    };
   }
 
   static handleSelectImage(event) {
     event.preventDefault();
 
     // Show the foundry file picker
-    const fp = new FilePicker({
+    const fp = new foundry.applications.apps.FilePicker.implementation({
       type: "image",
+      callback: (path, _filePicker) => {
+        const imageInput = document.querySelector("#achievement_image");
+        imageInput.value = path;
+        const imagePreview = document.querySelector("#achievement_image_preview");
+        imagePreview.style.display = "block";
+        imagePreview.src = path;
+      },
     });
     fp.render(true);
-    fp.callback = (path, _filePicker) => {
-      const imageInput = document.querySelector("#achievement_image");
-      imageInput.value = path;
-      const imagePreview = document.querySelector("#achievement_image_preview");
-      imagePreview.style.display = "block";
-      imagePreview.src = path;
-    };
   }
 
   static handleSelectCloakedImage(event) {
     event.preventDefault();
 
     // Show the foundry file picker
-    const fp = new FilePicker({
+    const fp = new foundry.applications.apps.FilePicker.implementation({
       type: "image",
+      callback: (path, _filePicker) => {
+        const imageInput = document.querySelector("#achievement_cloaked_image");
+        imageInput.value = path;
+        const imagePreview = document.querySelector("#achievement_cloaked_image_preview");
+        imagePreview.style.display = "block";
+        imagePreview.src = path;
+      },
     });
 
     fp.render(true);
-    fp.callback = (path, _filePicker) => {
-      const imageInput = document.querySelector("#achievement_cloaked_image");
-      imageInput.value = path;
-      const imagePreview = document.querySelector("#achievement_cloaked_image_preview");
-      imagePreview.style.display = "block";
-      imagePreview.src = path;
-    };
   }
 
   static handleImageChange(event) {

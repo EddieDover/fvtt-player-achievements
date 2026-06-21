@@ -15,7 +15,7 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+const { DialogV2, ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 import { generateUniqueId } from "../core";
 import { localize } from "../utils";
 
@@ -58,7 +58,7 @@ export class AchievementsImportDialog extends HandlebarsApplicationMixin(Applica
       ui.notifications.error(localize("fvtt-player-achievements.messages.no-clipboard-data"));
       return;
     }
-    const destructiveyesno = await Dialog.confirm({
+    const destructiveyesno = await DialogV2.confirm({
       title: localize("fvtt-player-achievements.messages.import-achievements.title"),
       content: localize("fvtt-player-achievements.messages.import-achievements.content"),
       yes: () => {
