@@ -15,6 +15,8 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { DEFAULT_SOUND } from "./constants.js";
+
 const replaceMap = [
   { from: "{i}", to: "<i>" },
   { from: "{/i}", to: "</i>" },
@@ -31,7 +33,7 @@ const replaceMap = [
  * @returns {any} Deep copied object
  */
 export function deepCopy(object) {
-  return JSON.parse(JSON.stringify(object));
+  return structuredClone(object);
 }
 
 /**
@@ -98,9 +100,8 @@ export function getDefaultSound() {
 
 /**
  * Get the Foundry version
- *
  * @export
- * @return {{ major: number, minor: number, patch: number, full: string }} version
+ * @returns {{ major: number, minor: number, patch: number, full: string }} version
  */
 export function getFoundryVersion() {
   const version = game.version;

@@ -63,11 +63,11 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
     this.hideDetails = false;
     this.onlyOnline = false;
     this.seluuid = "";
-    this.achievementsImportDialog = null;
-    this.achievementsExportDialog = null;
+    this.achievementsImportDialog = undefined;
+    this.achievementsExportDialog = undefined;
   }
 
-  async _prepareContext(options, b, c) {
+  async _prepareContext(_options, _b, _c) {
     const currentUsers = game.users.filter((user) => user.character != undefined && !user.isGM);
 
     const characters = currentUsers.map((user) => user.character);
@@ -177,7 +177,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
     achievementFilterInput.setSelectionRange(this.currentFilter.length, this.currentFilter.length);
   }
 
-  static async formHandler(event, form, formData) {
+  static formHandler(event, _form, _formData) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -326,11 +326,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
     const lockedAchievements = (await game.settings.get("fvtt-player-achievements", "lockedAchievements")) ?? [];
     const isLockedAchievement = lockedAchievements.includes(achievementId);
 
-    if (isLockedAchievement) {
-      await this.unlockAchievement(achievementId);
-    } else {
-      await this.lockAchievement(achievementId);
-    }
+    await (isLockedAchievement ? this.unlockAchievement(achievementId) : this.lockAchievement(achievementId));
 
     await this.refreshAchievementBlock(achievementId, toggleButton);
   }

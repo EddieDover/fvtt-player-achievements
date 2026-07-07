@@ -47,7 +47,7 @@ export class AchievementsExportDialog extends HandlebarsApplicationMixin(Applica
     ).trim();
   }
 
-  _prepareContext(options, b, c) {
+  _prepareContext(_options, _b, _c) {
     return {
       exportData: this.exportData,
     };

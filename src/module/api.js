@@ -71,8 +71,8 @@ const PlayerAchievementsAPI = (function () {
     try {
       const achievements = await prime_getAchievements(overrides);
       return createReturnPayload("", achievements);
-    } catch (e) {
-      return createReturnPayload(e.message, []);
+    } catch (error) {
+      return createReturnPayload(error.message, []);
     }
   }
 
@@ -234,7 +234,7 @@ const PlayerAchievementsAPI = (function () {
       return createReturnPayload("Missing required field(s).", false);
     }
 
-    if (!doesAchievementExist(id).payload === true) {
+    if (doesAchievementExist(id).payload !== true) {
       return createReturnPayload("Achievement does not exist.", false);
     }
 
@@ -269,7 +269,7 @@ const PlayerAchievementsAPI = (function () {
       return createReturnPayload("Missing required field(s).", false);
     }
 
-    if (!doesAchievementExist(id).payload === true) {
+    if (doesAchievementExist(id).payload !== true) {
       return createReturnPayload("Achievement does not exist.", false);
     }
 

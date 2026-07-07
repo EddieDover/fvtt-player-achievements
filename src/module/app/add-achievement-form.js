@@ -79,8 +79,8 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
     this.render(true);
   }
 
-  async _prepareContext(options, b, c) {
-    let tagarr = this.overrides.achievement?.tags ? JSON.parse(JSON.stringify(this.overrides.achievement.tags)) : [];
+  _prepareContext(_options, _b, _c) {
+    let tagarr = this.overrides.achievement?.tags ? structuredClone(this.overrides.achievement.tags) : [];
     if (typeof tagarr === "string") {
       tagarr = tagarr.split(",");
     }
@@ -97,7 +97,7 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
     console.log("SETUP DEFAULTS");
     const imageInput = document.querySelector("#achievement_image");
     const imagePreview = document.querySelector("#achievement_image_preview");
-    const achievementId = document.getElementsByName("achievement_id")[0];
+    const achievementId = document.querySelectorAll("[name='achievement_id']")[0];
 
     achievementId.value = await generateUniqueId();
     imageInput.value = DEFAULT_IMAGE;
@@ -118,7 +118,7 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
   }
 
   validateFields() {
-    const achievementId = document.getElementsByName("achievement_id")[0];
+    const achievementId = document.querySelectorAll("[name='achievement_id']")[0];
     const achievementIdError = document.querySelectorAll(".add-achievement-form__id-error")[0];
     achievementIdError.innerHTML = achievementId.value.includes(" ")
       ? localize("fvtt-player-achievements.messages.id-no-spaces")
@@ -128,7 +128,7 @@ export class AddAchievementForm extends HandlebarsApplicationMixin(ApplicationV2
   static handlePreviewSound(event) {
     event.preventDefault();
     const soundPreview = document.querySelector("#achievement_sound_preview");
-    if (soundPreview.src === window.location.href) {
+    if (soundPreview.src === globalThis.location.href) {
       new Audio(getDefaultSound()).play();
     } else {
       soundPreview.play();

@@ -43,7 +43,7 @@ export function setupAchievementSocket() {
 
   game.socket.on(`module.${MODULE_NAME}`, async (data) => {
     switch (data.type) {
-      case "getAchievements":
+      case "getAchievements": {
         if (game.user.isGM) {
           try {
             const result = await getAchievements(data.payload);
@@ -54,27 +54,31 @@ export function setupAchievementSocket() {
                 result: result,
               },
             });
-          } catch (err) {
-            console.error(`${MODULE_NAME} | Error handling getAchievements request:`, err);
+          } catch (error) {
+            console.error(`${MODULE_NAME} | Error handling getAchievements request:`, error);
           }
         }
         break;
+      }
 
-      case "awardAchievement":
+      case "awardAchievement": {
         if (game.user.isGM) {
           awardAchievementMessage(data.payload.achievementId, data.payload.characterId);
         }
         break;
+      }
 
-      case "awardAchievementSelf":
+      case "awardAchievementSelf": {
         awardAchievementSelf(data.payload);
         break;
+      }
 
-      case "getPendingAchievements":
+      case "getPendingAchievements": {
         if (game.user.isGM) {
           await getPendingAchievements(data.payload);
         }
         break;
+      }
     }
   });
 }
@@ -316,6 +320,7 @@ export async function awardPendingAchievementMessage(achievementId, characterId)
 
   const playerOwner =
     game.users.filter((user) => user.character).find((user) => user.character.uuid === characterId) ?? undefined;
+  if (!playerOwner) return;
 
   const character = playerOwner.character;
   let message = game.i18n.format("fvtt-player-achievements.messages.pending-award", {
@@ -422,8 +427,7 @@ export async function awardAchievement(achievementId, characterId, late = false)
   const awardingUserActive = awardingUser?.active ?? false;
   const awardedAchievements = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
   const awardBlock = awardedAchievements[achievementId] ?? [];
-  let characters = [...awardBlock];
-  characters.push(characterId);
+  let characters = [...awardBlock, characterId];
   characters = [...new Set(characters)];
   awardedAchievements[achievementId] = characters;
   game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);

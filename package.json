@@ -50,9 +50,12 @@
     "release:buildsite": "cd ghpages && bundle exec jekyll build"
   },
   "devDependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/stream": "^3.0.1",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "babel-jest": "^30.4.1",
     "commit-and-tag-version": "^12.7.1",
     "del": "^8.0.1",
     "eslint": "^10.1.0",
@@ -62,6 +65,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-unicorn": "^63.0.0",
     "fs-extra": "^11.3.4",
+    "globals": "^17.7.0",
     "gulp": "^5.0.1",
     "gulp-dart-sass": "^1.1.0",
     "gulp-rename": "^2.1.0",

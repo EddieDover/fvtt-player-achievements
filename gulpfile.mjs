@@ -20,9 +20,9 @@ import rollupStream from "@rollup/stream";
 
 import rollupConfig from "./rollup.config.mjs";
 
-/** ******************/
+/** */
 /*  CONFIGURATION   */
-/** ******************/
+/** */
 
 const packageId = "fvtt-player-achievements";
 const sourceDirectory = "./src";
@@ -32,9 +32,9 @@ const stylesExtension = "scss";
 const sourceFileExtension = "js";
 const staticFiles = ["assets", "fonts", "lang", "packs", "templates", "module.json"];
 
-/** ******************/
+/** */
 /*      BUILD       */
-/** ******************/
+/** */
 
 let cache;
 
@@ -127,9 +127,9 @@ export const build = gulp.series(cleanDistribution, gulp.parallel(buildCode, bui
 
 export const devexport = gulp.series(cleanDistribution, build, copyDistribution, zipDistribution);
 
-/** ******************/
+/** */
 /*      CLEAN       */
-/** ******************/
+/** */
 
 /**
  * Remove built files from `dist` folder while ignoring source files
@@ -149,9 +149,9 @@ export async function clean() {
   }
 }
 
-/** ******************/
+/** */
 /*      PACKAGE      */
-/** ******************/
+/** */
 
 // Define a task to zip the contents of the /dist folder into a subfolder
 gulp.task("zip-dist", () => {
@@ -166,9 +166,9 @@ gulp.task("zip-dist", () => {
     .pipe(zip(`${packageId}.zip`))
     .pipe(gulp.dest("."));
 });
-/** ******************/
+/** */
 /*       LINK       */
-/** ******************/
+/** */
 
 /**
  * Get the data paths of Foundry VTT based on what is configured in `foundryconfig.json`

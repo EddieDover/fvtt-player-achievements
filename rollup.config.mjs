@@ -5,7 +5,7 @@
 import copy from "rollup-plugin-copy";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 
-export default () => ({
+const config = () => ({
   input: "src/module/fvtt-player-achievements.js",
   output: {
     dir: "dist/module",
@@ -23,3 +23,5 @@ export default () => ({
     }),
   ],
 });
+
+export default config;
