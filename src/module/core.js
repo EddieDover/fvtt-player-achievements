@@ -122,7 +122,7 @@ export async function createAchievement({
     sound: sound ?? getDefaultSound(),
     tags,
   });
-  game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+  await game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
 /**
@@ -136,7 +136,7 @@ export async function editAchievement({ id, title, showTitleCloaked, description
     return;
   }
   customAchievements[index] = { id, title, showTitleCloaked, description, image, cloakedImage, sound, tags };
-  game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+  await game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
 /**
@@ -146,8 +146,11 @@ export async function editAchievement({ id, title, showTitleCloaked, description
 export async function deleteAchievement(achievementId) {
   const achievements = await game.settings.get("fvtt-player-achievements", "customAchievements");
   const index = achievements.findIndex((a) => a.id === achievementId);
+  if (index === -1) {
+    return;
+  }
   achievements.splice(index, 1);
-  game.settings.set("fvtt-player-achievements", "customAchievements", achievements);
+  await game.settings.set("fvtt-player-achievements", "customAchievements", achievements);
 
   const awardedAchievements = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
 
@@ -183,7 +186,7 @@ export async function getPendingAchievements(overrides) {
   if (pendingAchievementsFull[callingCharacterId]) {
     const pendingAchievements = pendingAchievementsFull[callingCharacterId];
     for (const ach of pendingAchievements) {
-      awardAchievement(ach, callingCharacterId, true);
+      await awardAchievement(ach, callingCharacterId, true);
     }
     delete pendingAchievementsFull[callingCharacterId];
     await game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievementsFull);
@@ -430,13 +433,13 @@ export async function awardAchievement(achievementId, characterId, late = false)
   let characters = [...awardBlock, characterId];
   characters = [...new Set(characters)];
   awardedAchievements[achievementId] = characters;
-  game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
+  await game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
 
   awardAchievementMessage(achievementId, characterId, late);
   if (awardingUserActive) {
     Hooks.call(MODULE_NAME + ".awardAchievement", achievementId, characterId);
   } else {
-    pendAwardAchievement(achievementId, characterId);
+    await pendAwardAchievement(achievementId, characterId);
   }
 }
 
@@ -455,7 +458,7 @@ export async function pendAwardAchievement(achievementId, characterId) {
     pendingAchievementsForUser.push(achievementId);
     pendingAchievements[characterId] = [...new Set(pendingAchievementsForUser)];
   }
-  game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
+  await game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
 }
 
 /**
@@ -486,11 +489,11 @@ export async function unAwardAchievement(achievementId, characterIds) {
   }
 
   awardedAchievements[achievementId] = awardedCharacters;
-  game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
-  game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
+  await game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
+  await game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
 
   const hydratedAchievements = await hydrateAwardedAchievements(awardedAchievements);
-  game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
+  await game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
 
   for (const characterId of cids) {
     Hooks.call(MODULE_NAME + ".unAwardAchievement", achievementId, characterId);

@@ -99,6 +99,15 @@ describe("achievement CRUD", () => {
     expect(game.settings.get("fvtt-player-achievements", "awardedAchievements")).toEqual({});
   });
 
+  it("deleteAchievement leaves the list untouched for an unknown id", async () => {
+    await createAchievement(makeAchievement());
+
+    await deleteAchievement();
+    await deleteAchievement("missing");
+
+    expect(game.settings.get("fvtt-player-achievements", "customAchievements")).toHaveLength(1);
+  });
+
   it("generateUniqueId returns an id not used by existing achievements", async () => {
     await createAchievement(makeAchievement());
     const id = await generateUniqueId();

@@ -43,6 +43,8 @@ export default [
       "jsdoc/require-jsdoc": "error",
       // Would force renaming long-established files/identifiers (utils.js, etc.).
       "unicorn/prevent-abbreviations": "off",
+      // The API returns promise-wrapped payloads; `(await f()).payload` is the natural idiom.
+      "unicorn/no-await-expression-member": "off",
     },
   },
   {

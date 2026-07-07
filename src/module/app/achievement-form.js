@@ -232,7 +232,8 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static async onEditAchievement(event) {
-    const id = event.target.dataset.achievement_id;
+    const id = event.target.closest('[data-action="onEditAchievement"]')?.dataset.achievement_id;
+    if (!id) return;
     const overrides = {
       onend: () => {
         setTimeout(() => {
@@ -262,9 +263,10 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
       return;
     }
 
-    const id = event.target.dataset.achievement_id;
-    this.unlockAchievement(id);
-    deleteAchievement(id);
+    const id = event.target.closest('[data-action="onDeleteAchievement"]')?.dataset.achievement_id;
+    if (!id) return;
+    await this.unlockAchievement(id);
+    await deleteAchievement(id);
     this.render(true);
   }
 
@@ -449,7 +451,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static onCopyIdToClipboard(event) {
-    const achievementId = event.target.dataset.achievement_id;
+    const achievementId = event.target.closest('[data-action="onCopyIdToClipboard"]')?.dataset.achievement_id;
     if (!achievementId) return;
     navigator.clipboard.writeText(achievementId);
     ui.notifications.info(localize("fvtt-player-achievements.messages.achievement-id-copied"));

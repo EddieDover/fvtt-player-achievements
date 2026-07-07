@@ -80,12 +80,13 @@ const PlayerAchievementsAPI = (function () {
    * Does the achievement exist?
    * @memberof PlayerAchievementsAPI
    * @param {string} achievementId The achievement id
-   * @returns { PlayerAchievementReturn<boolean> } Does the achievement exist?
+   * @returns { Promise<PlayerAchievementReturn<boolean>> } Does the achievement exist?
    */
-  function doesAchievementExist(achievementId) {
+  async function doesAchievementExist(achievementId) {
+    const achievements = await getAchievements();
     return createReturnPayload(
       "",
-      getAchievements().payload.some((a) => a.id === achievementId),
+      achievements.payload.some((a) => a.id === achievementId),
     );
   }
 
@@ -94,11 +95,11 @@ const PlayerAchievementsAPI = (function () {
    * @memberof PlayerAchievementsAPI
    * @param {string} characterUUID The character uuid
    * @param {string} achievementId The achievement id
-   * @returns { PlayerAchievementReturn<boolean> } Does the character have the achievement?
+   * @returns { Promise<PlayerAchievementReturn<boolean>> } Does the character have the achievement?
    */
-  function doesCharacterHaveAchievement(characterUUID, achievementId) {
+  async function doesCharacterHaveAchievement(characterUUID, achievementId) {
     const cuuid = assureActorUUID(characterUUID);
-    const achievement = getAchievements().payload.find((a) => a.id === achievementId);
+    const achievement = (await getAchievements()).payload.find((a) => a.id === achievementId);
     if (!achievement) {
       return createReturnPayload("Achievement does not exist.", false);
     }
@@ -115,11 +116,11 @@ const PlayerAchievementsAPI = (function () {
    * @memberof PlayerAchievementsAPI
    * @param {string} achievementId The achievement id
    * @param {string} characterUUID The character uuid
-   * @returns { PlayerAchievementReturn<boolean> } Was the achievement awarded?
+   * @returns { Promise<PlayerAchievementReturn<boolean>> } Was the achievement awarded?
    */
-  function awardAchievementToCharacter(achievementId, characterUUID) {
+  async function awardAchievementToCharacter(achievementId, characterUUID) {
     const cuuid = assureActorUUID(characterUUID);
-    const achievement = getAchievements().payload.find((a) => a.id === achievementId);
+    const achievement = (await getAchievements()).payload.find((a) => a.id === achievementId);
     if (!achievement) {
       return createReturnPayload("Achievement does not exist.", false);
     }
@@ -128,11 +129,11 @@ const PlayerAchievementsAPI = (function () {
       return createReturnPayload("Character does not exist.", false);
     }
 
-    if (doesCharacterHaveAchievement(cuuid, achievementId).payload) {
+    if ((await doesCharacterHaveAchievement(cuuid, achievementId)).payload) {
       return createReturnPayload("Character already has achievement.", false);
     }
 
-    prime_awardAchievement(achievementId, cuuid);
+    await prime_awardAchievement(achievementId, cuuid);
     return createReturnPayload("", true);
   }
 
@@ -140,11 +141,11 @@ const PlayerAchievementsAPI = (function () {
    * Remove an achievement from the character
    * @param {string} achievementId The achievement id
    * @param {string} characterUUID The character uuid
-   * @returns { PlayerAchievementReturn<boolean> } Was the achievement removed?
+   * @returns { Promise<PlayerAchievementReturn<boolean>> } Was the achievement removed?
    */
-  function removeAchievementFromCharacter(achievementId, characterUUID) {
+  async function removeAchievementFromCharacter(achievementId, characterUUID) {
     const cuuid = assureActorUUID(characterUUID);
-    const achievement = getAchievements().payload.find((a) => a.id === achievementId);
+    const achievement = (await getAchievements()).payload.find((a) => a.id === achievementId);
     if (!achievement) {
       return createReturnPayload("Achievement does not exist.", false);
     }
@@ -153,11 +154,11 @@ const PlayerAchievementsAPI = (function () {
       return createReturnPayload("Character does not exist.", false);
     }
 
-    if (!doesCharacterHaveAchievement(cuuid, achievementId).payload) {
+    if (!(await doesCharacterHaveAchievement(cuuid, achievementId)).payload) {
       return createReturnPayload("Character does not have achievement.", false);
     }
 
-    prime_unAwardAchievement(achievementId, cuuid);
+    await prime_unAwardAchievement(achievementId, cuuid);
     return createReturnPayload("", true);
   }
 
@@ -165,13 +166,14 @@ const PlayerAchievementsAPI = (function () {
    * Get the achievements for the character
    * @memberof PlayerAchievementsAPI
    * @param {string} characterUUID The character uuid
-   * @returns { PlayerAchievementReturn<Array<Achievement>> } achievements for the character
+   * @returns { Promise<PlayerAchievementReturn<Array<Achievement>>> } achievements for the character
    */
-  function getAchievementsByCharacter(characterUUID) {
+  async function getAchievementsByCharacter(characterUUID) {
     const cuuid = assureActorUUID(characterUUID);
+    const achievements = await getAchievements();
     return createReturnPayload(
       "",
-      getAchievements().payload.filter((a) => a.completedActors.includes(cuuid)),
+      achievements.payload.filter((a) => a.completedActors.includes(cuuid)),
     );
   }
 
@@ -205,7 +207,7 @@ const PlayerAchievementsAPI = (function () {
       return createReturnPayload("Missing required field(s).", "");
     }
 
-    if (doesAchievementExist(id).payload === true) {
+    if ((await doesAchievementExist(id)).payload === true) {
       return createReturnPayload("Achievement already exists.", "");
     }
 
@@ -220,25 +222,25 @@ const PlayerAchievementsAPI = (function () {
       tags,
     };
 
-    prime_createAchievement(achievement);
+    await prime_createAchievement(achievement);
     return createReturnPayload("", id);
   }
 
   /**
    * Delete an achievement
    * @param {string} id The achievement id
-   * @returns {PlayerAchievementReturn<boolean>} Was the achievement deleted?
+   * @returns {Promise<PlayerAchievementReturn<boolean>>} Was the achievement deleted?
    */
-  function deleteAchievement(id) {
+  async function deleteAchievement(id) {
     if (!id) {
       return createReturnPayload("Missing required field(s).", false);
     }
 
-    if (doesAchievementExist(id).payload !== true) {
+    if ((await doesAchievementExist(id)).payload !== true) {
       return createReturnPayload("Achievement does not exist.", false);
     }
 
-    prime_deleteAchievement(id);
+    await prime_deleteAchievement(id);
     return createReturnPayload("", true);
   }
 
@@ -253,9 +255,9 @@ const PlayerAchievementsAPI = (function () {
    * @param {string} cloakedImage The achievement cloaked image
    * @param {string} sound The achievement sound effect
    * @param {Array<string>} tags The achievement tags
-   * @returns { PlayerAchievementReturn<boolean> } Was the achievement edited?
+   * @returns { Promise<PlayerAchievementReturn<boolean>> } Was the achievement edited?
    */
-  function editAchievement(
+  async function editAchievement(
     id,
     title,
     description,
@@ -269,7 +271,7 @@ const PlayerAchievementsAPI = (function () {
       return createReturnPayload("Missing required field(s).", false);
     }
 
-    if (doesAchievementExist(id).payload !== true) {
+    if ((await doesAchievementExist(id)).payload !== true) {
       return createReturnPayload("Achievement does not exist.", false);
     }
 
@@ -284,7 +286,7 @@ const PlayerAchievementsAPI = (function () {
       tags,
     };
 
-    prime_editAchievement(achievement);
+    await prime_editAchievement(achievement);
     return createReturnPayload("", true);
   }
 

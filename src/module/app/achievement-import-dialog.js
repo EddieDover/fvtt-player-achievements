@@ -101,8 +101,8 @@ export class AchievementsImportDialog extends HandlebarsApplicationMixin(Applica
     ui.notifications.info(
       `${importedAchievements.length} ${localize("fvtt-player-achievements.messages.achievements-imported")}`,
     );
-    game.settings.set("fvtt-player-achievements", "customAchievements", importedAchievements);
-    game.settings.set("fvtt-player-achievements", "awardedAchievements", newAwardedAchievements);
+    await game.settings.set("fvtt-player-achievements", "customAchievements", importedAchievements);
+    await game.settings.set("fvtt-player-achievements", "awardedAchievements", newAwardedAchievements);
     this.onFinished();
     this.closeWindow();
   }

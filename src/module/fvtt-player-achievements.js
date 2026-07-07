@@ -21,6 +21,7 @@ import { getAchievements, getPendingAchievements, log, setupAchievementSocket } 
 import { enrichText } from "./utils.js";
 import { MODULE_NAME } from "./constants.js";
 import { AchievementForm } from "./app/achievement-form.js";
+import { registerQuenchTests } from "./quench/quench-tests.js";
 
 let currentAchievementScreen;
 let registeredHandlebars = false;
@@ -160,6 +161,9 @@ Hooks.on("init", async () => {
 
   Handlebars.registerPartial("achievement-block", achievementblock);
 });
+
+// Register in-Foundry integration tests when the Quench module is enabled.
+Hooks.on("quenchReady", registerQuenchTests);
 
 Hooks.on("ready", () => {
   setupAchievementSocket();

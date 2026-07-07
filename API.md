@@ -16,10 +16,13 @@ All functions return the following object:
 ### getAchievements - Returns the achievements array
 
 
+&nbsp;&nbsp;&nbsp;&nbsp; **Parameters:**
+
+  &nbsp;&nbsp;&nbsp;&nbsp;  - `overrides` (object): Overrides
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<Array.<Achievement>>"`: Achievements List
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"Promise.<PlayerAchievementReturn.<Array.<Achievement>>>"`: Achievements List
 
 <hr/>
 
@@ -33,7 +36,7 @@ All functions return the following object:
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Does the achievement exist?
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"Promise.<PlayerAchievementReturn.<boolean>>"`: Does the achievement exist?
 
 <hr/>
 
@@ -49,7 +52,7 @@ All functions return the following object:
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Does the character have the achievement?
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"Promise.<PlayerAchievementReturn.<boolean>>"`: Does the character have the achievement?
 
 <hr/>
 
@@ -65,7 +68,7 @@ All functions return the following object:
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Was the achievement awarded?
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"Promise.<PlayerAchievementReturn.<boolean>>"`: Was the achievement awarded?
 
 <hr/>
 
@@ -79,7 +82,7 @@ All functions return the following object:
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<Array.<Achievement>>"`: achievements for the character
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"Promise.<PlayerAchievementReturn.<Array.<Achievement>>>"`: achievements for the character
 
 <hr/>
 
@@ -135,7 +138,7 @@ All functions return the following object:
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Was the achievement edited?
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"Promise.<PlayerAchievementReturn.<boolean>>"`: Was the achievement edited?
 
 <hr/>
 
@@ -151,7 +154,7 @@ All functions return the following object:
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Was the achievement removed?
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"Promise.<PlayerAchievementReturn.<boolean>>"`: Was the achievement removed?
 
 <hr/>
 
@@ -165,7 +168,7 @@ All functions return the following object:
 
 &nbsp;&nbsp;&nbsp;&nbsp; **Returns:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;  - `"PlayerAchievementReturn.<boolean>"`: Was the achievement deleted?
+&nbsp;&nbsp;&nbsp;&nbsp;  - `"Promise.<PlayerAchievementReturn.<boolean>>"`: Was the achievement deleted?
 
 <hr/>
 
