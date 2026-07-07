@@ -8,7 +8,7 @@ import gulp from "gulp";
 import { deleteAsync } from "del";
 import zip from "gulp-zip";
 import rename from "gulp-rename";
-import sass from "gulp-dart-sass";
+import * as sass from "sass";
 import sourcemaps from "gulp-sourcemaps";
 import path from "node:path";
 import buffer from "vinyl-buffer";
@@ -56,13 +56,10 @@ function buildCode() {
 
 /**
  * Build style sheets
- * @returns {NodeJS.ReadWriteStream}
  */
-function buildStyles() {
-  return gulp
-    .src(`${stylesDirectory}/${packageId}.${stylesExtension}`)
-    .pipe(sass().on("error", sass.logError))
-    .pipe(gulp.dest(`${distributionDirectory}/styles`));
+async function buildStyles() {
+  const result = sass.compile(`${stylesDirectory}/${packageId}.${stylesExtension}`);
+  await fs.outputFile(`${distributionDirectory}/styles/${packageId}.css`, result.css);
 }
 
 /**
