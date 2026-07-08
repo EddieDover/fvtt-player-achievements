@@ -385,11 +385,13 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
   static onToggleHideAwarded(event) {
     event.preventDefault();
     this.hideAwarded = event.target.checked;
+    this.render(true);
   }
 
   static onToggleHideUnawarded(event) {
     event.preventDefault();
     this.hideUnawarded = event.target.checked;
+    this.render(true);
   }
 
   static onToggleHideDetails(event) {
