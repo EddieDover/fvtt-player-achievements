@@ -353,7 +353,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
       await awardAchievement(achievementId, characterId);
     }
 
-    this.render(true);
+    await this.refreshAchievementBlock(achievementId, event.target);
   }
 
   static async unassignAchievement(event) {
@@ -368,9 +368,7 @@ export class AchievementForm extends HandlebarsApplicationMixin(ApplicationV2) {
       await unAwardAchievement(achievementId, characterId);
     }
 
-    setTimeout(() => {
-      this.render(true);
-    }, 100);
+    await this.refreshAchievementBlock(achievementId, event.target);
   }
 
   static toggleTagFilter(event) {
