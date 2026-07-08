@@ -20,52 +20,54 @@ import { getAchievements } from "../core.js";
 import { buildAchievementList } from "./shared.js";
 
 /**
- * Register the PF2e character-sheet integration.
+ * Register the dnd5e character-sheet integration.
+ * Supports the ApplicationV2 character sheet introduced in dnd5e 5.x.
  */
-export function registerPF2eIntegration() {
-  Hooks.on("renderCharacterSheetPF2e", onRenderCharacterSheet);
+export function registerDnd5eIntegration() {
+  Hooks.on("renderCharacterActorSheet", onRenderCharacterSheet);
 }
 
 /**
- * Inject the Achievements tab into a rendered PF2e character sheet.
+ * Inject the Achievements tab into a rendered dnd5e character sheet.
  * @param {*} app - The character sheet application
- * @param {*} html - The sheet's rendered HTML (jQuery or HTMLElement)
+ * @param {*} element - The sheet's rendered HTML element
  */
-async function onRenderCharacterSheet(app, html) {
-  if (app.actor.type !== "character") return;
-  const element = html instanceof HTMLElement ? html : html[0];
+async function onRenderCharacterSheet(app, element) {
+  if (app.actor?.type !== "character") return;
 
-  const nav = element.querySelector(".sheet-navigation");
-  const sheetContent = element.querySelector(".sheet-content");
-  if (!nav || !sheetContent) return;
+  const nav = element.querySelector('nav.tabs[data-group="primary"]');
+  const tabBody = element.querySelector(".tab-body");
+  if (!nav || !tabBody) return;
 
+  const isActive = app.tabGroups?.primary === "achievements";
   const localizedLabel = game.i18n.localize(`${MODULE_NAME}.interface.achievements`);
 
-  if (!nav.querySelector('a.item[data-tab="achievements"]')) {
+  if (!nav.querySelector('[data-tab="achievements"]')) {
     const tabTrigger = document.createElement("a");
-    tabTrigger.classList.add("item");
+    tabTrigger.classList.add("item", "control");
+    if (isActive) tabTrigger.classList.add("active");
+    tabTrigger.dataset.action = "tab";
+    tabTrigger.dataset.group = "primary";
     tabTrigger.dataset.tab = "achievements";
-    tabTrigger.dataset.tooltip = localizedLabel;
-    tabTrigger.role = "tab";
+    tabTrigger.dataset.tooltip = "";
     tabTrigger.setAttribute("aria-label", localizedLabel);
-    tabTrigger.innerHTML = `<i class="fa-solid fa-trophy"></i>`;
-
-    const manageTabs = nav.querySelector(".manage-tabs");
-    if (manageTabs) {
-      manageTabs.before(tabTrigger);
-    } else {
-      nav.append(tabTrigger);
-    }
+    tabTrigger.innerHTML = `<i class="fas fa-trophy" inert></i>`;
+    nav.append(tabTrigger);
   }
 
-  let tabContent = sheetContent.querySelector('section.tab[data-tab="achievements"]');
+  let tabContent = tabBody.querySelector('section.tab[data-tab="achievements"]');
   if (!tabContent) {
     tabContent = document.createElement("section");
-    tabContent.classList.add("tab", "achievements", "major");
+    tabContent.classList.add("tab", "achievements");
+    if (isActive) tabContent.classList.add("active");
     tabContent.dataset.group = "primary";
     tabContent.dataset.tab = "achievements";
-    tabContent.innerHTML = `<div class="pa-sheet-achievements"></div>`;
-    sheetContent.append(tabContent);
+    tabContent.innerHTML = `
+      <fieldset class="card">
+        <legend>${localizedLabel}</legend>
+        <div class="pa-sheet-achievements"></div>
+      </fieldset>`;
+    tabBody.append(tabContent);
   }
 
   const list = tabContent.querySelector(".pa-sheet-achievements");

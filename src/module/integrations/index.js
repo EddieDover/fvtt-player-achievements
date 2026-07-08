@@ -16,9 +16,11 @@
  */
 
 import { log } from "../core.js";
+import { registerDnd5eIntegration } from "./dnd5e.js";
 import { registerPF2eIntegration } from "./pf2e.js";
 
 const SYSTEM_INTEGRATIONS = {
+  dnd5e: registerDnd5eIntegration,
   pf2e: registerPF2eIntegration,
 };
 

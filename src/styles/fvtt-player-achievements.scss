@@ -366,6 +366,10 @@
 .pa-sheet-achievements {
   padding: 10px;
 
+  fieldset.card > & {
+    padding: 0;
+  }
+
   .pa-sheet-achievements__message {
     text-align: center;
     margin: 10px;
