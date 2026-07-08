@@ -40,7 +40,11 @@
     },
     "interface": {
       "achievements-sheet": "Ventana de Logros",
-      "show-achievements-sheet": "Mostrar Ventana de Logros"
+      "show-achievements-sheet": "Mostrar Ventana de Logros",
+      "achievements": "Logros",
+      "achievements-none": "No se encontraron logros.",
+      "achievements-error": "Error al cargar los logros.",
+      "achievements-earned": "Conseguido"
     },
     "forms": {
       "achievements-sheet": {

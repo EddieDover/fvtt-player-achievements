@@ -40,7 +40,11 @@
     },
     "interface": {
       "achievements-sheet": "Achievements Window",
-      "show-achievements-sheet": "Show Achievements Window"
+      "show-achievements-sheet": "Show Achievements Window",
+      "achievements": "Achievements",
+      "achievements-none": "No achievements found.",
+      "achievements-error": "Error loading achievements.",
+      "achievements-earned": "Earned"
     },
     "forms": {
       "achievements-sheet": {

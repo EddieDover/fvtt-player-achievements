@@ -36,7 +36,11 @@
     },
     "interface": {
       "achievements-sheet": "Painel de Conquistas",
-      "show-achievements-sheet": "Mostrar Painel de Conquistas"
+      "show-achievements-sheet": "Mostrar Painel de Conquistas",
+      "achievements": "Conquistas",
+      "achievements-none": "Nenhuma conquista encontrada.",
+      "achievements-error": "Erro ao carregar as conquistas.",
+      "achievements-earned": "Conquistado"
     },
     "forms": {
       "achievements-sheet": {

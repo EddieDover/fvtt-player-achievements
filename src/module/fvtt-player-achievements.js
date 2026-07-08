@@ -22,6 +22,7 @@ import { enrichText } from "./utils.js";
 import { MODULE_NAME } from "./constants.js";
 import { AchievementForm } from "./app/achievement-form.js";
 import { registerQuenchTests } from "./quench/quench-tests.js";
+import { registerSystemIntegration } from "./integrations/index.js";
 
 let currentAchievementScreen;
 let registeredHandlebars = false;
@@ -154,6 +155,7 @@ Hooks.on("init", async () => {
 
   registerSettings();
   registerAPI();
+  registerSystemIntegration();
 
   const achievementblock = await fetch("modules/fvtt-player-achievements/templates/achievement-block.hbs").then((r) =>
     r.text(),
