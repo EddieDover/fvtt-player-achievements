@@ -31,8 +31,15 @@ export function buildAchievementList(achievements, actorUuid) {
     )}</p>`;
   }
 
+  const sortedAchievements = achievements.toSorted((a, b) => {
+    const aCompleted = a.completedActors.includes(actorUuid);
+    const bCompleted = b.completedActors.includes(actorUuid);
+    if (aCompleted !== bCompleted) return aCompleted ? -1 : 1;
+    return (a.title ?? "").localeCompare(b.title ?? "");
+  });
+
   let listHtml = `<ul class="pa-sheet-achievements__list">`;
-  for (const achievement of achievements) {
+  for (const achievement of sortedAchievements) {
     const isCompleted = achievement.completedActors.includes(actorUuid);
     const title = enrichText(cleanString(achievement.title ?? ""));
     const description = enrichText(cleanString(achievement.description ?? ""));
