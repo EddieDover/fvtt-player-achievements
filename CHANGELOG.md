@@ -6,6 +6,8 @@
 
 * updated module to v14 ([56e2984](https://github.com/EddieDover/fvtt-player-achievements/commit/56e2984492a204191cb11510a36ed9758633ccb9))
 * migrated forms to ApplicationV2 (Foundry V13 layout) ([5a998fe](https://github.com/EddieDover/fvtt-player-achievements/commit/5a998fefa7efb0d06fa1313a1bf2a02b5e4f5072))
+* add achievements integration for DND5E character sheet ([51698e5](https://github.com/EddieDover/fvtt-player-achievements/commit/51698e5634f401a3dcdfea831e006beb7f2e43fb))
+* add achievements integration for PF2e character sheet ([e43c81f](https://github.com/EddieDover/fvtt-player-achievements/commit/e43c81fe6d3bcb8d7cb72975af65861e467fad00))
 * add getAchievements to API ([3f32ae6](https://github.com/EddieDover/fvtt-player-achievements/commit/3f32ae66cd5a052abf26e21b24c4199985cb858f))
 * added option to show achievement window icon in token control sub list. ([6c8b71c](https://github.com/EddieDover/fvtt-player-achievements/commit/6c8b71cf1a522e5545f5d46d030b3888fef44960))
 * update chat message speaker alias for achievement notifications ([b52f4b2](https://github.com/EddieDover/fvtt-player-achievements/commit/b52f4b2a891bce3d38846890bac08fb48658ae71))
