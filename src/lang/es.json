@@ -1,10 +1,6 @@
 {
   "fvtt-player-achievements": {
     "settings": {
-      "enable-player-achievements": {
-        "name": "Habilitar los logros de los jugadores",
-        "hint": "Habilitar los logros de los jugadores"
-      },
       "play-self-sounds": {
         "name": "Reproducir Sonidos de Logro Personal",
         "hint": "Reproduce un sonido si recibes un logro."
@@ -36,11 +32,19 @@
       "cloak-description-text": {
         "name": "Texto de descripción oculto",
         "hint": "Texto que se muestra cuando la descripción de un logro está oculta."
+      },
+      "use-alternate-button": {
+        "name": "Usar Posición Alternativa del Botón",
+        "hint": "Usa una posición de botón alternativa para la ventana de logros. Esto es útil si tienes muchos iconos en la columna principal. El botón aparecerá en la sublista de Controls de Fichas. Deberás actualizar la ventana para que los cambios surtan efecto."
       }
     },
     "interface": {
       "achievements-sheet": "Ventana de Logros",
-      "show-achievements-sheet": "Mostrar Ventana de Logros"
+      "show-achievements-sheet": "Mostrar Ventana de Logros",
+      "achievements": "Logros",
+      "achievements-none": "No se encontraron logros.",
+      "achievements-error": "Error al cargar los logros.",
+      "achievements-earned": "Conseguido"
     },
     "forms": {
       "achievements-sheet": {
@@ -52,7 +56,7 @@
         "import": "Importar",
         "export-achievements": "Exportar datos de logros al portapapeles",
         "import-achievements": "Sobrescribir los logros actuales con los datos de exportación del portapapeles",
-        "filter": "Filtrar por nombre de logro",
+        "filter": "Filtrar por nombre, descripción o etiquetas del logro",
         "hide-awarded": "Ocultar logros ganados",
         "hide-unawarded": "Ocultar logros no ganados",
         "hide-details": "Vista compacta",

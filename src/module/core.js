@@ -23,7 +23,6 @@ import {
   getDefaultSound,
   hydrateAwardedAchievements,
 } from "./utils.js";
-let achievement_socket;
 
 /**
  * Log a message to the console
@@ -34,16 +33,54 @@ export function log(...message) {
 }
 
 /**
- * Setup the Achievement Data Socket
+ * Setup the Achievement Data Socket using Socket.IO
  */
 export function setupAchievementSocket() {
-  achievement_socket = socketlib.registerModule("fvtt-player-achievements");
-  achievement_socket.register("getAchievements", getAchivements);
-  achievement_socket.register("awardAchievement", (data) => {
-    awardAchievementMessage(data.achievementId, data.characterId);
+  if (!game.socket) {
+    console.error("game.socket is not defined!");
+    return;
+  }
+
+  game.socket.on(`module.${MODULE_NAME}`, async (data) => {
+    switch (data.type) {
+      case "getAchievements": {
+        if (game.user.isGM) {
+          try {
+            const result = await getAchievements(data.payload);
+            game.socket.emit(`module.${MODULE_NAME}`, {
+              type: "getAchievementsResponse",
+              payload: {
+                requestId: data.payload.requestId,
+                result: result,
+              },
+            });
+          } catch (error) {
+            console.error(`${MODULE_NAME} | Error handling getAchievements request:`, error);
+          }
+        }
+        break;
+      }
+
+      case "awardAchievement": {
+        if (game.user.isGM) {
+          awardAchievementMessage(data.payload.achievementId, data.payload.characterId);
+        }
+        break;
+      }
+
+      case "awardAchievementSelf": {
+        awardAchievementSelf(data.payload);
+        break;
+      }
+
+      case "getPendingAchievements": {
+        if (game.user.isGM) {
+          await getPendingAchievements(data.payload);
+        }
+        break;
+      }
+    }
   });
-  achievement_socket.register("awardAchievementSelf", awardAchievementSelf);
-  achievement_socket.register("getPendingAchievements", getPendingAchievements);
 }
 
 /**
@@ -85,7 +122,7 @@ export async function createAchievement({
     sound: sound ?? getDefaultSound(),
     tags,
   });
-  game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+  await game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
 /**
@@ -99,7 +136,7 @@ export async function editAchievement({ id, title, showTitleCloaked, description
     return;
   }
   customAchievements[index] = { id, title, showTitleCloaked, description, image, cloakedImage, sound, tags };
-  game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
+  await game.settings.set("fvtt-player-achievements", "customAchievements", customAchievements);
 }
 
 /**
@@ -109,12 +146,15 @@ export async function editAchievement({ id, title, showTitleCloaked, description
 export async function deleteAchievement(achievementId) {
   const achievements = await game.settings.get("fvtt-player-achievements", "customAchievements");
   const index = achievements.findIndex((a) => a.id === achievementId);
+  if (index === -1) {
+    return;
+  }
   achievements.splice(index, 1);
-  game.settings.set("fvtt-player-achievements", "customAchievements", achievements);
+  await game.settings.set("fvtt-player-achievements", "customAchievements", achievements);
 
   const awardedAchievements = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
 
-  for (const [aid, _character] of Object.entries(awardedAchievements)) {
+  for (const [aid] of Object.entries(awardedAchievements)) {
     if (aid === achievementId) {
       delete awardedAchievements[achievementId];
     }
@@ -128,20 +168,16 @@ export async function deleteAchievement(achievementId) {
  * @returns {Array<Achievement>} The array of Pending Achievements
  */
 export async function getPendingAchievements(overrides) {
-  let callingUser;
   let callingCharacterId = "";
-  if (overrides?.callingUser) {
-    callingUser = overrides.callingUser;
-    callingCharacterId = overrides.callingCharacterId;
-  } else {
-    callingUser = game.user;
-    callingCharacterId = "";
-  }
+  callingCharacterId = overrides?.callingCharacterId ?? "";
 
   if (!game.user.isGM) {
-    return achievement_socket.executeAsGM("getPendingAchievements", {
-      callingUser: game.user,
-      callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
+    return game.socket.emit(`module.${MODULE_NAME}`, {
+      type: "getPendingAchievements",
+      payload: {
+        callingUser: game.user,
+        callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
+      },
     });
   }
 
@@ -150,7 +186,7 @@ export async function getPendingAchievements(overrides) {
   if (pendingAchievementsFull[callingCharacterId]) {
     const pendingAchievements = pendingAchievementsFull[callingCharacterId];
     for (const ach of pendingAchievements) {
-      awardAchievement(ach, callingCharacterId, true);
+      await awardAchievement(ach, callingCharacterId, true);
     }
     delete pendingAchievementsFull[callingCharacterId];
     await game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievementsFull);
@@ -162,25 +198,45 @@ export async function getPendingAchievements(overrides) {
  * @param {{}} overrides Overrides
  * @returns {Array<Achievement>} The array of Achievements
  */
-export async function getAchivements(overrides) {
-  let callingUser;
+export async function getAchievements(overrides) {
   let callingCharacterId = "";
-  let showTags;
-  if (overrides?.callingUser) {
-    callingUser = overrides.callingUser;
+  let showTags = true;
+  if (overrides?.callingCharacterId) {
     callingCharacterId = overrides.callingCharacterId;
     showTags = overrides.showTags;
   } else {
-    callingUser = game.user;
     callingCharacterId = "";
     showTags = true;
   }
 
+  const callingUser =
+    game.users.get(overrides?.callingUser?.id || overrides?.callingUser?._id) ?? overrides?.callingUser ?? game.user;
+
   if (!game.user.isGM) {
-    return achievement_socket.executeAsGM("getAchievements", {
-      callingUser: game.user,
-      callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
-      showTags: await game.settings.get("fvtt-player-achievements", "showTagsToPlayers"),
+    const showTagsToPlayers = await game.settings.get("fvtt-player-achievements", "showTagsToPlayers");
+
+    return new Promise((resolve) => {
+      const requestId = `${game.user.id}-${Date.now()}`;
+
+      const responseHandler = (data) => {
+        if (data.type === "getAchievementsResponse" && data.payload.requestId === requestId) {
+          game.socket.off(`module.${MODULE_NAME}`, responseHandler);
+          resolve(data.payload.result);
+        }
+      };
+
+      game.socket.on(`module.${MODULE_NAME}`, responseHandler);
+
+      // Emit request to GM
+      game.socket.emit(`module.${MODULE_NAME}`, {
+        type: "getAchievements",
+        payload: {
+          requestId: requestId,
+          callingUser: { id: game.user.id },
+          callingCharacterId: `Actor.${game.user?.character?.id ?? ""}`,
+          showTags: showTagsToPlayers,
+        },
+      });
     });
   }
 
@@ -267,6 +323,7 @@ export async function awardPendingAchievementMessage(achievementId, characterId)
 
   const playerOwner =
     game.users.filter((user) => user.character).find((user) => user.character.uuid === characterId) ?? undefined;
+  if (!playerOwner) return;
 
   const character = playerOwner.character;
   let message = game.i18n.format("fvtt-player-achievements.messages.pending-award", {
@@ -275,7 +332,9 @@ export async function awardPendingAchievementMessage(achievementId, characterId)
     achievement_title: achievement.title,
   });
   const chatData = {
-    speaker: ChatMessage.getSpeaker(),
+    speaker: ChatMessage.getSpeaker({
+      alias: "Achievement Award Pending",
+    }),
     content: message,
     whisper: [],
   };
@@ -289,7 +348,7 @@ export async function awardPendingAchievementMessage(achievementId, characterId)
  * @param {string} characterId The chacter id
  * @param {boolean} late Is this a late award?
  */
-export async function awardAchievementMessage(achievementId, characterId, late = false) {
+export function awardAchievementMessage(achievementId, characterId, late = false) {
   const achievement = game.settings
     .get("fvtt-player-achievements", "customAchievements")
     .find((a) => a.id === achievementId);
@@ -328,15 +387,20 @@ export async function awardAchievementMessage(achievementId, characterId, late =
   const whisper = showOnlyToAwardedUser ? [playerOwner.id] : [];
   const chatData = {
     // user: game.user.id,
-    speaker: ChatMessage.getSpeaker(),
+    speaker: ChatMessage.getSpeaker({
+      alias: "Achievement Awarded",
+    }),
     content: message,
     whisper: whisper,
   };
   ChatMessage.create(chatData, {});
 
-  await achievement_socket.executeForEveryone("awardAchievementSelf", {
-    achievement,
-    characterId,
+  game.socket.emit(`module.${MODULE_NAME}`, {
+    type: "awardAchievementSelf",
+    payload: {
+      achievement,
+      characterId,
+    },
   });
 }
 
@@ -366,17 +430,16 @@ export async function awardAchievement(achievementId, characterId, late = false)
   const awardingUserActive = awardingUser?.active ?? false;
   const awardedAchievements = await game.settings.get("fvtt-player-achievements", "awardedAchievements");
   const awardBlock = awardedAchievements[achievementId] ?? [];
-  let characters = [...awardBlock];
-  characters.push(characterId);
+  let characters = [...awardBlock, characterId];
   characters = [...new Set(characters)];
   awardedAchievements[achievementId] = characters;
-  game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
+  await game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
 
   awardAchievementMessage(achievementId, characterId, late);
   if (awardingUserActive) {
     Hooks.call(MODULE_NAME + ".awardAchievement", achievementId, characterId);
   } else {
-    pendAwardAchievement(achievementId, characterId);
+    await pendAwardAchievement(achievementId, characterId);
   }
 }
 
@@ -395,7 +458,7 @@ export async function pendAwardAchievement(achievementId, characterId) {
     pendingAchievementsForUser.push(achievementId);
     pendingAchievements[characterId] = [...new Set(pendingAchievementsForUser)];
   }
-  game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
+  await game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
 }
 
 /**
@@ -426,11 +489,11 @@ export async function unAwardAchievement(achievementId, characterIds) {
   }
 
   awardedAchievements[achievementId] = awardedCharacters;
-  game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
-  game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
+  await game.settings.set("fvtt-player-achievements", "awardedAchievements", awardedAchievements);
+  await game.settings.set("fvtt-player-achievements", "pendingAwardedAchievements", pendingAchievements);
 
   const hydratedAchievements = await hydrateAwardedAchievements(awardedAchievements);
-  game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
+  await game.settings.set("fvtt-player-achievements", "customAchievements", hydratedAchievements);
 
   for (const characterId of cids) {
     Hooks.call(MODULE_NAME + ".unAwardAchievement", achievementId, characterId);

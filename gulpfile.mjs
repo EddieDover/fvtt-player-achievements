@@ -8,7 +8,7 @@ import gulp from "gulp";
 import { deleteAsync } from "del";
 import zip from "gulp-zip";
 import rename from "gulp-rename";
-import sass from "gulp-dart-sass";
+import * as sass from "sass";
 import sourcemaps from "gulp-sourcemaps";
 import path from "node:path";
 import buffer from "vinyl-buffer";
@@ -20,21 +20,21 @@ import rollupStream from "@rollup/stream";
 
 import rollupConfig from "./rollup.config.mjs";
 
-/** ******************/
+/** */
 /*  CONFIGURATION   */
-/** ******************/
+/** */
 
 const packageId = "fvtt-player-achievements";
 const sourceDirectory = "./src";
-const distDirectory = "./dist";
+const distributionDirectory = "./dist";
 const stylesDirectory = `${sourceDirectory}/styles`;
 const stylesExtension = "scss";
 const sourceFileExtension = "js";
 const staticFiles = ["assets", "fonts", "lang", "packs", "templates", "module.json"];
 
-/** ******************/
+/** */
 /*      BUILD       */
-/** ******************/
+/** */
 
 let cache;
 
@@ -49,20 +49,17 @@ function buildCode() {
     })
     .pipe(source(`${packageId}.js`))
     .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.init())
     .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest(`${distDirectory}/module`));
+    .pipe(gulp.dest(`${distributionDirectory}/module`));
 }
 
 /**
  * Build style sheets
- * @returns {NodeJS.ReadWriteStream}
  */
-function buildStyles() {
-  return gulp
-    .src(`${stylesDirectory}/${packageId}.${stylesExtension}`)
-    .pipe(sass().on("error", sass.logError))
-    .pipe(gulp.dest(`${distDirectory}/styles`));
+async function buildStyles() {
+  const result = sass.compile(`${stylesDirectory}/${packageId}.${stylesExtension}`);
+  await fs.outputFile(`${distributionDirectory}/styles/${packageId}.css`, result.css);
 }
 
 /**
@@ -71,37 +68,39 @@ function buildStyles() {
 async function copyFiles() {
   for (const file of staticFiles) {
     if (fs.existsSync(`${sourceDirectory}/${file}`)) {
-      await fs.copy(`${sourceDirectory}/${file}`, `${distDirectory}/${file}`, { encoding: false });
+      await fs.copy(`${sourceDirectory}/${file}`, `${distributionDirectory}/${file}`, { encoding: false });
     }
   }
 }
 
 /**
  * Cleans the dist folder
- * @returns {NodeJS.ReadWriteStream} The cleaned files
+ * @returns {Promise<void>} The cleaned files
  */
-async function cleanDist() {
-  return await deleteAsync([`${distDirectory}/**/*`, `${distDirectory}`]);
+function cleanDistribution() {
+  return deleteAsync([`${distributionDirectory}/**/*`, `${distributionDirectory}`]);
 }
 
 /**
  * Copies the files ot the dist folder in prep for packaging
  * @returns {NodeJS.ReadWriteStream} The copied files
  */
-function copyDist() {
+function copyDistribution() {
   // Take everything inside the dist folder and zip it into a subfolder named totm.zip
-  return gulp.src(`${distDirectory}/**/*`, { encoding: false }).pipe(gulp.dest(`${distDirectory}/${packageId}`));
+  return gulp
+    .src(`${distributionDirectory}/**/*`, { encoding: false })
+    .pipe(gulp.dest(`${distributionDirectory}/${packageId}`));
 }
 
 /**
  * Packages the dist subfolderfolder into a zip file
  * @returns {NodeJS.ReadWriteStream} The zipped files
  */
-function zipDist() {
+function zipDistribution() {
   return gulp
-    .src(`${distDirectory}/${packageId}/**/*`, { base: `${distDirectory}`, encoding: false })
+    .src(`${distributionDirectory}/${packageId}/**/*`, { base: `${distributionDirectory}`, encoding: false })
     .pipe(zip(`${packageId}.zip`))
-    .pipe(gulp.dest(`${distDirectory}`));
+    .pipe(gulp.dest(`${distributionDirectory}`));
 }
 
 /**
@@ -117,17 +116,17 @@ export function watch() {
   );
 }
 
-export const build = gulp.series(clean, gulp.parallel(buildCode, buildStyles, copyFiles));
+export const build = gulp.series(cleanDistribution, gulp.parallel(buildCode, buildStyles, copyFiles));
 
 /********************/
 /*    DEV EXPORT    */
 /********************/
 
-export const devexport = gulp.series(cleanDist, build, copyDist, zipDist);
+export const devexport = gulp.series(cleanDistribution, build, copyDistribution, zipDistribution);
 
-/** ******************/
+/** */
 /*      CLEAN       */
-/** ******************/
+/** */
 
 /**
  * Remove built files from `dist` folder while ignoring source files
@@ -143,13 +142,13 @@ export async function clean() {
   console.log("   ", files.join("\n    "));
 
   for (const filePath of files) {
-    await fs.remove(`${distDirectory}/${filePath}`);
+    await fs.remove(`${distributionDirectory}/${filePath}`);
   }
 }
 
-/** ******************/
+/** */
 /*      PACKAGE      */
-/** ******************/
+/** */
 
 // Define a task to zip the contents of the /dist folder into a subfolder
 gulp.task("zip-dist", () => {
@@ -164,9 +163,9 @@ gulp.task("zip-dist", () => {
     .pipe(zip(`${packageId}.zip`))
     .pipe(gulp.dest("."));
 });
-/** ******************/
+/** */
 /*       LINK       */
-/** ******************/
+/** */
 
 /**
  * Get the data paths of Foundry VTT based on what is configured in `foundryconfig.json`
@@ -176,23 +175,26 @@ function getDataPaths() {
   const config = fs.readJSONSync("foundryconfig.json");
   const dataPath = config?.dataPath;
 
-  if (dataPath) {
-    const dataPaths = Array.isArray(dataPath) ? dataPath : [dataPath];
-
-    return dataPaths.map((vdataPath) => {
-      if (typeof vdataPath !== "string") {
-        throw new TypeError(
-          `Property dataPath in foundryconfig.json is expected to be a string or an array of strings, but found ${vdataPath}`,
-        );
-      }
-      if (!fs.existsSync(path.resolve(dataPath))) {
-        throw new Error(`The dataPath ${dataPath} does not exist on the file system`);
-      }
-      return path.resolve(dataPath);
-    });
-  } else {
+  if (!dataPath) {
     throw new Error("No dataPath defined in foundryconfig.json");
   }
+
+  const dataPaths = Array.isArray(dataPath) ? dataPath : [dataPath];
+
+  return dataPaths.map((vdataPath) => {
+    if (typeof vdataPath !== "string") {
+      throw new TypeError(
+        `Property dataPath in foundryconfig.json is expected to be a string or an array of strings, but found ${vdataPath}`,
+      );
+    }
+
+    const resolvedPath = path.resolve(vdataPath);
+    if (!fs.existsSync(resolvedPath)) {
+      throw new Error(`The dataPath ${vdataPath} does not exist on the file system`);
+    }
+
+    return path.basename(resolvedPath) === "Data" ? resolvedPath : path.resolve(resolvedPath, "Data");
+  });
 }
 
 /**
@@ -206,9 +208,12 @@ export async function link() {
     throw new Error("Could not find module.json");
   }
 
-  const linkDirectories = getDataPaths().map((dataPath) =>
-    path.resolve(dataPath, "Data", destinationDirectory, packageId),
-  );
+  const resolvedDistributionDirectory = path.resolve(distributionDirectory);
+  if (!fs.existsSync(resolvedDistributionDirectory)) {
+    throw new Error(`Could not find ${resolvedDistributionDirectory}. Run npm run build first.`);
+  }
+
+  const linkDirectories = getDataPaths().map((dataPath) => path.resolve(dataPath, destinationDirectory, packageId));
 
   const argv = yargs(hideBin(process.argv)).option("clean", {
     "alias": "c",
@@ -227,7 +232,7 @@ export async function link() {
     } else {
       console.log(`Linking dist to ${linkDirectory}.`);
       await fs.ensureDir(path.resolve(linkDirectory, ".."));
-      await fs.symlink(path.resolve(distDirectory), linkDirectory);
+      await fs.ensureSymlink(resolvedDistributionDirectory, linkDirectory, "dir");
     }
   }
 }

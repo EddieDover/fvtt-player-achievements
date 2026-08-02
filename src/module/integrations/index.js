@@ -15,10 +15,22 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-describe("An example test", () => {
-  it("will always succeed", () => {
-    expect(true).toBeTruthy();
-  });
-});
+import { log } from "../core.js";
+import { registerDnd5eIntegration } from "./dnd5e.js";
+import { registerPF2eIntegration } from "./pf2e.js";
 
-// Add real tests here.
+const SYSTEM_INTEGRATIONS = {
+  dnd5e: registerDnd5eIntegration,
+  pf2e: registerPF2eIntegration,
+};
+
+/**
+ * Register the integration matching the active game system, if any.
+ */
+export function registerSystemIntegration() {
+  const register = SYSTEM_INTEGRATIONS[game.system.id];
+  if (register) {
+    register();
+    log(`Registered ${game.system.id} integration`);
+  }
+}

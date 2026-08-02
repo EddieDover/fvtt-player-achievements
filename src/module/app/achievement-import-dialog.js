@@ -15,48 +15,50 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+const { DialogV2, ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 import { generateUniqueId } from "../core";
 import { localize } from "../utils";
 
-export class AchievementsImportDialog extends Application {
+export class AchievementsImportDialog extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    id: "achievements-import-dialog",
+    classes: ["form"],
+    title: "Achievements Import",
+    window: {
+      width: 500,
+      zIndex: 1000,
+      height: 500,
+      maxHeight: 500,
+    },
+    actions: {
+      onImport: AchievementsImportDialog.onImportAchievements,
+    },
+  };
+
+  static PARTS = {
+    form: {
+      template: "modules/fvtt-player-achievements/templates/achievements-import-dialog.hbs",
+    },
+  };
+
   constructor(overrides) {
     super();
     this.overrides = overrides;
     this.onFinished = overrides.onFinished;
   }
 
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "achievements-import-dialog",
-      classes: ["form"],
-      title: "Achievements Import",
-      template: "modules/fvtt-player-achievements/templates/achievements-import-dialog.hbs",
-      width: 500,
-      zIndex: 1000,
-      height: 500,
-      maxHeight: 500,
-    });
-  }
-
   closeWindow() {
     this.close();
   }
 
-  // eslint-disable-next-line require-await
-  async activateListeners(html) {
-    super.activateListeners(html);
-
-    $('button[name="fpa-import"]', html).click(this.onImportAchievements.bind(this));
-  }
-
-  async onImportAchievements() {
-    const achievementsText = $('textarea[name="fpa-import-data"]').val();
+  static async onImportAchievements() {
+    const achievementsText = document.querySelector('textarea[name="fpa-import-data"]').value;
 
     if (!achievementsText) {
       ui.notifications.error(localize("fvtt-player-achievements.messages.no-clipboard-data"));
       return;
     }
-    const destructiveyesno = await Dialog.confirm({
+    const destructiveyesno = await DialogV2.confirm({
       title: localize("fvtt-player-achievements.messages.import-achievements.title"),
       content: localize("fvtt-player-achievements.messages.import-achievements.content"),
       yes: () => {
@@ -99,8 +101,8 @@ export class AchievementsImportDialog extends Application {
     ui.notifications.info(
       `${importedAchievements.length} ${localize("fvtt-player-achievements.messages.achievements-imported")}`,
     );
-    game.settings.set("fvtt-player-achievements", "customAchievements", importedAchievements);
-    game.settings.set("fvtt-player-achievements", "awardedAchievements", newAwardedAchievements);
+    await game.settings.set("fvtt-player-achievements", "customAchievements", importedAchievements);
+    await game.settings.set("fvtt-player-achievements", "awardedAchievements", newAwardedAchievements);
     this.onFinished();
     this.closeWindow();
   }

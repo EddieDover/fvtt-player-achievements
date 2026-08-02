@@ -15,12 +15,14 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { AchievementForm } from "./app/achievement-form.js";
 import { registerSettings } from "./app/settings.js";
 import PA_API from "./api.js";
-import { getAchivements, getPendingAchievements, log, setupAchievementSocket } from "./core.js";
+import { getAchievements, getPendingAchievements, log, setupAchievementSocket } from "./core.js";
 import { enrichText } from "./utils.js";
 import { MODULE_NAME } from "./constants.js";
+import { AchievementForm } from "./app/achievement-form.js";
+import { registerQuenchTests } from "./quench/quench-tests.js";
+import { registerSystemIntegration } from "./integrations/index.js";
 
 let currentAchievementScreen;
 let registeredHandlebars = false;
@@ -95,8 +97,7 @@ function registerHandlebarHelpers() {
  * Register the API
  */
 function registerAPI() {
-  game[MODULE_NAME] = {};
-  game[MODULE_NAME].api = {
+  const api = {
     getAchievements: PA_API.getAchievements,
     awardAchievementToCharacter: PA_API.awardAchievementToCharacter,
     createAchievement: PA_API.createAchievement,
@@ -110,6 +111,14 @@ function registerAPI() {
       showWindow();
     },
   };
+
+  game[MODULE_NAME] = {};
+  game[MODULE_NAME].api = api;
+
+  if (game.modules.get(MODULE_NAME)) {
+    game.modules.get(MODULE_NAME).api = api;
+  }
+
   log("API Registered");
 }
 
@@ -124,7 +133,7 @@ function toggleAchievementScreen() {
   } else {
     const overrides = {
       updateAchievements: () => {
-        return getAchivements();
+        return getAchievements();
       },
     };
     currentAchievementScreen = new AchievementForm(overrides);
@@ -141,14 +150,12 @@ function showWindow() {
 
 /* Hooks */
 
-Hooks.once("socketlib.ready", () => {
-  setupAchievementSocket();
-});
-
 Hooks.on("init", async () => {
   log("Initializing");
 
   registerSettings();
+  registerAPI();
+  registerSystemIntegration();
 
   const achievementblock = await fetch("modules/fvtt-player-achievements/templates/achievement-block.hbs").then((r) =>
     r.text(),
@@ -157,10 +164,13 @@ Hooks.on("init", async () => {
   Handlebars.registerPartial("achievement-block", achievementblock);
 });
 
+// Register in-Foundry integration tests when the Quench module is enabled.
+Hooks.on("quenchReady", registerQuenchTests);
+
 Hooks.on("ready", () => {
+  setupAchievementSocket();
   log("Ready");
   registerHandlebarHelpers();
-  registerAPI();
 
   if (!game.user.isGM) {
     getPendingAchievements();
@@ -181,93 +191,57 @@ Hooks.on("renderSceneNavigation", () => {});
 Hooks.on("renderSceneControls", () => {
   let button = document.querySelector("#AchievementButton");
   let settingsArea = document.querySelector("#settings-fvtt-player-achievements");
-
-  // Check if the element with the class name "scene-controls-layers" exists, if so this is v13
   let controls;
   let sidebarSettings;
-  let v13andUp = false;
-  if (document.querySelector("#scene-controls-layers")) {
-    controls = $("#scene-controls-layers");
-    settingsArea = document.querySelector(".fvtt-player-achievement-settings");
-    v13andUp = true;
-  } else {
-    controls = $(".main-controls.app.control-tools.flexcol");
-  }
+  controls = $("#scene-controls-layers");
+  settingsArea = document.querySelector(".fvtt-player-achievement-settings");
 
   const localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
+  const useAlternateButon = game.settings.get("fvtt-player-achievements", "useAlternateButton");
+
+  controls = useAlternateButon
+    ? document.querySelector("#scene-controls-tools")
+    : document.querySelector("#scene-controls-layers");
+  settingsArea = document.querySelector(".fvtt-player-achievement-settings");
 
   if (controls && !button) {
-    if (v13andUp) {
-      const newli = document.createElement("li");
-      const newButton = document.createElement("button");
-      sidebarSettings = document.querySelector("section.settings.flexcol");
+    const newli = document.createElement("li");
+    const newButton = document.createElement("button");
+    sidebarSettings = document.querySelector("section.settings.flexcol");
 
-      for (const st of ["control", "ui-control", "layer", "icon", "fa-regular"]) newButton.classList.add(st);
-      newButton.id = "AchievementButton";
-      newButton.type = "button";
-      newButton.role = "tab";
-      newButton.dataset.tool = "AchievementSheet";
+    for (const st of ["control", "ui-control", "layer", "icon", "fa-regular"]) newButton.classList.add(st);
+    newButton.id = "AchievementButton";
+    newButton.type = "button";
+    newButton.role = "tab";
+    newButton.dataset.tool = "AchievementSheet";
 
-      newButton.setAttribute("aria-label", localizedLabel);
-      newButton.dataset.tooltip = localizedLabel;
-      newButton.innerHTML = `<i class="fas fa-trophy"></i>`;
-      newButton.addEventListener("click", showWindow);
-      newli.append(newButton);
-      controls.append(newli);
+    newButton.setAttribute("aria-label", localizedLabel);
+    newButton.dataset.tooltip = localizedLabel;
+    newButton.innerHTML = `<i class="fas fa-trophy"></i>`;
+    newButton.addEventListener("click", showWindow);
+    newli.append(newButton);
+    controls.append(newli);
 
-      if (sidebarSettings && !settingsArea) {
-        const settingsAreaSection = document.createElement("section");
-        settingsAreaSection.classList.add("fvtt-player-achievement-settings", "flexcol");
-        const settingsAreaHeader = document.createElement("h4");
-        settingsAreaHeader.classList.add("divider");
-        settingsAreaHeader.textContent = "Player Achievements";
-        settingsAreaSection.append(settingsAreaHeader);
+    if (sidebarSettings && !settingsArea) {
+      const settingsAreaSection = document.createElement("section");
+      settingsAreaSection.classList.add("fvtt-player-achievement-settings", "flexcol");
+      const settingsAreaHeader = document.createElement("h4");
+      settingsAreaHeader.classList.add("divider");
+      settingsAreaHeader.textContent = "Player Achievements";
+      settingsAreaSection.append(settingsAreaHeader);
 
-        makeSibling(sidebarSettings, settingsAreaSection);
+      makeSibling(sidebarSettings, settingsAreaSection);
 
-        const settingsButton = document.createElement("button");
-        settingsButton.classList.add("settings-button");
-        settingsButton.dataset.action = "openApp";
-        settingsButton.type = "button";
-        let localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
-        settingsButton.innerHTML = `<i class='fas fa-trophy'></i> ${localizedLabel}`;
-        settingsButton.addEventListener("click", () => {
-          toggleAchievementScreen();
-        });
-        makeSibling(settingsAreaHeader, settingsButton);
-      }
-    } else {
-      sidebarSettings = document.querySelector("#settings-game");
-
-      const newli = document.createElement("li");
-      newli.classList.add("scene-control");
-      newli.id = "AchievementButton";
-      newli.dataset.tool = "AchievementSheet";
-      newli.setAttribute("aria-label", localizedLabel);
-      newli.setAttribute("role", "button");
-      newli.dataset.tooltip = localizedLabel;
-      newli.innerHTML = `<i class="fas fa-trophy"></i>`;
-      newli.addEventListener("click", showWindow);
-      controls.append(newli);
-
-      if (sidebarSettings && !settingsArea) {
-        const settingsAreaHeader = document.createElement("h2");
-        settingsAreaHeader.textContent = "Player Achievements";
-
-        makeSibling(sidebarSettings, settingsAreaHeader);
-
-        const settingsAreaDiv = document.createElement("div");
-        settingsAreaDiv.id = "settings-fvtt-player-achievements";
-        const settingsButton = document.createElement("button");
-        settingsButton.classList.add("settings-button");
-        let localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
-        settingsButton.innerHTML = `<i class='fas fa-trophy'></i> ${localizedLabel}`;
-        settingsButton.addEventListener("click", () => {
-          toggleAchievementScreen();
-        });
-        settingsAreaDiv.append(settingsButton);
-        makeSibling(settingsAreaHeader, settingsAreaDiv);
-      }
+      const settingsButton = document.createElement("button");
+      settingsButton.classList.add("settings-button");
+      settingsButton.dataset.action = "openApp";
+      settingsButton.type = "button";
+      let localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
+      settingsButton.innerHTML = `<i class='fas fa-trophy'></i> ${localizedLabel}`;
+      settingsButton.addEventListener("click", () => {
+        toggleAchievementScreen();
+      });
+      makeSibling(settingsAreaHeader, settingsButton);
     }
   }
 });

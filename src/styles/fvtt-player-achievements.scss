@@ -1,36 +1,49 @@
 .achievements-sheet {
-  width:100%;
-  height:100%;
-  padding: 0 10px 10px 10px;
-  max-height:600px;
+  width: 100%;
+  height: 100%;
+  padding: 0 10px 10px;
+  max-height: 600px;
+  display: flex;
+  flex-direction:column;
+  gap:5px;
 
   .achievements-sheet__dm-controls {
     display: flex;
     flex-direction: row;
-    flex-wrap:nowrap;
     margin-bottom: 5px;
+    gap: 5px;
   }
 
   .achievements-sheet__player-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .achievements-sheet__filter-controls {
     display:flex;
     flex-direction:row;
     flex-wrap:nowrap;
-    justify-content:center;
-    align-items: center;
+    align-items:center;
+    gap:5px;
   }
 }
 .achievements-container {
-  display:flex;
+  display: flex;
   flex-flow: column nowrap;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .add-achievement-form {
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-error {
-  color:red;
+  color: red;
 }
 
 .option-username {
@@ -42,49 +55,48 @@
 }
 
 .fpa-import-container {
-  display:flex;
-  flex-direction:column;
-  flex-wrap:nowrap;
+  display: flex;
+  flex-direction: column;
 
   .fpa-import-data {
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
   }
 }
 
 .fpa-export-container {
-  display:flex;
-  flex-direction:column;
-  flex-wrap:nowrap;
+  display: flex;
+  flex-direction: column;
 
   .fpa-export-data {
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
   }
 }
 
 .achievement-message {
   h2 {
-    text-align:center;
+    text-align: center;
   }
 
   p {
-    text-align:center;
+    text-align: center;
   }
 
   .achievement-message-description {
-    text-align:left;
+    text-align: left;
   }
 
   .achievement-message-container {
-    display:flex;
-    flex-direction:row;
-    flex-wrap:nowrap;
+    display: flex;
+    flex-direction: row;
 
     img {
-      margin-right:5px;
-      width:64px;
-      height:64px;
+      margin-right: 5px;
+      width: 64px;
+      height: 64px;
     }
   }
 }
@@ -92,28 +104,21 @@
 .achievement-block {
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
-
+  flex-shrink: 0;
   background: rgba(128, 128, 128, 0.5);
-  margin-top: 5px;
-  margin-bottom:5px;
+  margin: 5px 0;
   border: 1px solid black;
   border-radius: 5px;
 
   details {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
   }
 
   summary {
-      display: flex;
-      align-items: center;
-
-      display {
-        color: #333;
-        font-weight: bold;
-      }
+    display: flex;
+    align-items: center;
   }
 
   details[open] summary::before {
@@ -121,12 +126,12 @@
   }
 
   summary::before {
-      content: "▶";
-      margin-right: 0.5rem;
+    content: "▶";
+    margin-right: 0.5rem;
   }
 
   .achievement-block__details {
-    position:relative;
+    position: relative;
   }
 
   .achievement-block__details-summary {
@@ -146,20 +151,16 @@
   .achievement-block__content {
     margin-left: 5px;
     display: flex;
-    flex-direction:column;
-    flex-wrap: nowrap;
+    flex-direction: column;
     flex: 1 1 auto;
 
     .achievement-block-title-row {
       display: flex;
-      flex-direction:row;
-      flex-wrap: nowrap;
+      flex-direction: row;
       justify-content: space-between;
       width: 100%;
 
       .achievement-block__toggle-lock {
-        // width: 2rem;
-        // height: 2rem;
         height: 28px;
         margin-right: 1px;
         margin-top: 1px;
@@ -176,11 +177,10 @@
         width: fit-content;
       }
     }
-
   }
 
   .achievement-block__header {
-    display:flex;
+    display: flex;
     flex-flow: row nowrap;
   }
 
@@ -191,6 +191,14 @@
     padding: 5px;
   }
 
+  .achievement-block-tags-container-area {
+    padding: 5px;
+  }
+
+  .achievement-block__image-holder-buttons-container {
+    padding: 5px;
+  }
+
   .achievement-block__image-holder-other-players-area {
     display: flex;
     flex-direction: row;
@@ -198,40 +206,14 @@
     align-items: center;
 
     p {
-      margin:0;
+      margin: 0;
     }
 
-    // .owned {
-    //   display:flex;
-    //   flex-flow: row nowrap;
-    //   justify-content: center;
-    //   align-items: center;
-    //   margin-bottom:5px;
-    //   margin-top:5px;
-
-    //   button {
-    //     height: 28px;
-    //     background: rgba(0, 0, 0, 0.5);
-    //     box-shadow: 0 0 10px var(--color-shadow-dark);
-    //     border: 1px solid var(--color-border-dark);
-    //     border-radius: 5px;
-    //     cursor: pointer;
-    //     pointer-events: all;
-    //     display: flex;
-    //     color: white;
-    //     align-items: center;
-    //     justify-content: center;
-    //     width:fit-content;
-    //     margin:5px;
-    //   }
-    // }
-
-
-    .owned,.unowned {
-      display:flex;
+    .owned,
+    .unowned {
+      display: flex;
       flex-flow: row wrap;
-      margin-bottom:5px;
-      margin-top:5px;
+      margin: 5px 0;
 
       button {
         height: 28px;
@@ -244,48 +226,47 @@
         overflow: clip;
         text-overflow: ellipsis;
         line-height: 24px;
-        width:fit-content;
+        width: fit-content;
+        white-space:nowrap;
       }
     }
   }
 
   .achievement-block__image-unobtained {
-    filter: brightness(0.5)
+    filter: brightness(0.5);
   }
 
   .achievement-block__image-holder-buttons {
-    display:flex;
-    flex-direction:column;
-    flex-wrap:nowrap;
+    display: flex;
+    flex-direction: column;
   }
 
   .achievement-block__image-holder-award-buttons-area {
-    display:flex;
-    flex-basis:content;
-    flex-direction:row;
-    flex-wrap:nowrap;
+    display: flex;
+    flex-basis: content;
+    flex-direction: row;
     justify-content: center;
 
     p {
-      margin:0;
+      margin: 0;
     }
 
     .pcolumn {
-      display:flex;
-      flex-flow:column nowrap;
+      display: flex;
+      flex-flow: column nowrap;
       width: 100%;
       padding: 5px;
     }
 
     .pcolumn:nth-child(2) {
-      border-left: 1px black solid;
+      border-left: 1px solid black;
     }
 
-    .owned,.unowned {
-      display:flex;
-      flex-flow: column nowrap;
-      margin-bottom:5px;
-      margin-top:5px;
+    .owned,
+    .unowned {
+      display: flex;
+      flex-flow: row nowrap;
+      margin: 5px 0;
       align-items: center;
 
       button {
@@ -304,49 +285,38 @@
   }
 
   .achievement-block__title-wrap {
-    display:flex;
-    flex-wrap: nowrap;
+    display: flex;
     flex-direction: row;
   }
 
   .achievement-block__title-copy {
-    margin:5px;
+    margin: 5px;
     cursor: pointer;
+  }
+
+  .achievement-block__title,
+  .achievement-block__title-lock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25em;
   }
 
   .achievement-block__title {
     border-bottom: 1px solid black;
-    align-content: center;
-    display: flex;
-    justify-content: center;
-    justify-self: center;
-    align-items: center;
-    align-self: center;
-    font-size: 1.25em;
   }
 
   .achievement-block__title-lock {
     border-bottom: none;
-    align-content: center;
-    display: flex;
-    justify-content: center;
-    justify-self: center;
-    align-items: center;
-    align-self: center;
-    font-size: 1.25em;
   }
 
   .achievement-block__title-buttons {
-    display:flex;
-    flex-flow:row-reverse;
-    flex-wrap:nowrap;
+    display: flex;
+    flex-flow: row-reverse;
   }
 
   .achievements-sheet__hide-details {
-    margin-left: 0px;
-    margin-right: 5px;
-    margin-top: 3px;
-    margin-bottom: 3px;
+    margin: 3px 5px 3px 0;
   }
 
   .achievement-block__image-holder-button {
@@ -354,7 +324,7 @@
     width: 28px;
     margin-top: 0.25rem;
     margin-left: 0.05rem;
-    margin-right:0.05rem;
+    margin-right: 0.05rem;
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid var(--color-border-dark);
     border-radius: 5px;
@@ -369,10 +339,9 @@
       background: rgba(0, 0, 0, 0.75);
     }
 
-  }
-
-  .achievement-block__image-holder-button:first-of-type {
-    margin-right:0.25rem;
+    &:first-of-type {
+      margin-right: 0.25rem;
+    }
   }
 
   .achievement-block-tags-container {
@@ -381,24 +350,83 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    align-content: center;
+    width:auto;
+    gap: 3px;
   }
 
   .achievement-block-tag {
-    width: fit-content;
-    border: 1px solid var(--color-border-dark);
-    border-radius: 5px;
-    height: fit-content;
-    padding: 2px;
-    margin: 1px;
-    line-height: 14px;
-    background: var(--color-shadow-light);
-    color: var(--color-text-dark-1);
+    &--selected {
+      background: var(--color-text-dark-secondary);
+      color: var(--color-text-hyperlink);
+    }
+  }
+}
+
+/* Character-sheet integrations (e.g. PF2e achievements tab) */
+.pa-sheet-achievements {
+  padding: 10px;
+
+  fieldset.card > & {
+    padding: 0;
   }
 
-  .achievement-block-tag--selected {
-    background: var(--color-text-dark-secondary);
-    color: var(--color-text-hyperlink);
+  .pa-sheet-achievements__message {
+    text-align: center;
+    margin: 10px;
+
+    &--error {
+      color: red;
+    }
   }
 
+  .pa-sheet-achievements__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .pa-sheet-achievements__item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+    gap: 10px;
+
+    img {
+      border: none;
+      flex-shrink: 0;
+    }
+
+    &.locked img {
+      filter: grayscale(100%);
+      opacity: 0.7;
+    }
+  }
+
+  .pa-sheet-achievements__details {
+    flex: 1;
+
+    h4 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+  }
+
+  .pa-sheet-achievements__description {
+    font-size: 0.9em;
+    opacity: 0.8;
+  }
+
+  .pa-sheet-achievements__earned {
+    align-self: center;
+    margin-left: 10px;
+    color: green;
+    font-size: 1.5em;
+  }
 }

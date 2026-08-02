@@ -12,3 +12,4 @@ foundryconfig.json
 fvtt-player-achievements.zip
 docs/CNAME
 cypress.env.json
+coverage/

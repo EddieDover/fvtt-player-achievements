@@ -50,6 +50,15 @@ export const registerSettings = () => {
     "type": Array,
   });
 
+  game.settings.register("fvtt-player-achievements", "useAlternateButton", {
+    "name": "fvtt-player-achievements.settings.use-alternate-button.name",
+    "hint": "fvtt-player-achievements.settings.use-alternate-button.hint",
+    "scope": "world",
+    "config": true,
+    "default": false,
+    "type": Boolean,
+  });
+
   game.settings.register("fvtt-player-achievements", "defaultSoundFile", {
     "name": "fvtt-player-achievements.settings.default-sound-file.name",
     "hint": "fvtt-player-achievements.settings.default-sound-file.hint",
@@ -58,15 +67,6 @@ export const registerSettings = () => {
     "default": DEFAULT_SOUND,
     "type": String,
     "filePicker": true,
-  });
-
-  game.settings.register("fvtt-player-achievements", "enablePlayerAchievements", {
-    "name": "fvtt-player-achievements.settings.enable-player-achievements.name",
-    "hint": "fvtt-player-achievements.settings.enable-player-achievements.hint",
-    "scope": "world",
-    "config": true,
-    "default": true,
-    "type": Boolean,
   });
 
   game.settings.register("fvtt-player-achievements", "hideUnearnedAchievements", {
