@@ -57,6 +57,7 @@ export const registerSettings = () => {
     "config": true,
     "default": false,
     "type": Boolean,
+    "onChange": () => ui.controls?.render({ reset: true }),
   });
 
   game.settings.register("fvtt-player-achievements", "defaultSoundFile", {

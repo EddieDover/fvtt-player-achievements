@@ -188,61 +188,71 @@ function makeSibling(element, sibling) {
 
 Hooks.on("renderSceneNavigation", () => {});
 
+Hooks.on("getSceneControlButtons", (controls) => {
+  if (!game.settings.get(MODULE_NAME, "useAlternateButton")) return;
+  const tokens = controls.tokens;
+  if (!tokens) return;
+  tokens.tools ??= {};
+  tokens.tools.achievementSheet = {
+    name: "achievementSheet",
+    order: Object.keys(tokens.tools).length,
+    title: "fvtt-player-achievements.interface.achievements-sheet",
+    icon: "fas fa-trophy",
+    button: true,
+    visible: true,
+    onChange: () => showWindow(),
+  };
+});
+
 Hooks.on("renderSceneControls", () => {
-  let button = document.querySelector("#AchievementButton");
-  let settingsArea = document.querySelector("#settings-fvtt-player-achievements");
-  let controls;
-  let sidebarSettings;
-  controls = $("#scene-controls-layers");
-  settingsArea = document.querySelector(".fvtt-player-achievement-settings");
-
   const localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
-  const useAlternateButon = game.settings.get("fvtt-player-achievements", "useAlternateButton");
+  const useAlternateButton = game.settings.get(MODULE_NAME, "useAlternateButton");
+  const button = document.querySelector("#AchievementButton");
 
-  controls = useAlternateButon
-    ? document.querySelector("#scene-controls-tools")
-    : document.querySelector("#scene-controls-layers");
-  settingsArea = document.querySelector(".fvtt-player-achievement-settings");
+  if (useAlternateButton) {
+    button?.closest("li")?.remove();
+  } else {
+    const controls = document.querySelector("#scene-controls-layers");
+    if (controls && !button) {
+      const newli = document.createElement("li");
+      const newButton = document.createElement("button");
 
-  if (controls && !button) {
-    const newli = document.createElement("li");
-    const newButton = document.createElement("button");
-    sidebarSettings = document.querySelector("section.settings.flexcol");
+      for (const st of ["control", "ui-control", "layer", "icon", "fa-regular"]) newButton.classList.add(st);
+      newButton.id = "AchievementButton";
+      newButton.type = "button";
+      newButton.role = "tab";
+      newButton.dataset.tool = "AchievementSheet";
 
-    for (const st of ["control", "ui-control", "layer", "icon", "fa-regular"]) newButton.classList.add(st);
-    newButton.id = "AchievementButton";
-    newButton.type = "button";
-    newButton.role = "tab";
-    newButton.dataset.tool = "AchievementSheet";
-
-    newButton.setAttribute("aria-label", localizedLabel);
-    newButton.dataset.tooltip = localizedLabel;
-    newButton.innerHTML = `<i class="fas fa-trophy"></i>`;
-    newButton.addEventListener("click", showWindow);
-    newli.append(newButton);
-    controls.append(newli);
-
-    if (sidebarSettings && !settingsArea) {
-      const settingsAreaSection = document.createElement("section");
-      settingsAreaSection.classList.add("fvtt-player-achievement-settings", "flexcol");
-      const settingsAreaHeader = document.createElement("h4");
-      settingsAreaHeader.classList.add("divider");
-      settingsAreaHeader.textContent = "Player Achievements";
-      settingsAreaSection.append(settingsAreaHeader);
-
-      makeSibling(sidebarSettings, settingsAreaSection);
-
-      const settingsButton = document.createElement("button");
-      settingsButton.classList.add("settings-button");
-      settingsButton.dataset.action = "openApp";
-      settingsButton.type = "button";
-      let localizedLabel = game.i18n.localize("fvtt-player-achievements.interface.achievements-sheet");
-      settingsButton.innerHTML = `<i class='fas fa-trophy'></i> ${localizedLabel}`;
-      settingsButton.addEventListener("click", () => {
-        toggleAchievementScreen();
-      });
-      makeSibling(settingsAreaHeader, settingsButton);
+      newButton.setAttribute("aria-label", localizedLabel);
+      newButton.dataset.tooltip = localizedLabel;
+      newButton.innerHTML = `<i class="fas fa-trophy"></i>`;
+      newButton.addEventListener("click", showWindow);
+      newli.append(newButton);
+      controls.append(newli);
     }
+  }
+
+  const sidebarSettings = document.querySelector("section.settings.flexcol");
+  const settingsArea = document.querySelector(".fvtt-player-achievement-settings");
+  if (sidebarSettings && !settingsArea) {
+    const settingsAreaSection = document.createElement("section");
+    settingsAreaSection.classList.add("fvtt-player-achievement-settings", "flexcol");
+    const settingsAreaHeader = document.createElement("h4");
+    settingsAreaHeader.classList.add("divider");
+    settingsAreaHeader.textContent = "Player Achievements";
+    settingsAreaSection.append(settingsAreaHeader);
+
+    makeSibling(sidebarSettings, settingsAreaSection);
+
+    const settingsButton = document.createElement("button");
+    settingsButton.classList.add("settings-button");
+    settingsButton.dataset.action = "openApp";
+    settingsButton.type = "button";
+    settingsButton.innerHTML = `<i class='fas fa-trophy'></i> ${localizedLabel}`;
+    settingsButton.addEventListener("click", () => {
+      toggleAchievementScreen();
+    });
+    makeSibling(settingsAreaHeader, settingsButton);
   }
 });
 

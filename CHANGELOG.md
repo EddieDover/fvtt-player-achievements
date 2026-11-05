@@ -1,4 +1,11 @@
 
+## [2.0.1](https://github.com/EddieDover/fvtt-player-achievements/compare/v2.0.0...v2.0.1) (2026-11-05)
+
+
+### Bug Fixes
+
+* alternate button location now stays in token control submenu ([878917a](https://github.com/EddieDover/fvtt-player-achievements/commit/878917a52d63f2865260be398b97713ef4961dee))
+
 ## [2.0.0](https://github.com/EddieDover/fvtt-player-achievements/compare/v1.8.2...v2.0.0) (2026-06-21)
 
 
